@@ -18,7 +18,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @OutputTimeUnit(TimeUnit.SECONDS)
 @State(Scope.Benchmark)
 @Warmup(iterations = 5, time = 10, timeUnit = TimeUnit.SECONDS)
-@Measurement(iterations = 5, time = 10, timeUnit = TimeUnit.SECONDS)
+@Measurement(iterations = 30, time = 10, timeUnit = TimeUnit.SECONDS)
 @Fork(value = 2, jvmArgs = {"-Xms10G",
         "-Xmx10G"/*, "-Xgc:deterministic", "-XpauseTarget=80ms", "-XXgcthreads:4"
         , "-Xverbose:compaction,gc,gcpause,gcreport,memory,memdbg",
