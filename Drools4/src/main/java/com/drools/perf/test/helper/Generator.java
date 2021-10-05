@@ -2,14 +2,20 @@ package com.drools.perf.test.helper;
 
 import com.drools.perf.test.model.Account;
 import com.drools.perf.test.model.Subscriber;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.*;
+import java.util.zip.GZIPInputStream;
 
 public class Generator {
     public static final int MAX_CHARGING_PROFILE_ID = 50;
     public static final int MAX_ACCOUNT_KIND_ID = 80;
     public static final int MAX_ACC_TO_ADD = 5;
     private static final Random rd = new Random();
+    private static final File SUBSCRIBERS_DATA = new File(new File(System.getProperty("user.dir")).getParent(), "subscribers.json");
 
     public static void generateRules() {
         int accountKindIds = MAX_ACCOUNT_KIND_ID;
@@ -65,6 +71,23 @@ public class Generator {
         return subscribers;
     }
 
+    public static List<Subscriber> getPreGeneratedSubscribers() throws Exception {
+        FileInputStream fos = null;
+        GZIPInputStream gz = null;
+        try {
+            fos = new FileInputStream(SUBSCRIBERS_DATA);
+            gz = new GZIPInputStream(fos);
+
+            return new ObjectMapper().readValue(gz, new TypeReference<List<Subscriber>>() {
+            });
+        } finally {
+            if (gz != null)
+                gz.close();
+            if (fos != null)
+                fos.close();
+        }
+    }
+
     private static int generateRandom(int max) {
         return generateRandom(0, max);
     }
@@ -73,7 +96,7 @@ public class Generator {
         return (int) ((Math.random() * (max - min)) + min);
     }
 
-    public static void main(String[] args) {
-        generateRules();
+    public static void main(String[] args) throws Exception {
+        System.out.println(getPreGeneratedSubscribers().size());
     }
 }

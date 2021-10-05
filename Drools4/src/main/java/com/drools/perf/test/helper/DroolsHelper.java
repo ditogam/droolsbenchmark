@@ -24,6 +24,7 @@ public class DroolsHelper {
     private static final AtomicInteger RULE_FOUND_COUNT = new AtomicInteger();
     private static Package PACKAGE = null;
     public static boolean threadLocal;
+    public static boolean shadowProxy;
 
 
     public static void compile() throws Exception {
@@ -103,7 +104,7 @@ public class DroolsHelper {
             return ruleBase;
         RuleBaseConfiguration conf = new RuleBaseConfiguration();
         conf.setSequential(false);
-        conf.setShadowProxy(false);
+        conf.setShadowProxy(shadowProxy);
         ruleBase = RuleBaseFactory.newRuleBase(conf);
         ruleBase.addPackage(PACKAGE);
         if (threadLocal) {

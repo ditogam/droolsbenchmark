@@ -28,22 +28,24 @@ import java.util.concurrent.atomic.AtomicInteger;
 )
 public class DroolsBenchmark {
     private List<Subscriber> subscribers;
-    private static final int COUNT = 100000;
     private AtomicInteger index = new AtomicInteger();
 
-    @Param({"false", "true"})
+    //    @Param({"false", "true"})
     private boolean threadLocal;
+    @Param({"false", "true"})
+    private boolean shadowProxy;
 
     @Setup
     public void loadData() throws Exception {
         DroolsHelper.threadLocal = threadLocal;
-        subscribers = Generator.generateSubscribers(COUNT);
+        DroolsHelper.shadowProxy = shadowProxy;
+        subscribers = Generator.getPreGeneratedSubscribers();
     }
 
     @Benchmark
     public Subscriber send() throws Exception {
         int i = index.incrementAndGet();
-        if (i + 1 >= COUNT) {
+        if (i + 1 >= subscribers.size()) {
             index.set(0);
             i = 0;
         }

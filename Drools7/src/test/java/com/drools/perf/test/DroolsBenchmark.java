@@ -26,10 +26,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 )
 public class DroolsBenchmark {
     private List<Subscriber> subscribers;
-    private static final int COUNT = 100000;
     private AtomicInteger index = new AtomicInteger();
 
-    @Param({"0", "3"})
+    //    @Param({"0", "3"})
     private int sessionPool;
 //    @Param({"false", "true"})
 //    private boolean threadLocal;
@@ -38,13 +37,13 @@ public class DroolsBenchmark {
     public void loadData() throws Exception {
         DroolsHelper.sessionPool = sessionPool;
 //        DroolsHelper.threadLocal = threadLocal;
-        subscribers = Generator.generateSubscribers(COUNT);
+        subscribers = Generator.getPreGeneratedSubscribers();
     }
 
     @Benchmark
     public Subscriber send() throws Exception {
         int i = index.incrementAndGet();
-        if (i + 1 >= COUNT) {
+        if (i + 1 >= subscribers.size()) {
             index.set(0);
             i = 0;
         }
@@ -73,7 +72,7 @@ public class DroolsBenchmark {
                 .include(DroolsBenchmark.class.getSimpleName())
                 .forks(1)
                 .warmupIterations(5)
-                .measurementIterations(5)
+                .measurementIterations(30)
                 .threads(Integer.parseInt(args[0]))
 //                .addProfiler(GCProfiler.class)
 

@@ -2,14 +2,24 @@ package com.drools.perf.test.helper;
 
 import com.drools.perf.test.model.Account;
 import com.drools.perf.test.model.Subscriber;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.*;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 public class Generator {
     public static final int MAX_CHARGING_PROFILE_ID = 50;
     public static final int MAX_ACCOUNT_KIND_ID = 80;
     public static final int MAX_ACC_TO_ADD = 5;
     private static final Random rd = new Random();
+    private static final int COUNT = 100000;
+    private static final File SUBSCRIBERS_DATA = new File(new File(System.getProperty("user.dir")).getParent(), "subscribers.json");
 
     public static void generateRules() {
         int accountKindIds = MAX_ACCOUNT_KIND_ID;
@@ -73,7 +83,28 @@ public class Generator {
         return (int) ((Math.random() * (max - min)) + min);
     }
 
-    public static void main(String[] args) {
-        generateRules();
+    public static List<Subscriber> getPreGeneratedSubscribers() throws Exception {
+        try (FileInputStream fos = new FileInputStream(SUBSCRIBERS_DATA);
+             GZIPInputStream gz = new GZIPInputStream(fos);
+        ) {
+
+            return new ObjectMapper().readValue(gz, new TypeReference<List<Subscriber>>() {
+            });
+        }
+    }
+
+    public static void main(String[] args) throws Exception {
+        generateSubscribersJson();
+        System.out.println(getPreGeneratedSubscribers().size());
+    }
+
+    public static void generateSubscribersJson() throws IOException {
+        List<Subscriber> subscribers = generateSubscribers(COUNT);
+
+        try (FileOutputStream fos = new FileOutputStream(SUBSCRIBERS_DATA);
+             GZIPOutputStream gz = new GZIPOutputStream(fos);
+        ) {
+            new ObjectMapper().writeValue(gz, subscribers);
+        }
     }
 }
