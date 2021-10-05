@@ -14,8 +14,11 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@BenchmarkMode(Mode.Throughput)
-@OutputTimeUnit(TimeUnit.SECONDS)
+//@BenchmarkMode(Mode.Throughput)
+//@OutputTimeUnit(TimeUnit.SECONDS)
+@BenchmarkMode(Mode.All)
+@OutputTimeUnit(TimeUnit.MICROSECONDS)
+
 @State(Scope.Benchmark)
 @Warmup(iterations = 5, time = 10, timeUnit = TimeUnit.SECONDS)
 @Measurement(iterations = 30, time = 10, timeUnit = TimeUnit.SECONDS)
@@ -32,7 +35,7 @@ public class DroolsBenchmark {
 
     //    @Param({"false", "true"})
     private boolean threadLocal;
-    @Param({"false", "true"})
+//    @Param({"false", "true"})
     private boolean shadowProxy;
 
     @Setup

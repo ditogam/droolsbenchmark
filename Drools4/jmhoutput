@@ -1,0 +1,64 @@
+# JMH 1.6.3 (released 2399 days ago, please consider updating!)
+# VM invoker: /opt/jdk/oracle/jrockit-jdk1.6.0_45-R28.2.7-4.1.0/jre/bin/java
+# VM options: -Xms10G -Xmx10G
+# Warmup: 5 iterations, 10 s each
+# Measurement: 30 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 10 threads, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: com.drools.perf.test.DroolsBenchmark.send
+
+# Run progress: 0.00% complete, ETA 00:05:50
+# Fork: 1 of 1
+WARNING: Not a HotSpot compiler command compatible VM ("Oracle JRockit(R)-1.6.0_45"), compilerHints are disabled.
+# Warmup Iteration   1: Oct 5, 2021 5:32:07 PM com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector <clinit>
+WARNING: Unable to load JDK7 annotation types; will have to skip
+Oct 5, 2021 5:32:08 PM com.fasterxml.jackson.databind.ext.OptionalHandlerFactory <clinit>
+INFO: Could not load Java7 `java.nio.file.Path` class: ignoring
+179.660 ±(99.9%) 33.316 us/op
+# Warmup Iteration   2: 82.492 ±(99.9%) 3.001 us/op
+# Warmup Iteration   3: 79.058 ±(99.9%) 2.026 us/op
+# Warmup Iteration   4: 76.127 ±(99.9%) 1.262 us/op
+# Warmup Iteration   5: 77.149 ±(99.9%) 2.430 us/op
+Iteration   1: 74.700 ±(99.9%) 0.877 us/op
+Iteration   2: 76.893 ±(99.9%) 1.453 us/op
+Iteration   3: 79.890 ±(99.9%) 1.735 us/op
+Iteration   4: 77.186 ±(99.9%) 1.150 us/op
+Iteration   5: 76.580 ±(99.9%) 1.069 us/op
+Iteration   6: 77.338 ±(99.9%) 1.260 us/op
+Iteration   7: 76.004 ±(99.9%) 1.440 us/op
+Iteration   8: 73.464 ±(99.9%) 1.243 us/op
+Iteration   9: 74.309 ±(99.9%) 1.092 us/op
+Iteration  10: 75.544 ±(99.9%) 1.516 us/op
+Iteration  11: 73.386 ±(99.9%) 1.155 us/op
+Iteration  12: 72.335 ±(99.9%) 1.660 us/op
+Iteration  13: 72.691 ±(99.9%) 1.436 us/op
+Iteration  14: 71.893 ±(99.9%) 1.155 us/op
+Iteration  15: 71.997 ±(99.9%) 0.907 us/op
+Iteration  16: 71.082 ±(99.9%) 1.794 us/op
+Iteration  17: 78.182 ±(99.9%) 3.323 us/op
+Iteration  18: 80.616 ±(99.9%) 2.719 us/op
+Iteration  19: 77.000 ±(99.9%) 3.980 us/op
+Iteration  20: 81.653 ±(99.9%) 2.003 us/op
+Iteration  21: 78.765 ±(99.9%) 2.550 us/op
+Iteration  22: 78.439 ±(99.9%) 4.795 us/op
+Iteration  23: 76.860 ±(99.9%) 3.816 us/op
+Iteration  24: 71.808 ±(99.9%) 2.400 us/op
+Iteration  25: 74.483 ±(99.9%) 1.882 us/op
+Iteration  26: 73.323 ±(99.9%) 1.959 us/op
+Iteration  27: 71.233 ±(99.9%) 1.809 us/op
+Iteration  28: 68.360 ±(99.9%) 1.477 us/op
+Iteration  29: 87.189 ±(99.9%) 5.273 us/op
+Iteration  30: 82.134 ±(99.9%) 3.454 us/op
+Executed = Found = false Executed = 45200739. rule found = 40018279 distinct rules
+
+
+Result: 75.845 ±(99.9%) 2.668 us/op [Average]
+  Statistics: (min, avg, max) = (68.360, 75.845, 87.189), stdev = 3.994
+  Confidence interval (99.9%): [73.176, 78.513]
+
+
+# Run complete. Total time: 00:05:51
+
+Benchmark             Mode  Cnt   Score   Error  Units
+DroolsBenchmark.send  avgt   30  75.845 ± 2.668  us/op

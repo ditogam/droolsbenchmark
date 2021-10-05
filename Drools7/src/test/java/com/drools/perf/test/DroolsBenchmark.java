@@ -14,8 +14,11 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@BenchmarkMode(Mode.Throughput)
-@OutputTimeUnit(TimeUnit.SECONDS)
+//@BenchmarkMode(Mode.Throughput)
+//@OutputTimeUnit(TimeUnit.SECONDS)
+@BenchmarkMode(Mode.AverageTime)
+@OutputTimeUnit(TimeUnit.MICROSECONDS)
+
 @State(Scope.Benchmark)
 @Fork(value = 2, jvmArgs = {"-Xms10G",
         "-Xmx10G"/*, "-Xgc:deterministic", "-XpauseTarget=80ms", "-XXgcthreads:4"
