@@ -86,14 +86,24 @@ public class DroolsHelper {
         if (ruleBase != null)
             return ruleBase;
 
-        ruleBase = KnowledgeBaseFactory.newKnowledgeBase(getRuleBaseConfiguration());
-        ((KnowledgeBaseImpl) ruleBase).addPackages(kiePackages);
         if (threadLocal) {
+            ruleBase = createKieBase();
             RULE_BASE_THREAD_LOCAL.set(ruleBase);
+            return ruleBase;
         } else {
-            RULE_BASE = ruleBase;
+            synchronized (DroolsHelper.class) {
+                RULE_BASE = createKieBase();
+                return RULE_BASE;
+            }
         }
 
+
+    }
+
+    private static KieBase createKieBase() {
+        KieBase ruleBase;
+        ruleBase = KnowledgeBaseFactory.newKnowledgeBase(getRuleBaseConfiguration());
+        ((KnowledgeBaseImpl) ruleBase).addPackages(kiePackages);
         return ruleBase;
     }
 
