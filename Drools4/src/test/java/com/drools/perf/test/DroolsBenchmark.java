@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 //@BenchmarkMode(Mode.Throughput)
 //@OutputTimeUnit(TimeUnit.SECONDS)
-@BenchmarkMode(Mode.All)
+@BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MICROSECONDS)
 
 @State(Scope.Benchmark)

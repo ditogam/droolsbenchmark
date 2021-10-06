@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Logger;
 
 public class DroolsHelper {
     public static final String DROOLS_FILE_NAME = "rools.data";
@@ -32,7 +33,7 @@ public class DroolsHelper {
     public static int sessionPool = 0;
     private static Collection<KiePackage> kiePackages = null;
     public static boolean threadLocal;
-
+    private static Logger logger=Logger.getLogger(DroolsHelper.class.getName());
 
     public static void compile() throws Exception {
         KnowledgeBuilder builder = KnowledgeBuilderFactory.newKnowledgeBuilder();
@@ -140,11 +141,11 @@ public class DroolsHelper {
     }
 
     public static void main(String[] args) throws Exception {
-        List<Subscriber> subscribers = Generator.generateSubscribers(1);
+        List<Subscriber> subscribers = Generator.generateSubscribers(10000);
         loadRules();
         for (Subscriber subscriber : subscribers) {
             executeSubscriber(subscriber);
         }
-
+        logger.info("done");
     }
 }

@@ -95,24 +95,32 @@ public class DroolsHelper {
         RuleBase ruleBase = null;
         if (threadLocal) {
             ruleBase = RULE_BASE_THREAD_LOCAL.get();
-
-
         } else {
             ruleBase = RULE_BASE;
         }
         if (ruleBase != null)
             return ruleBase;
+
+
+        if (threadLocal) {
+            ruleBase = createRuleBase();
+            RULE_BASE_THREAD_LOCAL.set(ruleBase);
+        } else {
+            synchronized (DroolsHelper.class) {
+                ruleBase = createRuleBase();
+                RULE_BASE = ruleBase;
+            }
+        }
+
+        return ruleBase;
+    }
+
+    private static RuleBase createRuleBase() throws Exception {
         RuleBaseConfiguration conf = new RuleBaseConfiguration();
         conf.setSequential(false);
         conf.setShadowProxy(shadowProxy);
-        ruleBase = RuleBaseFactory.newRuleBase(conf);
+        RuleBase ruleBase = RuleBaseFactory.newRuleBase(conf);
         ruleBase.addPackage(PACKAGE);
-        if (threadLocal) {
-            RULE_BASE_THREAD_LOCAL.set(ruleBase);
-        } else {
-            RULE_BASE = ruleBase;
-        }
-
         return ruleBase;
     }
 

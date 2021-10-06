@@ -21,7 +21,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @State(Scope.Benchmark)
 @Fork(value = 2, jvmArgs = {"-Xms10G",
-        "-Xmx10G"/*, "-Xgc:deterministic", "-XpauseTarget=80ms", "-XXgcthreads:4"
+        "-Xmx10G","-Ddrools.metric.logger.enabled=true","-Ddrools.metric.logger.threshold=500"/*, "-Xgc:deterministic", "-XpauseTarget=80ms", "-XXgcthreads:4"
         , "-Xverbose:compaction,gc,gcpause,gcreport,memory,memdbg",
         "-XverboseTimeStamp",
         "-Xverboselog:./logs/jvm.log"*/
@@ -69,8 +69,9 @@ public class DroolsBenchmark {
         if (args == null || args.length == 0)
             args = new String[]{"10"};
         File file = new File("logs");
-        if (!file.exists() || !file.isDirectory())
-            file.mkdir();
+        file.delete();
+//        if (!file.exists() || !file.isDirectory())
+//            file.mkdir();
         final Options options = new OptionsBuilder()
                 .include(DroolsBenchmark.class.getSimpleName())
                 .forks(1)
