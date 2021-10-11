@@ -5,6 +5,8 @@ import com.drools.perf.test.helper.Generator;
 import com.drools.perf.test.model.Subscriber;
 import org.junit.Test;
 import org.openjdk.jmh.annotations.*;
+
+import org.openjdk.jmh.profile.LinuxPerfProfiler;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
@@ -14,32 +16,37 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-//@BenchmarkMode(Mode.Throughput)
-//@OutputTimeUnit(TimeUnit.SECONDS)
-@BenchmarkMode(Mode.AverageTime)
-@OutputTimeUnit(TimeUnit.MICROSECONDS)
+@BenchmarkMode(Mode.Throughput)
+@OutputTimeUnit(TimeUnit.SECONDS)
+//@BenchmarkMode(Mode.AverageTime)
+//@OutputTimeUnit(TimeUnit.MICROSECONDS)
 
 @State(Scope.Benchmark)
+@Warmup(iterations = 5, time = 10, timeUnit = TimeUnit.SECONDS)
+@Measurement(iterations = 10, time = 10, timeUnit = TimeUnit.SECONDS)
 @Fork(value = 2, jvmArgs = {"-Xms10G",
-        "-Xmx10G","-Ddrools.metric.logger.enabled=true","-Ddrools.metric.logger.threshold=500"/*, "-Xgc:deterministic", "-XpauseTarget=80ms", "-XXgcthreads:4"
+//        "-XX:+UseParallelGC",
+        "-XX:StartFlightRecording=filename=myrecording.jfr,delay=60s",
+
+        "-Xmx10G", "-Xgc:deterministic", "-XpauseTarget=80ms", "-XXgcthreads:4"/**/
         , "-Xverbose:compaction,gc,gcpause,gcreport,memory,memdbg",
         "-XverboseTimeStamp",
-        "-Xverboselog:./logs/jvm.log"*/
+        "-Xverboselog:./logs/jvm.log"
 }
 )
-public class DroolsBenchmark {
+public class DroolsBenchmarkTest {
     private List<Subscriber> subscribers;
     private AtomicInteger index = new AtomicInteger();
 
-    //    @Param({"0", "3"})
-    private int sessionPool;
+    //    @Param({"false", "true"})
+    private boolean threadLocal;
 //    @Param({"false", "true"})
-//    private boolean threadLocal;
+    private boolean shadowProxy;
 
     @Setup
     public void loadData() throws Exception {
-        DroolsHelper.sessionPool = sessionPool;
-//        DroolsHelper.threadLocal = threadLocal;
+        DroolsHelper.threadLocal = threadLocal;
+        DroolsHelper.shadowProxy = shadowProxy;
         subscribers = Generator.getPreGeneratedSubscribers();
     }
 
@@ -69,17 +76,13 @@ public class DroolsBenchmark {
         if (args == null || args.length == 0)
             args = new String[]{"10"};
         File file = new File("logs");
-        file.delete();
-//        if (!file.exists() || !file.isDirectory())
-//            file.mkdir();
+        if (!file.exists() || !file.isDirectory())
+            file.mkdir();
         final Options options = new OptionsBuilder()
-                .include(DroolsBenchmark.class.getSimpleName())
+                .include(DroolsBenchmarkTest.class.getSimpleName())
                 .forks(1)
-                .warmupIterations(5)
-                .measurementIterations(30)
                 .threads(Integer.parseInt(args[0]))
-//                .addProfiler(GCProfiler.class)
-
+                .addProfiler(LinuxPerfProfiler.class)
                 .build();
 
         new Runner(options).run();

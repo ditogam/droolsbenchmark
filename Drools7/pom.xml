@@ -13,9 +13,11 @@
         <maven.compiler.target>8</maven.compiler.target>
         <drools.version>7.52.0.Final</drools.version>
         <jmh.version>1.32</jmh.version>
+        <jar.directory>${project.build.directory}/libraries</jar.directory>
     </properties>
 
     <dependencies>
+
         <!-- drools -->
         <dependency>
             <groupId>org.drools</groupId>
@@ -44,6 +46,7 @@
             <groupId>org.drools</groupId>
             <artifactId>drools-mvel</artifactId>
             <version>${drools.version}</version>
+
         </dependency>
         <dependency>
             <groupId>org.drools</groupId>
@@ -56,6 +59,7 @@
             <version>${drools.version}</version>
         </dependency>
         <!-- -->
+
 
         <dependency>
             <groupId>ch.qos.logback</groupId>
@@ -91,4 +95,48 @@
         </dependency>
 
     </dependencies>
+    <build>
+        <finalName>${project.groupId}.${project.artifactId}-${project.version}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.10</version>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <includeScope>runtime</includeScope>
+                            <outputDirectory>${jar.directory}</outputDirectory>
+                            <prependGroupId>true</prependGroupId>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/*.properties</exclude>
+                    </excludes>
+                    <outputDirectory>${project.build.directory}/libraries</outputDirectory>
+                    <archive>
+                        <manifestEntries>
+                            <Implementation-Version>master.${maven.build.timestamp}
+                            </Implementation-Version>
+                            <classpathPrefix>libraries/</classpathPrefix>
+                            <mainClass>com.drools.perf.test.helper.DroolsHelper</mainClass>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
 </project>

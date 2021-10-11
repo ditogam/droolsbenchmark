@@ -1,0 +1,2137 @@
+hwinfo --cpu --short
+cpu:                                                            
+                       Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz, 3200 MHz
+                       Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz, 3200 MHz
+                       Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz, 3200 MHz
+                       Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz, 3200 MHz
+                       Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz, 3200 MHz
+                       Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz, 3200 MHz
+                       Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz, 3200 MHz
+                       Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz, 3200 MHz
+                       Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz, 4300 MHz
+                       Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz, 3200 MHz
+                       Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz, 3200 MHz
+                       Intel(R) Core(TM) i7-8700 CPU @ 3.20GHz, 4300 MHz
+free
+              total        used        free      shared  buff/cache   available
+Mem:       65799376    18306792    44553548      702648     2939036    46151216
+Swap:       2097148           0     2097148
+
+
+index: 0, jdk: jdk1.6.0_45, java_version: 1.6, jmh_version: 1.6.3, use_profiler: false, mvn_path: apache-maven-3.2.5
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running benchmarks.SynchronizationBenchmarkTest
+# JMH 1.6.3 (released 2405 days ago, please consider updating!)
+# VM invoker: /opt/jdk/oracle/jdk1.6.0_45/jre/bin/java
+# VM options: -Xms10G -Xmx10G -XX:+UseParallelGC
+# Warmup: 3 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: benchmarks.SynchronizationBenchmarkTest.testAtomic
+# Parameters: (threadCount = 1)
+
+# Run progress: 0.00% complete, ETA 00:04:00
+# Fork: 1 of 1
+# Warmup Iteration   1: 135374448.572 ops/s
+# Warmup Iteration   2: 134159819.160 ops/s
+# Warmup Iteration   3: 134791103.337 ops/s
+Iteration   1: 135228387.266 ops/s
+Iteration   2: 136611509.626 ops/s
+Iteration   3: 135524182.486 ops/s
+Iteration   4: 136442313.128 ops/s
+Iteration   5: 136297570.017 ops/s
+
+
+Result: 136020792.505 ±(99.9%) 2340481.848 ops/s [Average]
+  Statistics: (min, avg, max) = (135228387.266, 136020792.505, 136611509.626), stdev = 607815.703
+  Confidence interval (99.9%): [133680310.657, 138361274.352]
+
+
+# JMH 1.6.3 (released 2405 days ago, please consider updating!)
+# VM invoker: /opt/jdk/oracle/jdk1.6.0_45/jre/bin/java
+# VM options: -Xms10G -Xmx10G -XX:+UseParallelGC
+# Warmup: 3 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber
+# Parameters: (threadCount = 1)
+
+# Run progress: 33.33% complete, ETA 00:02:40
+# Fork: 1 of 1
+# Warmup Iteration   1: 59985738.310 ops/s
+# Warmup Iteration   2: 60013588.609 ops/s
+# Warmup Iteration   3: 60518687.816 ops/s
+Iteration   1: 60417902.779 ops/s
+Iteration   2: 60277420.945 ops/s
+Iteration   3: 60361898.680 ops/s
+Iteration   4: 60460025.571 ops/s
+Iteration   5: 60517243.305 ops/s
+
+
+Result: 60406898.256 ±(99.9%) 354536.300 ops/s [Average]
+  Statistics: (min, avg, max) = (60277420.945, 60406898.256, 60517243.305), stdev = 92071.951
+  Confidence interval (99.9%): [60052361.956, 60761434.556]
+
+
+# JMH 1.6.3 (released 2405 days ago, please consider updating!)
+# VM invoker: /opt/jdk/oracle/jdk1.6.0_45/jre/bin/java
+# VM options: -Xms10G -Xmx10G -XX:+UseParallelGC
+# Warmup: 3 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: benchmarks.SynchronizationBenchmarkTest.testVolatile
+# Parameters: (threadCount = 1)
+
+# Run progress: 66.67% complete, ETA 00:01:20
+# Fork: 1 of 1
+# Warmup Iteration   1: 50692393.503 ops/s
+# Warmup Iteration   2: 50612671.416 ops/s
+# Warmup Iteration   3: 50148857.229 ops/s
+Iteration   1: 50080190.375 ops/s
+Iteration   2: 49656317.241 ops/s
+Iteration   3: 49366805.959 ops/s
+Iteration   4: 49071706.095 ops/s
+Iteration   5: 49798283.844 ops/s
+
+
+Result: 49594660.703 ±(99.9%) 1499283.559 ops/s [Average]
+  Statistics: (min, avg, max) = (49071706.095, 49594660.703, 50080190.375), stdev = 389359.179
+  Confidence interval (99.9%): [48095377.144, 51093944.262]
+
+
+# Run complete. Total time: 00:04:00
+
+Benchmark                                           (threadCount)   Mode  Cnt          Score         Error  Units
+SynchronizationBenchmarkTest.testAtomic                         1  thrpt    5  136020792.505 ± 2340481.848  ops/s
+SynchronizationBenchmarkTest.testNonVolatileNumber              1  thrpt    5   60406898.256 ±  354536.300  ops/s
+SynchronizationBenchmarkTest.testVolatile                       1  thrpt    5   49594660.703 ± 1499283.559  ops/s
+
+Benchmark result is saved to results/result_Sun__Microsystems__Inc._1.6_1.6.0_45-b06_tc1.csv
+# JMH 1.6.3 (released 2405 days ago, please consider updating!)
+# VM invoker: /opt/jdk/oracle/jdk1.6.0_45/jre/bin/java
+# VM options: -Xms10G -Xmx10G -XX:+UseParallelGC
+# Warmup: 3 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 8 threads, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: benchmarks.SynchronizationBenchmarkTest.testAtomic
+# Parameters: (threadCount = 8)
+
+# Run progress: 0.00% complete, ETA 00:04:00
+# Fork: 1 of 1
+# Warmup Iteration   1: 12057285.311 ops/s
+# Warmup Iteration   2: 11987070.667 ops/s
+# Warmup Iteration   3: 12191319.159 ops/s
+Iteration   1: 12187758.150 ops/s
+Iteration   2: 12025757.767 ops/s
+Iteration   3: 12072869.759 ops/s
+Iteration   4: 11957249.715 ops/s
+Iteration   5: 12107504.621 ops/s
+
+
+Result: 12070228.002 ±(99.9%) 333206.190 ops/s [Average]
+  Statistics: (min, avg, max) = (11957249.715, 12070228.002, 12187758.150), stdev = 86532.589
+  Confidence interval (99.9%): [11737021.813, 12403434.192]
+
+
+# JMH 1.6.3 (released 2405 days ago, please consider updating!)
+# VM invoker: /opt/jdk/oracle/jdk1.6.0_45/jre/bin/java
+# VM options: -Xms10G -Xmx10G -XX:+UseParallelGC
+# Warmup: 3 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 8 threads, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber
+# Parameters: (threadCount = 8)
+
+# Run progress: 33.33% complete, ETA 00:02:40
+# Fork: 1 of 1
+# Warmup Iteration   1: 17163407.003 ops/s
+# Warmup Iteration   2: 17081112.056 ops/s
+# Warmup Iteration   3: 16548412.189 ops/s
+Iteration   1: 16493800.931 ops/s
+Iteration   2: 16458791.781 ops/s
+Iteration   3: 16647375.548 ops/s
+Iteration   4: 16316429.133 ops/s
+Iteration   5: 16601268.487 ops/s
+
+
+Result: 16503533.176 ±(99.9%) 499647.020 ops/s [Average]
+  Statistics: (min, avg, max) = (16316429.133, 16503533.176, 16647375.548), stdev = 129756.744
+  Confidence interval (99.9%): [16003886.156, 17003180.196]
+
+
+# JMH 1.6.3 (released 2405 days ago, please consider updating!)
+# VM invoker: /opt/jdk/oracle/jdk1.6.0_45/jre/bin/java
+# VM options: -Xms10G -Xmx10G -XX:+UseParallelGC
+# Warmup: 3 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 8 threads, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: benchmarks.SynchronizationBenchmarkTest.testVolatile
+# Parameters: (threadCount = 8)
+
+# Run progress: 66.67% complete, ETA 00:01:20
+# Fork: 1 of 1
+# Warmup Iteration   1: 17531167.835 ops/s
+# Warmup Iteration   2: 17944530.538 ops/s
+# Warmup Iteration   3: 20711527.075 ops/s
+Iteration   1: 20205217.952 ops/s
+Iteration   2: 20132899.744 ops/s
+Iteration   3: 20234017.834 ops/s
+Iteration   4: 20110913.330 ops/s
+Iteration   5: 20181493.568 ops/s
+
+
+Result: 20172908.485 ±(99.9%) 195361.429 ops/s [Average]
+  Statistics: (min, avg, max) = (20110913.330, 20172908.485, 20234017.834), stdev = 50734.743
+  Confidence interval (99.9%): [19977547.056, 20368269.914]
+
+
+# Run complete. Total time: 00:04:00
+
+Benchmark                                           (threadCount)   Mode  Cnt         Score        Error  Units
+SynchronizationBenchmarkTest.testAtomic                         8  thrpt    5  12070228.002 ± 333206.190  ops/s
+SynchronizationBenchmarkTest.testNonVolatileNumber              8  thrpt    5  16503533.176 ± 499647.020  ops/s
+SynchronizationBenchmarkTest.testVolatile                       8  thrpt    5  20172908.485 ± 195361.429  ops/s
+
+Benchmark result is saved to results/result_Sun__Microsystems__Inc._1.6_1.6.0_45-b06_tc8.csv
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 480.922 sec
+
+Results :
+
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+
+index: 1, jdk: jdk1.7.0_80, java_version: 1.7, jmh_version: 1.6.3, use_profiler: false, mvn_path: apache-maven-3.3.1
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running benchmarks.SynchronizationBenchmarkTest
+# JMH 1.6.3 (released 2405 days ago, please consider updating!)
+# VM invoker: /opt/jdk/oracle/jdk1.7.0_80/jre/bin/java
+# VM options: -Xms10G -Xmx10G -XX:+UseParallelGC
+# Warmup: 3 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: benchmarks.SynchronizationBenchmarkTest.testAtomic
+# Parameters: (threadCount = 1)
+
+# Run progress: 0.00% complete, ETA 00:04:00
+# Fork: 1 of 1
+# Warmup Iteration   1: 132232636.331 ops/s
+# Warmup Iteration   2: 131739835.336 ops/s
+# Warmup Iteration   3: 135808544.160 ops/s
+Iteration   1: 135746293.218 ops/s
+Iteration   2: 135411285.189 ops/s
+Iteration   3: 135329485.578 ops/s
+Iteration   4: 136396924.682 ops/s
+Iteration   5: 136322651.111 ops/s
+
+
+Result: 135841327.956 ±(99.9%) 1921767.142 ops/s [Average]
+  Statistics: (min, avg, max) = (135329485.578, 135841327.956, 136396924.682), stdev = 499076.824
+  Confidence interval (99.9%): [133919560.814, 137763095.097]
+
+
+# JMH 1.6.3 (released 2405 days ago, please consider updating!)
+# VM invoker: /opt/jdk/oracle/jdk1.7.0_80/jre/bin/java
+# VM options: -Xms10G -Xmx10G -XX:+UseParallelGC
+# Warmup: 3 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber
+# Parameters: (threadCount = 1)
+
+# Run progress: 33.33% complete, ETA 00:02:40
+# Fork: 1 of 1
+# Warmup Iteration   1: 59699369.996 ops/s
+# Warmup Iteration   2: 58851235.802 ops/s
+# Warmup Iteration   3: 60328627.999 ops/s
+Iteration   1: 60327270.457 ops/s
+Iteration   2: 60804995.694 ops/s
+Iteration   3: 59930355.718 ops/s
+Iteration   4: 59951352.079 ops/s
+Iteration   5: 60396586.474 ops/s
+
+
+Result: 60282112.084 ±(99.9%) 1390617.894 ops/s [Average]
+  Statistics: (min, avg, max) = (59930355.718, 60282112.084, 60804995.694), stdev = 361139.051
+  Confidence interval (99.9%): [58891494.190, 61672729.978]
+
+
+# JMH 1.6.3 (released 2405 days ago, please consider updating!)
+# VM invoker: /opt/jdk/oracle/jdk1.7.0_80/jre/bin/java
+# VM options: -Xms10G -Xmx10G -XX:+UseParallelGC
+# Warmup: 3 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: benchmarks.SynchronizationBenchmarkTest.testVolatile
+# Parameters: (threadCount = 1)
+
+# Run progress: 66.67% complete, ETA 00:01:20
+# Fork: 1 of 1
+# Warmup Iteration   1: 50536054.274 ops/s
+# Warmup Iteration   2: 50105570.698 ops/s
+# Warmup Iteration   3: 48992025.084 ops/s
+Iteration   1: 48980847.116 ops/s
+Iteration   2: 48300174.818 ops/s
+Iteration   3: 49801971.085 ops/s
+Iteration   4: 49756433.535 ops/s
+Iteration   5: 49715780.380 ops/s
+
+
+Result: 49311041.387 ±(99.9%) 2535349.512 ops/s [Average]
+  Statistics: (min, avg, max) = (48300174.818, 49311041.387, 49801971.085), stdev = 658422.217
+  Confidence interval (99.9%): [46775691.875, 51846390.899]
+
+
+# Run complete. Total time: 00:04:00
+
+Benchmark                                           (threadCount)   Mode  Cnt          Score         Error  Units
+SynchronizationBenchmarkTest.testAtomic                         1  thrpt    5  135841327.956 ± 1921767.142  ops/s
+SynchronizationBenchmarkTest.testNonVolatileNumber              1  thrpt    5   60282112.084 ± 1390617.894  ops/s
+SynchronizationBenchmarkTest.testVolatile                       1  thrpt    5   49311041.387 ± 2535349.512  ops/s
+
+Benchmark result is saved to results/result_Oracle__Corporation_1.7_1.7.0_80-b15_tc1.csv
+# JMH 1.6.3 (released 2405 days ago, please consider updating!)
+# VM invoker: /opt/jdk/oracle/jdk1.7.0_80/jre/bin/java
+# VM options: -Xms10G -Xmx10G -XX:+UseParallelGC
+# Warmup: 3 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 8 threads, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: benchmarks.SynchronizationBenchmarkTest.testAtomic
+# Parameters: (threadCount = 8)
+
+# Run progress: 0.00% complete, ETA 00:04:00
+# Fork: 1 of 1
+# Warmup Iteration   1: 11757761.592 ops/s
+# Warmup Iteration   2: 11709052.411 ops/s
+# Warmup Iteration   3: 12029141.011 ops/s
+Iteration   1: 12002874.175 ops/s
+Iteration   2: 11749008.111 ops/s
+Iteration   3: 11839954.311 ops/s
+Iteration   4: 11917859.050 ops/s
+Iteration   5: 11987219.178 ops/s
+
+
+Result: 11899382.965 ±(99.9%) 408020.008 ops/s [Average]
+  Statistics: (min, avg, max) = (11749008.111, 11899382.965, 12002874.175), stdev = 105961.500
+  Confidence interval (99.9%): [11491362.957, 12307402.973]
+
+
+# JMH 1.6.3 (released 2405 days ago, please consider updating!)
+# VM invoker: /opt/jdk/oracle/jdk1.7.0_80/jre/bin/java
+# VM options: -Xms10G -Xmx10G -XX:+UseParallelGC
+# Warmup: 3 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 8 threads, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber
+# Parameters: (threadCount = 8)
+
+# Run progress: 33.33% complete, ETA 00:02:40
+# Fork: 1 of 1
+# Warmup Iteration   1: 20612298.113 ops/s
+# Warmup Iteration   2: 18733183.221 ops/s
+# Warmup Iteration   3: 17780560.817 ops/s
+Iteration   1: 17842989.360 ops/s
+Iteration   2: 17586856.762 ops/s
+Iteration   3: 17728497.323 ops/s
+Iteration   4: 17268195.756 ops/s
+Iteration   5: 18090682.145 ops/s
+
+
+Result: 17703444.269 ±(99.9%) 1176003.891 ops/s [Average]
+  Statistics: (min, avg, max) = (17268195.756, 17703444.269, 18090682.145), stdev = 305404.476
+  Confidence interval (99.9%): [16527440.378, 18879448.161]
+
+
+# JMH 1.6.3 (released 2405 days ago, please consider updating!)
+# VM invoker: /opt/jdk/oracle/jdk1.7.0_80/jre/bin/java
+# VM options: -Xms10G -Xmx10G -XX:+UseParallelGC
+# Warmup: 3 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 8 threads, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: benchmarks.SynchronizationBenchmarkTest.testVolatile
+# Parameters: (threadCount = 8)
+
+# Run progress: 66.67% complete, ETA 00:01:20
+# Fork: 1 of 1
+# Warmup Iteration   1: 22396606.444 ops/s
+# Warmup Iteration   2: 20807368.997 ops/s
+# Warmup Iteration   3: 23155321.808 ops/s
+Iteration   1: 22963934.117 ops/s
+Iteration   2: 23089877.484 ops/s
+Iteration   3: 23196800.431 ops/s
+Iteration   4: 23786388.582 ops/s
+Iteration   5: 25236527.560 ops/s
+
+
+Result: 23654705.635 ±(99.9%) 3614980.699 ops/s [Average]
+  Statistics: (min, avg, max) = (22963934.117, 23654705.635, 25236527.560), stdev = 938799.008
+  Confidence interval (99.9%): [20039724.936, 27269686.334]
+
+
+# Run complete. Total time: 00:04:00
+
+Benchmark                                           (threadCount)   Mode  Cnt         Score         Error  Units
+SynchronizationBenchmarkTest.testAtomic                         8  thrpt    5  11899382.965 ±  408020.008  ops/s
+SynchronizationBenchmarkTest.testNonVolatileNumber              8  thrpt    5  17703444.269 ± 1176003.891  ops/s
+SynchronizationBenchmarkTest.testVolatile                       8  thrpt    5  23654705.635 ± 3614980.699  ops/s
+
+Benchmark result is saved to results/result_Oracle__Corporation_1.7_1.7.0_80-b15_tc8.csv
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 480.975 sec
+
+Results :
+
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+
+index: 2, jdk: jdk1.8.0_271, java_version: 1.8, jmh_version: 1.32, use_profiler: true, mvn_path: apache-maven-3.3.1
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running benchmarks.SynchronizationBenchmarkTest
+# JMH version: 1.32
+# VM version: JDK 1.8, Java HotSpot(TM) 64-Bit Server VM, 25.271-b09
+# VM invoker: /opt/jdk/oracle/jdk1.8.0_271/jre/bin/java
+# VM options: -Xms10G -Xmx10G -XX:+UseParallelGC
+# Blackhole mode: full + dont-inline hint
+# Warmup: 3 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: benchmarks.SynchronizationBenchmarkTest.testAtomic
+# Parameters: (threadCount = 1)
+
+# Run progress: 0.00% complete, ETA 00:04:00
+# Fork: 1 of 1
+# Preparing profilers: LinuxPerfProfiler AsyncProfiler 
+# Profilers consume stderr from target VM, use -v EXTRA to copy to console
+# Warmup Iteration   1: 151848100.795 ops/s
+# Warmup Iteration   2: 151460060.899 ops/s
+# Warmup Iteration   3: 169789892.654 ops/s
+Iteration   1: 170574771.072 ops/s
+Iteration   2: 170094943.103 ops/s
+Iteration   3: 170615351.394 ops/s
+Iteration   4: 170307081.051 ops/s
+Iteration   5: 170471807.462 ops/s
+                 ·async: (text only)
+
+# Processing profiler results: AsyncProfiler LinuxPerfProfiler 
+
+
+Result "benchmarks.SynchronizationBenchmarkTest.testAtomic":
+  170412790.816 ±(99.9%) 823518.247 ops/s [Average]
+  (min, avg, max) = (170094943.103, 170412790.816, 170615351.394), stdev = 213865.073
+  CI (99.9%): [169589272.570, 171236309.063] (assumes normal distribution)
+
+Secondary result "benchmarks.SynchronizationBenchmarkTest.testAtomic:·async":
+Async profiler results:
+  flamegraphs/benchmarks.SynchronizationBenchmarkTest.testAtomic-Throughput-threadCount-1/flame-cpu-forward.html
+
+Secondary result "benchmarks.SynchronizationBenchmarkTest.testAtomic:·perf":
+Perf stats:
+--------------------------------------------------
+
+         49,440.56 msec task-clock                #    0.615 CPUs utilized          
+             1,506      context-switches          #    0.030 K/sec                  
+                55      cpu-migrations            #    0.001 K/sec                  
+               264      page-faults               #    0.005 K/sec                  
+   214,571,450,227      cycles                    #    4.340 GHz                      (30.78%)
+   245,491,136,097      instructions              #    1.14  insn per cycle           (38.50%)
+    42,402,008,518      branches                  #  857.636 M/sec                    (38.51%)
+        15,828,806      branch-misses             #    0.04% of all branches          (38.52%)
+   101,381,081,791      L1-dcache-loads           # 2050.565 M/sec                    (38.55%)
+         6,064,274      L1-dcache-load-misses     #    0.01% of all L1-dcache accesses  (38.52%)
+         1,394,188      LLC-loads                 #    0.028 M/sec                    (30.78%)
+           123,882      LLC-load-misses           #    8.89% of all LL-cache accesses  (30.77%)
+   <not supported>      L1-icache-loads                                             
+         9,387,677      L1-icache-load-misses                                         (30.76%)
+   101,446,731,146      dTLB-loads                # 2051.893 M/sec                    (30.77%)
+         1,033,625      dTLB-load-misses          #    0.00% of all dTLB cache accesses  (30.77%)
+           595,365      iTLB-loads                #    0.012 M/sec                    (30.76%)
+         2,031,963      iTLB-load-misses          #  341.30% of all iTLB cache accesses  (30.76%)
+   <not supported>      L1-dcache-prefetches                                        
+   <not supported>      L1-dcache-prefetch-misses                                   
+
+      80.426715101 seconds time elapsed
+
+      80.438991000 seconds user
+       0.167772000 seconds sys
+
+
+
+
+# JMH version: 1.32
+# VM version: JDK 1.8, Java HotSpot(TM) 64-Bit Server VM, 25.271-b09
+# VM invoker: /opt/jdk/oracle/jdk1.8.0_271/jre/bin/java
+# VM options: -Xms10G -Xmx10G -XX:+UseParallelGC
+# Blackhole mode: full + dont-inline hint
+# Warmup: 3 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber
+# Parameters: (threadCount = 1)
+
+# Run progress: 33.33% complete, ETA 00:02:40
+# Fork: 1 of 1
+# Preparing profilers: LinuxPerfProfiler AsyncProfiler 
+# Profilers consume stderr from target VM, use -v EXTRA to copy to console
+# Warmup Iteration   1: 63439445.657 ops/s
+# Warmup Iteration   2: 58276610.920 ops/s
+# Warmup Iteration   3: 58061402.926 ops/s
+Iteration   1: 58080639.352 ops/s
+Iteration   2: 58130001.611 ops/s
+Iteration   3: 57688478.793 ops/s
+Iteration   4: 58273229.210 ops/s
+Iteration   5: 57886492.036 ops/s
+                 ·async: (text only)
+
+# Processing profiler results: AsyncProfiler LinuxPerfProfiler 
+
+
+Result "benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber":
+  58011768.200 ±(99.9%) 876591.273 ops/s [Average]
+  (min, avg, max) = (57688478.793, 58011768.200, 58273229.210), stdev = 227647.970
+  CI (99.9%): [57135176.928, 58888359.473] (assumes normal distribution)
+
+Secondary result "benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber:·async":
+Async profiler results:
+  flamegraphs/benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber-Throughput-threadCount-1/flame-cpu-forward.html
+
+Secondary result "benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber:·perf":
+Perf stats:
+--------------------------------------------------
+
+         49,420.77 msec task-clock                #    0.615 CPUs utilized          
+             1,485      context-switches          #    0.030 K/sec                  
+                34      cpu-migrations            #    0.001 K/sec                  
+               363      page-faults               #    0.007 K/sec                  
+   214,261,455,783      cycles                    #    4.335 GHz                      (30.81%)
+   187,507,343,679      instructions              #    0.88  insn per cycle           (38.51%)
+    40,402,062,194      branches                  #  817.512 M/sec                    (38.53%)
+        15,994,521      branch-misses             #    0.04% of all branches          (38.54%)
+    66,325,468,524      L1-dcache-loads           # 1342.056 M/sec                    (38.55%)
+         6,543,036      L1-dcache-load-misses     #    0.01% of all L1-dcache accesses  (38.50%)
+         1,495,587      LLC-loads                 #    0.030 M/sec                    (30.78%)
+           212,165      LLC-load-misses           #   14.19% of all LL-cache accesses  (30.78%)
+   <not supported>      L1-icache-loads                                             
+        10,814,601      L1-icache-load-misses                                         (30.76%)
+    66,265,868,748      dTLB-loads                # 1340.850 M/sec                    (30.77%)
+         1,032,520      dTLB-load-misses          #    0.00% of all dTLB cache accesses  (30.76%)
+           437,005      iTLB-loads                #    0.009 M/sec                    (30.75%)
+         2,006,741      iTLB-load-misses          #  459.20% of all iTLB cache accesses  (30.75%)
+   <not supported>      L1-dcache-prefetches                                        
+   <not supported>      L1-dcache-prefetch-misses                                   
+
+      80.403378872 seconds time elapsed
+
+      80.401398000 seconds user
+       0.199488000 seconds sys
+
+
+
+
+# JMH version: 1.32
+# VM version: JDK 1.8, Java HotSpot(TM) 64-Bit Server VM, 25.271-b09
+# VM invoker: /opt/jdk/oracle/jdk1.8.0_271/jre/bin/java
+# VM options: -Xms10G -Xmx10G -XX:+UseParallelGC
+# Blackhole mode: full + dont-inline hint
+# Warmup: 3 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: benchmarks.SynchronizationBenchmarkTest.testVolatile
+# Parameters: (threadCount = 1)
+
+# Run progress: 66.67% complete, ETA 00:01:20
+# Fork: 1 of 1
+# Preparing profilers: LinuxPerfProfiler AsyncProfiler 
+# Profilers consume stderr from target VM, use -v EXTRA to copy to console
+# Warmup Iteration   1: 54363269.283 ops/s
+# Warmup Iteration   2: 54838463.543 ops/s
+# Warmup Iteration   3: 52228243.806 ops/s
+Iteration   1: 52218492.051 ops/s
+Iteration   2: 52281869.193 ops/s
+Iteration   3: 52215388.290 ops/s
+Iteration   4: 52231623.062 ops/s
+Iteration   5: 52031821.516 ops/s
+                 ·async: (text only)
+
+# Processing profiler results: AsyncProfiler LinuxPerfProfiler 
+
+
+Result "benchmarks.SynchronizationBenchmarkTest.testVolatile":
+  52195838.822 ±(99.9%) 367725.223 ops/s [Average]
+  (min, avg, max) = (52031821.516, 52195838.822, 52281869.193), stdev = 95497.073
+  CI (99.9%): [51828113.599, 52563564.046] (assumes normal distribution)
+
+Secondary result "benchmarks.SynchronizationBenchmarkTest.testVolatile:·async":
+Async profiler results:
+  flamegraphs/benchmarks.SynchronizationBenchmarkTest.testVolatile-Throughput-threadCount-1/flame-cpu-forward.html
+
+Secondary result "benchmarks.SynchronizationBenchmarkTest.testVolatile:·perf":
+Perf stats:
+--------------------------------------------------
+
+         49,435.47 msec task-clock                #    0.615 CPUs utilized          
+             1,373      context-switches          #    0.028 K/sec                  
+                41      cpu-migrations            #    0.001 K/sec                  
+               338      page-faults               #    0.007 K/sec                  
+   215,270,227,165      cycles                    #    4.355 GHz                      (30.77%)
+   156,069,494,509      instructions              #    0.72  insn per cycle           (38.47%)
+    31,249,560,045      branches                  #  632.128 M/sec                    (38.49%)
+        15,435,774      branch-misses             #    0.05% of all branches          (38.50%)
+    59,744,402,277      L1-dcache-loads           # 1208.533 M/sec                    (38.54%)
+         6,162,679      L1-dcache-load-misses     #    0.01% of all L1-dcache accesses  (38.52%)
+         1,255,450      LLC-loads                 #    0.025 M/sec                    (30.79%)
+            97,808      LLC-load-misses           #    7.79% of all LL-cache accesses  (30.77%)
+   <not supported>      L1-icache-loads                                             
+         8,817,732      L1-icache-load-misses                                         (30.78%)
+    59,681,025,433      dTLB-loads                # 1207.251 M/sec                    (30.78%)
+         1,017,034      dTLB-load-misses          #    0.00% of all dTLB cache accesses  (30.78%)
+           456,229      iTLB-loads                #    0.009 M/sec                    (30.78%)
+         2,587,371      iTLB-load-misses          #  567.12% of all iTLB cache accesses  (30.76%)
+   <not supported>      L1-dcache-prefetches                                        
+   <not supported>      L1-dcache-prefetch-misses                                   
+
+      80.417028658 seconds time elapsed
+
+      80.430896000 seconds user
+       0.195826000 seconds sys
+
+
+
+
+# Run complete. Total time: 00:04:01
+
+REMEMBER: The numbers below are just data. To gain reusable insights, you need to follow up on
+why the numbers are the way they are. Use profilers (see -prof, -lprof), design factorial
+experiments, perform baseline and negative tests that provide experimental control, make sure
+the benchmarking environment is safe on JVM/OS/HW level, ask for reviews from the domain experts.
+Do not assume the numbers tell you what you want them to tell.
+
+Benchmark                                                  (threadCount)   Mode  Cnt          Score        Error      Units
+SynchronizationBenchmarkTest.testAtomic                                1  thrpt    5  170412790.816 ± 823518.247      ops/s
+SynchronizationBenchmarkTest.testAtomic:·async                         1  thrpt                 NaN                     ---
+SynchronizationBenchmarkTest.testAtomic:·cpi                           1  thrpt               0.874               clks/insn
+SynchronizationBenchmarkTest.testAtomic:·ipc                           1  thrpt               1.144               insns/clk
+SynchronizationBenchmarkTest.testAtomic:·perf                          1  thrpt                 NaN                     ---
+SynchronizationBenchmarkTest.testNonVolatileNumber                     1  thrpt    5   58011768.200 ± 876591.273      ops/s
+SynchronizationBenchmarkTest.testNonVolatileNumber:·async              1  thrpt                 NaN                     ---
+SynchronizationBenchmarkTest.testNonVolatileNumber:·cpi                1  thrpt               1.143               clks/insn
+SynchronizationBenchmarkTest.testNonVolatileNumber:·ipc                1  thrpt               0.875               insns/clk
+SynchronizationBenchmarkTest.testNonVolatileNumber:·perf               1  thrpt                 NaN                     ---
+SynchronizationBenchmarkTest.testVolatile                              1  thrpt    5   52195838.822 ± 367725.223      ops/s
+SynchronizationBenchmarkTest.testVolatile:·async                       1  thrpt                 NaN                     ---
+SynchronizationBenchmarkTest.testVolatile:·cpi                         1  thrpt               1.379               clks/insn
+SynchronizationBenchmarkTest.testVolatile:·ipc                         1  thrpt               0.725               insns/clk
+SynchronizationBenchmarkTest.testVolatile:·perf                        1  thrpt                 NaN                     ---
+
+Benchmark result is saved to results/result_Oracle__Corporation_1.8_1.8.0_271-b09_tc1.csv
+# JMH version: 1.32
+# VM version: JDK 1.8, Java HotSpot(TM) 64-Bit Server VM, 25.271-b09
+# VM invoker: /opt/jdk/oracle/jdk1.8.0_271/jre/bin/java
+# VM options: -Xms10G -Xmx10G -XX:+UseParallelGC
+# Blackhole mode: full + dont-inline hint
+# Warmup: 3 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 8 threads, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: benchmarks.SynchronizationBenchmarkTest.testAtomic
+# Parameters: (threadCount = 8)
+
+# Run progress: 0.00% complete, ETA 00:04:00
+# Fork: 1 of 1
+# Preparing profilers: LinuxPerfProfiler AsyncProfiler 
+# Profilers consume stderr from target VM, use -v EXTRA to copy to console
+# Warmup Iteration   1: 55159938.674 ops/s
+# Warmup Iteration   2: 56671467.674 ops/s
+# Warmup Iteration   3: 56854983.396 ops/s
+Iteration   1: 56122720.994 ops/s
+Iteration   2: 57653806.439 ops/s
+Iteration   3: 56914041.224 ops/s
+Iteration   4: 56994921.131 ops/s
+Iteration   5: 56842262.262 ops/s
+                 ·async: (text only)
+
+# Processing profiler results: AsyncProfiler LinuxPerfProfiler 
+
+
+Result "benchmarks.SynchronizationBenchmarkTest.testAtomic":
+  56905550.410 ±(99.9%) 2095661.079 ops/s [Average]
+  (min, avg, max) = (56122720.994, 56905550.410, 57653806.439), stdev = 544236.527
+  CI (99.9%): [54809889.331, 59001211.490] (assumes normal distribution)
+
+Secondary result "benchmarks.SynchronizationBenchmarkTest.testAtomic:·async":
+Async profiler results:
+  flamegraphs/benchmarks.SynchronizationBenchmarkTest.testAtomic-Throughput-threadCount-8/flame-cpu-forward.html
+
+Secondary result "benchmarks.SynchronizationBenchmarkTest.testAtomic:·perf":
+Perf stats:
+--------------------------------------------------
+
+        394,606.40 msec task-clock                #    4.907 CPUs utilized          
+             3,861      context-switches          #    0.010 K/sec                  
+               462      cpu-migrations            #    0.001 K/sec                  
+               329      page-faults               #    0.001 K/sec                  
+ 1,694,391,614,178      cycles                    #    4.294 GHz                      (30.77%)
+    92,467,566,520      instructions              #    0.05  insn per cycle           (38.47%)
+    16,276,979,653      branches                  #   41.249 M/sec                    (38.48%)
+        82,444,866      branch-misses             #    0.51% of all branches          (38.48%)
+    37,049,517,685      L1-dcache-loads           #   93.890 M/sec                    (38.48%)
+       290,739,595      L1-dcache-load-misses     #    0.78% of all L1-dcache accesses  (38.48%)
+        78,717,524      LLC-loads                 #    0.199 M/sec                    (30.78%)
+           626,208      LLC-load-misses           #    0.80% of all LL-cache accesses  (30.78%)
+   <not supported>      L1-icache-loads                                             
+       107,276,434      L1-icache-load-misses                                         (30.77%)
+    36,875,386,192      dTLB-loads                #   93.449 M/sec                    (30.77%)
+         8,391,901      dTLB-load-misses          #    0.02% of all dTLB cache accesses  (30.77%)
+         1,728,242      iTLB-loads                #    0.004 M/sec                    (30.77%)
+        15,922,282      iTLB-load-misses          #  921.30% of all iTLB cache accesses  (30.77%)
+   <not supported>      L1-dcache-prefetches                                        
+   <not supported>      L1-dcache-prefetch-misses                                   
+
+      80.420371478 seconds time elapsed
+
+     639.661665000 seconds user
+       0.375959000 seconds sys
+
+
+
+
+# JMH version: 1.32
+# VM version: JDK 1.8, Java HotSpot(TM) 64-Bit Server VM, 25.271-b09
+# VM invoker: /opt/jdk/oracle/jdk1.8.0_271/jre/bin/java
+# VM options: -Xms10G -Xmx10G -XX:+UseParallelGC
+# Blackhole mode: full + dont-inline hint
+# Warmup: 3 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 8 threads, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber
+# Parameters: (threadCount = 8)
+
+# Run progress: 33.33% complete, ETA 00:02:40
+# Fork: 1 of 1
+# Preparing profilers: LinuxPerfProfiler AsyncProfiler 
+# Profilers consume stderr from target VM, use -v EXTRA to copy to console
+# Warmup Iteration   1: 24303998.385 ops/s
+# Warmup Iteration   2: 17090721.553 ops/s
+# Warmup Iteration   3: 26600518.153 ops/s
+Iteration   1: 31335954.432 ops/s
+Iteration   2: 31583995.804 ops/s
+Iteration   3: 31580429.642 ops/s
+Iteration   4: 31447334.276 ops/s
+Iteration   5: 31609266.732 ops/s
+                 ·async: (text only)
+
+# Processing profiler results: AsyncProfiler LinuxPerfProfiler 
+
+
+Result "benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber":
+  31511396.177 ±(99.9%) 449465.592 ops/s [Average]
+  (min, avg, max) = (31335954.432, 31511396.177, 31609266.732), stdev = 116724.787
+  CI (99.9%): [31061930.585, 31960861.770] (assumes normal distribution)
+
+Secondary result "benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber:·async":
+Async profiler results:
+  flamegraphs/benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber-Throughput-threadCount-8/flame-cpu-forward.html
+
+Secondary result "benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber:·perf":
+Perf stats:
+--------------------------------------------------
+
+        122,739.10 msec task-clock                #    1.526 CPUs utilized          
+         4,651,303      context-switches          #    0.038 M/sec                  
+            18,025      cpu-migrations            #    0.147 K/sec                  
+               303      page-faults               #    0.002 K/sec                  
+   508,632,497,727      cycles                    #    4.144 GHz                      (30.39%)
+   258,500,391,887      instructions              #    0.51  insn per cycle           (37.86%)
+    58,031,176,249      branches                  #  472.801 M/sec                    (38.36%)
+       901,661,774      branch-misses             #    1.55% of all branches          (38.45%)
+    82,173,245,923      L1-dcache-loads           #  669.495 M/sec                    (38.55%)
+     3,680,421,106      L1-dcache-load-misses     #    4.48% of all L1-dcache accesses  (38.88%)
+     1,333,455,131      LLC-loads                 #   10.864 M/sec                    (30.88%)
+           476,107      LLC-load-misses           #    0.04% of all LL-cache accesses  (31.00%)
+   <not supported>      L1-icache-loads                                             
+     4,927,923,386      L1-icache-load-misses                                         (31.04%)
+    82,256,865,179      dTLB-loads                #  670.177 M/sec                    (30.81%)
+        96,088,586      dTLB-load-misses          #    0.12% of all dTLB cache accesses  (30.84%)
+       157,365,462      iTLB-loads                #    1.282 M/sec                    (30.65%)
+        54,309,031      iTLB-load-misses          #   34.51% of all iTLB cache accesses  (30.50%)
+   <not supported>      L1-dcache-prefetches                                        
+   <not supported>      L1-dcache-prefetch-misses                                   
+
+      80.457034955 seconds time elapsed
+
+     193.743581000 seconds user
+      46.870511000 seconds sys
+
+
+
+
+# JMH version: 1.32
+# VM version: JDK 1.8, Java HotSpot(TM) 64-Bit Server VM, 25.271-b09
+# VM invoker: /opt/jdk/oracle/jdk1.8.0_271/jre/bin/java
+# VM options: -Xms10G -Xmx10G -XX:+UseParallelGC
+# Blackhole mode: full + dont-inline hint
+# Warmup: 3 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 8 threads, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: benchmarks.SynchronizationBenchmarkTest.testVolatile
+# Parameters: (threadCount = 8)
+
+# Run progress: 66.67% complete, ETA 00:01:20
+# Fork: 1 of 1
+# Preparing profilers: LinuxPerfProfiler AsyncProfiler 
+# Profilers consume stderr from target VM, use -v EXTRA to copy to console
+# Warmup Iteration   1: 16782552.174 ops/s
+# Warmup Iteration   2: 24258408.403 ops/s
+# Warmup Iteration   3: 28006573.054 ops/s
+Iteration   1: 34682414.835 ops/s
+Iteration   2: 35560052.600 ops/s
+Iteration   3: 35850905.929 ops/s
+Iteration   4: 35321645.787 ops/s
+Iteration   5: 35432428.317 ops/s
+                 ·async: (text only)
+
+# Processing profiler results: AsyncProfiler LinuxPerfProfiler 
+
+
+Result "benchmarks.SynchronizationBenchmarkTest.testVolatile":
+  35369489.493 ±(99.9%) 1663368.964 ops/s [Average]
+  (min, avg, max) = (34682414.835, 35369489.493, 35850905.929), stdev = 431971.638
+  CI (99.9%): [33706120.529, 37032858.458] (assumes normal distribution)
+
+Secondary result "benchmarks.SynchronizationBenchmarkTest.testVolatile:·async":
+Async profiler results:
+  flamegraphs/benchmarks.SynchronizationBenchmarkTest.testVolatile-Throughput-threadCount-8/flame-cpu-forward.html
+
+Secondary result "benchmarks.SynchronizationBenchmarkTest.testVolatile:·perf":
+Perf stats:
+--------------------------------------------------
+
+         95,721.03 msec task-clock                #    1.190 CPUs utilized          
+         3,035,910      context-switches          #    0.032 M/sec                  
+            17,657      cpu-migrations            #    0.184 K/sec                  
+               316      page-faults               #    0.003 K/sec                  
+   398,506,425,475      cycles                    #    4.163 GHz                      (30.78%)
+   215,743,214,000      instructions              #    0.54  insn per cycle           (38.38%)
+    47,602,597,696      branches                  #  497.306 M/sec                    (38.54%)
+       516,545,568      branch-misses             #    1.09% of all branches          (38.71%)
+    73,915,708,692      L1-dcache-loads           #  772.199 M/sec                    (38.40%)
+     2,507,650,607      L1-dcache-load-misses     #    3.39% of all L1-dcache accesses  (38.51%)
+       937,954,832      LLC-loads                 #    9.799 M/sec                    (30.75%)
+           587,381      LLC-load-misses           #    0.06% of all LL-cache accesses  (30.82%)
+   <not supported>      L1-icache-loads                                             
+     3,769,989,139      L1-icache-load-misses                                         (30.74%)
+    74,425,638,617      dTLB-loads                #  777.527 M/sec                    (30.84%)
+       128,299,790      dTLB-load-misses          #    0.17% of all dTLB cache accesses  (30.82%)
+        96,824,506      iTLB-loads                #    1.012 M/sec                    (30.58%)
+        78,398,772      iTLB-load-misses          #   80.97% of all iTLB cache accesses  (30.97%)
+   <not supported>      L1-dcache-prefetches                                        
+   <not supported>      L1-dcache-prefetch-misses                                   
+
+      80.424742861 seconds time elapsed
+
+     166.838542000 seconds user
+      43.223424000 seconds sys
+
+
+
+
+# Run complete. Total time: 00:04:01
+
+REMEMBER: The numbers below are just data. To gain reusable insights, you need to follow up on
+why the numbers are the way they are. Use profilers (see -prof, -lprof), design factorial
+experiments, perform baseline and negative tests that provide experimental control, make sure
+the benchmarking environment is safe on JVM/OS/HW level, ask for reviews from the domain experts.
+Do not assume the numbers tell you what you want them to tell.
+
+Benchmark                                                  (threadCount)   Mode  Cnt         Score         Error      Units
+SynchronizationBenchmarkTest.testAtomic                                8  thrpt    5  56905550.410 ± 2095661.079      ops/s
+SynchronizationBenchmarkTest.testAtomic:·async                         8  thrpt                NaN                      ---
+SynchronizationBenchmarkTest.testAtomic:·cpi                           8  thrpt             18.324                clks/insn
+SynchronizationBenchmarkTest.testAtomic:·ipc                           8  thrpt              0.055                insns/clk
+SynchronizationBenchmarkTest.testAtomic:·perf                          8  thrpt                NaN                      ---
+SynchronizationBenchmarkTest.testNonVolatileNumber                     8  thrpt    5  31511396.177 ±  449465.592      ops/s
+SynchronizationBenchmarkTest.testNonVolatileNumber:·async              8  thrpt                NaN                      ---
+SynchronizationBenchmarkTest.testNonVolatileNumber:·cpi                8  thrpt              1.968                clks/insn
+SynchronizationBenchmarkTest.testNonVolatileNumber:·ipc                8  thrpt              0.508                insns/clk
+SynchronizationBenchmarkTest.testNonVolatileNumber:·perf               8  thrpt                NaN                      ---
+SynchronizationBenchmarkTest.testVolatile                              8  thrpt    5  35369489.493 ± 1663368.964      ops/s
+SynchronizationBenchmarkTest.testVolatile:·async                       8  thrpt                NaN                      ---
+SynchronizationBenchmarkTest.testVolatile:·cpi                         8  thrpt              1.847                clks/insn
+SynchronizationBenchmarkTest.testVolatile:·ipc                         8  thrpt              0.541                insns/clk
+SynchronizationBenchmarkTest.testVolatile:·perf                        8  thrpt                NaN                      ---
+
+Benchmark result is saved to results/result_Oracle__Corporation_1.8_1.8.0_271-b09_tc8.csv
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 483.261 sec
+
+Results :
+
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+
+flamegraphs/
+flamegraphs/benchmarks.SynchronizationBenchmarkTest.testVolatile-Throughput-threadCount-1/
+flamegraphs/benchmarks.SynchronizationBenchmarkTest.testVolatile-Throughput-threadCount-1/flame-cpu-forward.html
+flamegraphs/benchmarks.SynchronizationBenchmarkTest.testAtomic-Throughput-threadCount-1/
+flamegraphs/benchmarks.SynchronizationBenchmarkTest.testAtomic-Throughput-threadCount-1/flame-cpu-forward.html
+flamegraphs/benchmarks.SynchronizationBenchmarkTest.testVolatile-Throughput-threadCount-8/
+flamegraphs/benchmarks.SynchronizationBenchmarkTest.testVolatile-Throughput-threadCount-8/flame-cpu-forward.html
+flamegraphs/benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber-Throughput-threadCount-8/
+flamegraphs/benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber-Throughput-threadCount-8/flame-cpu-forward.html
+flamegraphs/benchmarks.SynchronizationBenchmarkTest.testAtomic-Throughput-threadCount-8/
+flamegraphs/benchmarks.SynchronizationBenchmarkTest.testAtomic-Throughput-threadCount-8/flame-cpu-forward.html
+flamegraphs/benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber-Throughput-threadCount-1/
+flamegraphs/benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber-Throughput-threadCount-1/flame-cpu-forward.html
+index: 3, jdk: jdk-11.0.9, java_version: 11, jmh_version: 1.32, use_profiler: true, mvn_path: apache-maven-3.3.1
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running benchmarks.SynchronizationBenchmarkTest
+# JMH version: 1.32
+# VM version: JDK 11, Java HotSpot(TM) 64-Bit Server VM, 11.0.9+7-LTS
+# VM invoker: /opt/jdk/oracle/jdk-11.0.9/bin/java
+# VM options: -Xms10G -Xmx10G -XX:+UseParallelGC
+# Blackhole mode: full + dont-inline hint
+# Warmup: 3 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: benchmarks.SynchronizationBenchmarkTest.testAtomic
+# Parameters: (threadCount = 1)
+
+# Run progress: 0.00% complete, ETA 00:04:00
+# Fork: 1 of 1
+# Preparing profilers: LinuxPerfProfiler AsyncProfiler 
+# Profilers consume stderr from target VM, use -v EXTRA to copy to console
+# Warmup Iteration   1: 147279804.929 ops/s
+# Warmup Iteration   2: 146683872.344 ops/s
+# Warmup Iteration   3: 171403840.556 ops/s
+Iteration   1: 169949885.852 ops/s
+Iteration   2: 170490272.439 ops/s
+Iteration   3: 170832650.135 ops/s
+Iteration   4: 170309815.761 ops/s
+Iteration   5: 170673427.503 ops/s
+                 ·async: (text only)
+
+# Processing profiler results: AsyncProfiler LinuxPerfProfiler 
+
+
+Result "benchmarks.SynchronizationBenchmarkTest.testAtomic":
+  170451210.338 ±(99.9%) 1316730.636 ops/s [Average]
+  (min, avg, max) = (169949885.852, 170451210.338, 170832650.135), stdev = 341950.765
+  CI (99.9%): [169134479.702, 171767940.974] (assumes normal distribution)
+
+Secondary result "benchmarks.SynchronizationBenchmarkTest.testAtomic:·async":
+Async profiler results:
+  flamegraphs/benchmarks.SynchronizationBenchmarkTest.testAtomic-Throughput-threadCount-1/flame-cpu-forward.html
+
+Secondary result "benchmarks.SynchronizationBenchmarkTest.testAtomic:·perf":
+Perf stats:
+--------------------------------------------------
+
+         49,484.28 msec task-clock                #    0.615 CPUs utilized          
+             2,263      context-switches          #    0.046 K/sec                  
+                27      cpu-migrations            #    0.001 K/sec                  
+               340      page-faults               #    0.007 K/sec                  
+   214,870,687,407      cycles                    #    4.342 GHz                      (30.79%)
+   254,046,723,866      instructions              #    1.18  insn per cycle           (38.51%)
+    42,437,269,640      branches                  #  857.591 M/sec                    (38.53%)
+        16,837,232      branch-misses             #    0.04% of all branches          (38.54%)
+   118,400,686,304      L1-dcache-loads           # 2392.693 M/sec                    (38.55%)
+         8,983,928      L1-dcache-load-misses     #    0.01% of all L1-dcache accesses  (38.52%)
+         1,864,059      LLC-loads                 #    0.038 M/sec                    (30.77%)
+           120,409      LLC-load-misses           #    6.46% of all LL-cache accesses  (30.76%)
+   <not supported>      L1-icache-loads                                             
+        14,874,742      L1-icache-load-misses                                         (30.77%)
+   118,422,762,309      dTLB-loads                # 2393.139 M/sec                    (30.76%)
+         1,035,466      dTLB-load-misses          #    0.00% of all dTLB cache accesses  (30.77%)
+           675,928      iTLB-loads                #    0.014 M/sec                    (30.77%)
+         1,959,803      iTLB-load-misses          #  289.94% of all iTLB cache accesses  (30.75%)
+   <not supported>      L1-dcache-prefetches                                        
+   <not supported>      L1-dcache-prefetch-misses                                   
+
+      80.483078428 seconds time elapsed
+
+      80.538203000 seconds user
+       0.160870000 seconds sys
+
+
+
+
+# JMH version: 1.32
+# VM version: JDK 11, Java HotSpot(TM) 64-Bit Server VM, 11.0.9+7-LTS
+# VM invoker: /opt/jdk/oracle/jdk-11.0.9/bin/java
+# VM options: -Xms10G -Xmx10G -XX:+UseParallelGC
+# Blackhole mode: full + dont-inline hint
+# Warmup: 3 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber
+# Parameters: (threadCount = 1)
+
+# Run progress: 33.33% complete, ETA 00:02:41
+# Fork: 1 of 1
+# Preparing profilers: LinuxPerfProfiler AsyncProfiler 
+# Profilers consume stderr from target VM, use -v EXTRA to copy to console
+# Warmup Iteration   1: 258679756.721 ops/s
+# Warmup Iteration   2: 234656971.133 ops/s
+# Warmup Iteration   3: 280754647.221 ops/s
+Iteration   1: 285736330.747 ops/s
+Iteration   2: 282565912.295 ops/s
+Iteration   3: 282955184.252 ops/s
+Iteration   4: 284101139.629 ops/s
+Iteration   5: 284359980.256 ops/s
+                 ·async: (text only)
+
+# Processing profiler results: AsyncProfiler LinuxPerfProfiler 
+
+
+Result "benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber":
+  283943709.436 ±(99.9%) 4827555.775 ops/s [Average]
+  (min, avg, max) = (282565912.295, 283943709.436, 285736330.747), stdev = 1253700.904
+  CI (99.9%): [279116153.661, 288771265.211] (assumes normal distribution)
+
+Secondary result "benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber:·async":
+Async profiler results:
+  flamegraphs/benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber-Throughput-threadCount-1/flame-cpu-forward.html
+
+Secondary result "benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber:·perf":
+Perf stats:
+--------------------------------------------------
+
+         49,464.97 msec task-clock                #    0.615 CPUs utilized          
+             1,519      context-switches          #    0.031 K/sec                  
+                24      cpu-migrations            #    0.000 K/sec                  
+               347      page-faults               #    0.007 K/sec                  
+   214,784,408,809      cycles                    #    4.342 GHz                      (30.80%)
+   814,510,485,968      instructions              #    3.79  insn per cycle           (38.52%)
+   112,463,688,124      branches                  # 2273.603 M/sec                    (38.54%)
+        16,639,516      branch-misses             #    0.01% of all branches          (38.54%)
+   294,593,807,097      L1-dcache-loads           # 5955.604 M/sec                    (38.54%)
+         7,356,037      L1-dcache-load-misses     #    0.00% of all L1-dcache accesses  (38.51%)
+         1,526,822      LLC-loads                 #    0.031 M/sec                    (30.75%)
+           124,692      LLC-load-misses           #    8.17% of all LL-cache accesses  (30.75%)
+   <not supported>      L1-icache-loads                                             
+         9,781,603      L1-icache-load-misses                                         (30.76%)
+   295,024,939,802      dTLB-loads                # 5964.320 M/sec                    (30.77%)
+         1,024,148      dTLB-load-misses          #    0.00% of all dTLB cache accesses  (30.77%)
+           673,930      iTLB-loads                #    0.014 M/sec                    (30.78%)
+         2,027,092      iTLB-load-misses          #  300.79% of all iTLB cache accesses  (30.77%)
+   <not supported>      L1-dcache-prefetches                                        
+   <not supported>      L1-dcache-prefetch-misses                                   
+
+      80.443465095 seconds time elapsed
+
+      80.564257000 seconds user
+       0.151273000 seconds sys
+
+
+
+
+# JMH version: 1.32
+# VM version: JDK 11, Java HotSpot(TM) 64-Bit Server VM, 11.0.9+7-LTS
+# VM invoker: /opt/jdk/oracle/jdk-11.0.9/bin/java
+# VM options: -Xms10G -Xmx10G -XX:+UseParallelGC
+# Blackhole mode: full + dont-inline hint
+# Warmup: 3 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: benchmarks.SynchronizationBenchmarkTest.testVolatile
+# Parameters: (threadCount = 1)
+
+# Run progress: 66.67% complete, ETA 00:01:20
+# Fork: 1 of 1
+# Preparing profilers: LinuxPerfProfiler AsyncProfiler 
+# Profilers consume stderr from target VM, use -v EXTRA to copy to console
+# Warmup Iteration   1: 133711246.897 ops/s
+# Warmup Iteration   2: 137576153.354 ops/s
+# Warmup Iteration   3: 142714843.939 ops/s
+Iteration   1: 142193749.140 ops/s
+Iteration   2: 142364817.819 ops/s
+Iteration   3: 142235947.122 ops/s
+Iteration   4: 141585257.235 ops/s
+Iteration   5: 140749096.233 ops/s
+                 ·async: (text only)
+
+# Processing profiler results: AsyncProfiler LinuxPerfProfiler 
+
+
+Result "benchmarks.SynchronizationBenchmarkTest.testVolatile":
+  141825773.510 ±(99.9%) 2591185.295 ops/s [Average]
+  (min, avg, max) = (140749096.233, 141825773.510, 142364817.819), stdev = 672922.592
+  CI (99.9%): [139234588.215, 144416958.805] (assumes normal distribution)
+
+Secondary result "benchmarks.SynchronizationBenchmarkTest.testVolatile:·async":
+Async profiler results:
+  flamegraphs/benchmarks.SynchronizationBenchmarkTest.testVolatile-Throughput-threadCount-1/flame-cpu-forward.html
+
+Secondary result "benchmarks.SynchronizationBenchmarkTest.testVolatile:·perf":
+Perf stats:
+--------------------------------------------------
+
+         49,463.32 msec task-clock                #    0.615 CPUs utilized          
+             1,485      context-switches          #    0.030 K/sec                  
+                29      cpu-migrations            #    0.001 K/sec                  
+               365      page-faults               #    0.007 K/sec                  
+   214,652,918,222      cycles                    #    4.340 GHz                      (30.80%)
+   344,750,816,891      instructions              #    1.61  insn per cycle           (38.52%)
+    49,392,661,011      branches                  #  998.571 M/sec                    (38.53%)
+        16,476,805      branch-misses             #    0.03% of all branches          (38.54%)
+   140,543,541,676      L1-dcache-loads           # 2841.369 M/sec                    (38.55%)
+         6,276,120      L1-dcache-load-misses     #    0.00% of all L1-dcache accesses  (38.50%)
+         1,309,261      LLC-loads                 #    0.026 M/sec                    (30.76%)
+           153,246      LLC-load-misses           #   11.70% of all LL-cache accesses  (30.75%)
+   <not supported>      L1-icache-loads                                             
+         8,350,321      L1-icache-load-misses                                         (30.77%)
+   140,468,254,594      dTLB-loads                # 2839.847 M/sec                    (30.77%)
+         1,023,633      dTLB-load-misses          #    0.00% of all dTLB cache accesses  (30.77%)
+           527,194      iTLB-loads                #    0.011 M/sec                    (30.77%)
+         2,012,312      iTLB-load-misses          #  381.70% of all iTLB cache accesses  (30.77%)
+   <not supported>      L1-dcache-prefetches                                        
+   <not supported>      L1-dcache-prefetch-misses                                   
+
+      80.440916679 seconds time elapsed
+
+      80.561490000 seconds user
+       0.151981000 seconds sys
+
+
+
+
+# Run complete. Total time: 00:04:01
+
+REMEMBER: The numbers below are just data. To gain reusable insights, you need to follow up on
+why the numbers are the way they are. Use profilers (see -prof, -lprof), design factorial
+experiments, perform baseline and negative tests that provide experimental control, make sure
+the benchmarking environment is safe on JVM/OS/HW level, ask for reviews from the domain experts.
+Do not assume the numbers tell you what you want them to tell.
+
+Benchmark                                                  (threadCount)   Mode  Cnt          Score         Error      Units
+SynchronizationBenchmarkTest.testAtomic                                1  thrpt    5  170451210.338 ± 1316730.636      ops/s
+SynchronizationBenchmarkTest.testAtomic:·async                         1  thrpt                 NaN                      ---
+SynchronizationBenchmarkTest.testAtomic:·cpi                           1  thrpt               0.846                clks/insn
+SynchronizationBenchmarkTest.testAtomic:·ipc                           1  thrpt               1.182                insns/clk
+SynchronizationBenchmarkTest.testAtomic:·perf                          1  thrpt                 NaN                      ---
+SynchronizationBenchmarkTest.testNonVolatileNumber                     1  thrpt    5  283943709.436 ± 4827555.775      ops/s
+SynchronizationBenchmarkTest.testNonVolatileNumber:·async              1  thrpt                 NaN                      ---
+SynchronizationBenchmarkTest.testNonVolatileNumber:·cpi                1  thrpt               0.264                clks/insn
+SynchronizationBenchmarkTest.testNonVolatileNumber:·ipc                1  thrpt               3.792                insns/clk
+SynchronizationBenchmarkTest.testNonVolatileNumber:·perf               1  thrpt                 NaN                      ---
+SynchronizationBenchmarkTest.testVolatile                              1  thrpt    5  141825773.510 ± 2591185.295      ops/s
+SynchronizationBenchmarkTest.testVolatile:·async                       1  thrpt                 NaN                      ---
+SynchronizationBenchmarkTest.testVolatile:·cpi                         1  thrpt               0.623                clks/insn
+SynchronizationBenchmarkTest.testVolatile:·ipc                         1  thrpt               1.606                insns/clk
+SynchronizationBenchmarkTest.testVolatile:·perf                        1  thrpt                 NaN                      ---
+
+Benchmark result is saved to results/result_Oracle__Corporation_11_11.0.9__7-LTS_tc1.csv
+# JMH version: 1.32
+# VM version: JDK 11, Java HotSpot(TM) 64-Bit Server VM, 11.0.9+7-LTS
+# VM invoker: /opt/jdk/oracle/jdk-11.0.9/bin/java
+# VM options: -Xms10G -Xmx10G -XX:+UseParallelGC
+# Blackhole mode: full + dont-inline hint
+# Warmup: 3 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 8 threads, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: benchmarks.SynchronizationBenchmarkTest.testAtomic
+# Parameters: (threadCount = 8)
+
+# Run progress: 0.00% complete, ETA 00:04:00
+# Fork: 1 of 1
+# Preparing profilers: LinuxPerfProfiler AsyncProfiler 
+# Profilers consume stderr from target VM, use -v EXTRA to copy to console
+# Warmup Iteration   1: 57638245.335 ops/s
+# Warmup Iteration   2: 58092454.787 ops/s
+# Warmup Iteration   3: 58633994.080 ops/s
+Iteration   1: 58578569.840 ops/s
+Iteration   2: 57943555.346 ops/s
+Iteration   3: 58288551.266 ops/s
+Iteration   4: 57209497.931 ops/s
+Iteration   5: 57106138.459 ops/s
+                 ·async: (text only)
+
+# Processing profiler results: AsyncProfiler LinuxPerfProfiler 
+
+
+Result "benchmarks.SynchronizationBenchmarkTest.testAtomic":
+  57825262.568 ±(99.9%) 2504700.336 ops/s [Average]
+  (min, avg, max) = (57106138.459, 57825262.568, 58578569.840), stdev = 650462.723
+  CI (99.9%): [55320562.233, 60329962.904] (assumes normal distribution)
+
+Secondary result "benchmarks.SynchronizationBenchmarkTest.testAtomic:·async":
+Async profiler results:
+  flamegraphs/benchmarks.SynchronizationBenchmarkTest.testAtomic-Throughput-threadCount-8/flame-cpu-forward.html
+
+Secondary result "benchmarks.SynchronizationBenchmarkTest.testAtomic:·perf":
+Perf stats:
+--------------------------------------------------
+
+        395,170.53 msec task-clock                #    4.911 CPUs utilized          
+             4,739      context-switches          #    0.012 K/sec                  
+               420      cpu-migrations            #    0.001 K/sec                  
+               782      page-faults               #    0.002 K/sec                  
+ 1,696,886,764,937      cycles                    #    4.294 GHz                      (30.76%)
+    96,862,633,652      instructions              #    0.06  insn per cycle           (38.46%)
+    16,553,301,932      branches                  #   41.889 M/sec                    (38.47%)
+        83,533,396      branch-misses             #    0.50% of all branches          (38.47%)
+    43,412,330,118      L1-dcache-loads           #  109.857 M/sec                    (38.48%)
+       308,137,393      L1-dcache-load-misses     #    0.71% of all L1-dcache accesses  (38.49%)
+        53,845,528      LLC-loads                 #    0.136 M/sec                    (30.78%)
+           773,026      LLC-load-misses           #    1.44% of all LL-cache accesses  (30.78%)
+   <not supported>      L1-icache-loads                                             
+       117,842,929      L1-icache-load-misses                                         (30.77%)
+    43,129,474,706      dTLB-loads                #  109.141 M/sec                    (30.78%)
+         8,555,168      dTLB-load-misses          #    0.02% of all dTLB cache accesses  (30.77%)
+         1,724,752      iTLB-loads                #    0.004 M/sec                    (30.77%)
+        15,965,770      iTLB-load-misses          #  925.68% of all iTLB cache accesses  (30.76%)
+   <not supported>      L1-dcache-prefetches                                        
+   <not supported>      L1-dcache-prefetch-misses                                   
+
+      80.465102694 seconds time elapsed
+
+     640.109757000 seconds user
+       0.319302000 seconds sys
+
+
+
+
+# JMH version: 1.32
+# VM version: JDK 11, Java HotSpot(TM) 64-Bit Server VM, 11.0.9+7-LTS
+# VM invoker: /opt/jdk/oracle/jdk-11.0.9/bin/java
+# VM options: -Xms10G -Xmx10G -XX:+UseParallelGC
+# Blackhole mode: full + dont-inline hint
+# Warmup: 3 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 8 threads, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber
+# Parameters: (threadCount = 8)
+
+# Run progress: 33.33% complete, ETA 00:02:40
+# Fork: 1 of 1
+# Preparing profilers: LinuxPerfProfiler AsyncProfiler 
+# Profilers consume stderr from target VM, use -v EXTRA to copy to console
+# Warmup Iteration   1: 19553310.865 ops/s
+# Warmup Iteration   2: 19750471.856 ops/s
+# Warmup Iteration   3: 19423138.391 ops/s
+Iteration   1: 24995731.864 ops/s
+Iteration   2: 25239179.124 ops/s
+Iteration   3: 25197989.284 ops/s
+Iteration   4: 25276800.896 ops/s
+Iteration   5: 25390042.839 ops/s
+                 ·async: (text only)
+
+# Processing profiler results: AsyncProfiler LinuxPerfProfiler 
+
+
+Result "benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber":
+  25219948.802 ±(99.9%) 555646.060 ops/s [Average]
+  (min, avg, max) = (24995731.864, 25219948.802, 25390042.839), stdev = 144299.517
+  CI (99.9%): [24664302.741, 25775594.862] (assumes normal distribution)
+
+Secondary result "benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber:·async":
+Async profiler results:
+  flamegraphs/benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber-Throughput-threadCount-8/flame-cpu-forward.html
+
+Secondary result "benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber:·perf":
+Perf stats:
+--------------------------------------------------
+
+        141,965.07 msec task-clock                #    1.764 CPUs utilized          
+         5,033,101      context-switches          #    0.035 M/sec                  
+            23,573      cpu-migrations            #    0.166 K/sec                  
+               451      page-faults               #    0.003 K/sec                  
+   590,018,240,120      cycles                    #    4.156 GHz                      (30.61%)
+   260,062,941,069      instructions              #    0.44  insn per cycle           (38.41%)
+    57,417,311,968      branches                  #  404.447 M/sec                    (38.42%)
+     1,160,919,968      branch-misses             #    2.02% of all branches          (38.63%)
+    81,141,435,003      L1-dcache-loads           #  571.559 M/sec                    (38.61%)
+     3,931,375,625      L1-dcache-load-misses     #    4.85% of all L1-dcache accesses  (38.82%)
+     1,252,032,982      LLC-loads                 #    8.819 M/sec                    (31.12%)
+           777,441      LLC-load-misses           #    0.06% of all LL-cache accesses  (30.90%)
+   <not supported>      L1-icache-loads                                             
+     5,066,087,313      L1-icache-load-misses                                         (30.81%)
+    81,076,782,197      dTLB-loads                #  571.104 M/sec                    (30.65%)
+        80,893,204      dTLB-load-misses          #    0.10% of all dTLB cache accesses  (30.52%)
+       204,900,501      iTLB-loads                #    1.443 M/sec                    (30.54%)
+        57,746,257      iTLB-load-misses          #   28.18% of all iTLB cache accesses  (30.65%)
+   <not supported>      L1-dcache-prefetches                                        
+   <not supported>      L1-dcache-prefetch-misses                                   
+
+      80.463276994 seconds time elapsed
+
+     218.358262000 seconds user
+      46.289797000 seconds sys
+
+
+
+
+# JMH version: 1.32
+# VM version: JDK 11, Java HotSpot(TM) 64-Bit Server VM, 11.0.9+7-LTS
+# VM invoker: /opt/jdk/oracle/jdk-11.0.9/bin/java
+# VM options: -Xms10G -Xmx10G -XX:+UseParallelGC
+# Blackhole mode: full + dont-inline hint
+# Warmup: 3 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 8 threads, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: benchmarks.SynchronizationBenchmarkTest.testVolatile
+# Parameters: (threadCount = 8)
+
+# Run progress: 66.67% complete, ETA 00:01:20
+# Fork: 1 of 1
+# Preparing profilers: LinuxPerfProfiler AsyncProfiler 
+# Profilers consume stderr from target VM, use -v EXTRA to copy to console
+# Warmup Iteration   1: 25331442.561 ops/s
+# Warmup Iteration   2: 24892083.878 ops/s
+# Warmup Iteration   3: 26834250.280 ops/s
+Iteration   1: 34237224.790 ops/s
+Iteration   2: 34616829.224 ops/s
+Iteration   3: 33815198.047 ops/s
+Iteration   4: 34247860.691 ops/s
+Iteration   5: 33979225.105 ops/s
+                 ·async: (text only)
+
+# Processing profiler results: AsyncProfiler LinuxPerfProfiler 
+
+
+Result "benchmarks.SynchronizationBenchmarkTest.testVolatile":
+  34179267.571 ±(99.9%) 1174427.242 ops/s [Average]
+  (min, avg, max) = (33815198.047, 34179267.571, 34616829.224), stdev = 304995.025
+  CI (99.9%): [33004840.329, 35353694.813] (assumes normal distribution)
+
+Secondary result "benchmarks.SynchronizationBenchmarkTest.testVolatile:·async":
+Async profiler results:
+  flamegraphs/benchmarks.SynchronizationBenchmarkTest.testVolatile-Throughput-threadCount-8/flame-cpu-forward.html
+
+Secondary result "benchmarks.SynchronizationBenchmarkTest.testVolatile:·perf":
+Perf stats:
+--------------------------------------------------
+
+        104,341.84 msec task-clock                #    1.297 CPUs utilized          
+         3,249,756      context-switches          #    0.031 M/sec                  
+            19,089      cpu-migrations            #    0.183 K/sec                  
+               401      page-faults               #    0.004 K/sec                  
+   434,576,792,343      cycles                    #    4.165 GHz                      (30.55%)
+   219,834,565,315      instructions              #    0.51  insn per cycle           (38.28%)
+    48,102,550,848      branches                  #  461.009 M/sec                    (38.19%)
+       623,318,721      branch-misses             #    1.30% of all branches          (38.76%)
+    75,957,882,984      L1-dcache-loads           #  727.972 M/sec                    (38.80%)
+     2,771,517,875      L1-dcache-load-misses     #    3.65% of all L1-dcache accesses  (38.62%)
+     1,012,656,244      LLC-loads                 #    9.705 M/sec                    (31.09%)
+           673,792      LLC-load-misses           #    0.07% of all LL-cache accesses  (30.88%)
+   <not supported>      L1-icache-loads                                             
+     3,833,158,723      L1-icache-load-misses                                         (30.77%)
+    76,242,881,359      dTLB-loads                #  730.703 M/sec                    (30.92%)
+       115,169,200      dTLB-load-misses          #    0.15% of all dTLB cache accesses  (30.81%)
+       104,209,470      iTLB-loads                #    0.999 M/sec                    (30.45%)
+        69,154,105      iTLB-load-misses          #   66.36% of all iTLB cache accesses  (30.51%)
+   <not supported>      L1-dcache-prefetches                                        
+   <not supported>      L1-dcache-prefetch-misses                                   
+
+      80.450171987 seconds time elapsed
+
+     169.917487000 seconds user
+      40.247143000 seconds sys
+
+
+
+
+# Run complete. Total time: 00:04:01
+
+REMEMBER: The numbers below are just data. To gain reusable insights, you need to follow up on
+why the numbers are the way they are. Use profilers (see -prof, -lprof), design factorial
+experiments, perform baseline and negative tests that provide experimental control, make sure
+the benchmarking environment is safe on JVM/OS/HW level, ask for reviews from the domain experts.
+Do not assume the numbers tell you what you want them to tell.
+
+Benchmark                                                  (threadCount)   Mode  Cnt         Score         Error      Units
+SynchronizationBenchmarkTest.testAtomic                                8  thrpt    5  57825262.568 ± 2504700.336      ops/s
+SynchronizationBenchmarkTest.testAtomic:·async                         8  thrpt                NaN                      ---
+SynchronizationBenchmarkTest.testAtomic:·cpi                           8  thrpt             17.518                clks/insn
+SynchronizationBenchmarkTest.testAtomic:·ipc                           8  thrpt              0.057                insns/clk
+SynchronizationBenchmarkTest.testAtomic:·perf                          8  thrpt                NaN                      ---
+SynchronizationBenchmarkTest.testNonVolatileNumber                     8  thrpt    5  25219948.802 ±  555646.060      ops/s
+SynchronizationBenchmarkTest.testNonVolatileNumber:·async              8  thrpt                NaN                      ---
+SynchronizationBenchmarkTest.testNonVolatileNumber:·cpi                8  thrpt              2.269                clks/insn
+SynchronizationBenchmarkTest.testNonVolatileNumber:·ipc                8  thrpt              0.441                insns/clk
+SynchronizationBenchmarkTest.testNonVolatileNumber:·perf               8  thrpt                NaN                      ---
+SynchronizationBenchmarkTest.testVolatile                              8  thrpt    5  34179267.571 ± 1174427.242      ops/s
+SynchronizationBenchmarkTest.testVolatile:·async                       8  thrpt                NaN                      ---
+SynchronizationBenchmarkTest.testVolatile:·cpi                         8  thrpt              1.977                clks/insn
+SynchronizationBenchmarkTest.testVolatile:·ipc                         8  thrpt              0.506                insns/clk
+SynchronizationBenchmarkTest.testVolatile:·perf                        8  thrpt                NaN                      ---
+
+Benchmark result is saved to results/result_Oracle__Corporation_11_11.0.9__7-LTS_tc8.csv
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 483.474 sec
+
+Results :
+
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+
+flamegraphs/
+flamegraphs/benchmarks.SynchronizationBenchmarkTest.testVolatile-Throughput-threadCount-1/
+flamegraphs/benchmarks.SynchronizationBenchmarkTest.testVolatile-Throughput-threadCount-1/flame-cpu-forward.html
+flamegraphs/benchmarks.SynchronizationBenchmarkTest.testAtomic-Throughput-threadCount-1/
+flamegraphs/benchmarks.SynchronizationBenchmarkTest.testAtomic-Throughput-threadCount-1/flame-cpu-forward.html
+flamegraphs/benchmarks.SynchronizationBenchmarkTest.testVolatile-Throughput-threadCount-8/
+flamegraphs/benchmarks.SynchronizationBenchmarkTest.testVolatile-Throughput-threadCount-8/flame-cpu-forward.html
+flamegraphs/benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber-Throughput-threadCount-8/
+flamegraphs/benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber-Throughput-threadCount-8/flame-cpu-forward.html
+flamegraphs/benchmarks.SynchronizationBenchmarkTest.testAtomic-Throughput-threadCount-8/
+flamegraphs/benchmarks.SynchronizationBenchmarkTest.testAtomic-Throughput-threadCount-8/flame-cpu-forward.html
+flamegraphs/benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber-Throughput-threadCount-1/
+flamegraphs/benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber-Throughput-threadCount-1/flame-cpu-forward.html
+index: 4, jdk: jdk-17, java_version: 17, jmh_version: 1.32, use_profiler: true, mvn_path: apache-maven-3.3.1
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running benchmarks.SynchronizationBenchmarkTest
+# JMH version: 1.32
+# VM version: JDK 17, Java HotSpot(TM) 64-Bit Server VM, 17+35-LTS-2724
+# VM invoker: /opt/jdk/oracle/jdk-17/bin/java
+# VM options: -Xms10G -Xmx10G -XX:+UseParallelGC
+# Blackhole mode: full + dont-inline hint
+# Warmup: 3 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: benchmarks.SynchronizationBenchmarkTest.testAtomic
+# Parameters: (threadCount = 1)
+
+# Run progress: 0.00% complete, ETA 00:04:00
+# Fork: 1 of 1
+# Preparing profilers: LinuxPerfProfiler AsyncProfiler 
+# Profilers consume stderr from target VM, use -v EXTRA to copy to console
+# Warmup Iteration   1: 147409557.224 ops/s
+# Warmup Iteration   2: 147111968.572 ops/s
+# Warmup Iteration   3: 171077127.710 ops/s
+Iteration   1: 170833586.492 ops/s
+Iteration   2: 170752361.040 ops/s
+Iteration   3: 170768700.850 ops/s
+Iteration   4: 169881893.915 ops/s
+Iteration   5: 170034939.324 ops/s
+                 ·async: (text only)
+
+# Processing profiler results: AsyncProfiler LinuxPerfProfiler 
+
+
+Result "benchmarks.SynchronizationBenchmarkTest.testAtomic":
+  170454296.324 ±(99.9%) 1759388.901 ops/s [Average]
+  (min, avg, max) = (169881893.915, 170454296.324, 170833586.492), stdev = 456907.710
+  CI (99.9%): [168694907.423, 172213685.225] (assumes normal distribution)
+
+Secondary result "benchmarks.SynchronizationBenchmarkTest.testAtomic:·async":
+Async profiler results:
+  flamegraphs/benchmarks.SynchronizationBenchmarkTest.testAtomic-Throughput-threadCount-1/flame-cpu-forward.html
+
+Secondary result "benchmarks.SynchronizationBenchmarkTest.testAtomic:·perf":
+Perf stats:
+--------------------------------------------------
+
+         49,441.87 msec task-clock                #    0.615 CPUs utilized          
+             1,424      context-switches          #    0.029 K/sec                  
+                27      cpu-migrations            #    0.001 K/sec                  
+               255      page-faults               #    0.005 K/sec                  
+   214,565,509,145      cycles                    #    4.340 GHz                      (30.79%)
+   254,015,189,344      instructions              #    1.18  insn per cycle           (38.50%)
+    50,842,054,545      branches                  # 1028.320 M/sec                    (38.51%)
+        16,284,523      branch-misses             #    0.03% of all branches          (38.51%)
+   109,855,469,770      L1-dcache-loads           # 2221.912 M/sec                    (38.52%)
+         6,604,899      L1-dcache-load-misses     #    0.01% of all L1-dcache accesses  (38.49%)
+         1,663,160      LLC-loads                 #    0.034 M/sec                    (30.78%)
+           257,071      LLC-load-misses           #   15.46% of all LL-cache accesses  (30.78%)
+   <not supported>      L1-icache-loads                                             
+         9,743,381      L1-icache-load-misses                                         (30.77%)
+   109,815,591,474      dTLB-loads                # 2221.105 M/sec                    (30.77%)
+         1,023,112      dTLB-load-misses          #    0.00% of all dTLB cache accesses  (30.77%)
+           545,420      iTLB-loads                #    0.011 M/sec                    (30.77%)
+         1,989,223      iTLB-load-misses          #  364.71% of all iTLB cache accesses  (30.77%)
+   <not supported>      L1-dcache-prefetches                                        
+   <not supported>      L1-dcache-prefetch-misses                                   
+
+      80.436405749 seconds time elapsed
+
+      80.458916000 seconds user
+       0.175801000 seconds sys
+
+
+
+
+# JMH version: 1.32
+# VM version: JDK 17, Java HotSpot(TM) 64-Bit Server VM, 17+35-LTS-2724
+# VM invoker: /opt/jdk/oracle/jdk-17/bin/java
+# VM options: -Xms10G -Xmx10G -XX:+UseParallelGC
+# Blackhole mode: full + dont-inline hint
+# Warmup: 3 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber
+# Parameters: (threadCount = 1)
+
+# Run progress: 33.33% complete, ETA 00:02:40
+# Fork: 1 of 1
+# Preparing profilers: LinuxPerfProfiler AsyncProfiler 
+# Profilers consume stderr from target VM, use -v EXTRA to copy to console
+# Warmup Iteration   1: 63572811.659 ops/s
+# Warmup Iteration   2: 63692156.257 ops/s
+# Warmup Iteration   3: 63685306.833 ops/s
+Iteration   1: 63625928.401 ops/s
+Iteration   2: 63177068.372 ops/s
+Iteration   3: 63775956.769 ops/s
+Iteration   4: 63941077.484 ops/s
+Iteration   5: 63709567.389 ops/s
+                 ·async: (text only)
+
+# Processing profiler results: AsyncProfiler LinuxPerfProfiler 
+
+
+Result "benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber":
+  63645919.683 ±(99.9%) 1103160.772 ops/s [Average]
+  (min, avg, max) = (63177068.372, 63645919.683, 63941077.484), stdev = 286487.349
+  CI (99.9%): [62542758.911, 64749080.455] (assumes normal distribution)
+
+Secondary result "benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber:·async":
+Async profiler results:
+  flamegraphs/benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber-Throughput-threadCount-1/flame-cpu-forward.html
+
+Secondary result "benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber:·perf":
+Perf stats:
+--------------------------------------------------
+
+         49,445.79 msec task-clock                #    0.615 CPUs utilized          
+             1,459      context-switches          #    0.030 K/sec                  
+                48      cpu-migrations            #    0.001 K/sec                  
+               274      page-faults               #    0.006 K/sec                  
+   214,649,278,554      cycles                    #    4.341 GHz                      (30.78%)
+   177,423,295,195      instructions              #    0.83  insn per cycle           (38.50%)
+    38,035,594,476      branches                  #  769.238 M/sec                    (38.51%)
+        16,191,600      branch-misses             #    0.04% of all branches          (38.53%)
+    72,718,286,337      L1-dcache-loads           # 1470.667 M/sec                    (38.56%)
+         6,756,315      L1-dcache-load-misses     #    0.01% of all L1-dcache accesses  (38.53%)
+         1,660,176      LLC-loads                 #    0.034 M/sec                    (30.78%)
+           174,176      LLC-load-misses           #   10.49% of all LL-cache accesses  (30.77%)
+   <not supported>      L1-icache-loads                                             
+         7,810,362      L1-icache-load-misses                                         (30.76%)
+    72,722,284,376      dTLB-loads                # 1470.748 M/sec                    (30.76%)
+         1,036,992      dTLB-load-misses          #    0.00% of all dTLB cache accesses  (30.77%)
+           445,298      iTLB-loads                #    0.009 M/sec                    (30.76%)
+         2,019,488      iTLB-load-misses          #  453.51% of all iTLB cache accesses  (30.76%)
+   <not supported>      L1-dcache-prefetches                                        
+   <not supported>      L1-dcache-prefetch-misses                                   
+
+      80.434190992 seconds time elapsed
+
+      80.434877000 seconds user
+       0.203624000 seconds sys
+
+
+
+
+# JMH version: 1.32
+# VM version: JDK 17, Java HotSpot(TM) 64-Bit Server VM, 17+35-LTS-2724
+# VM invoker: /opt/jdk/oracle/jdk-17/bin/java
+# VM options: -Xms10G -Xmx10G -XX:+UseParallelGC
+# Blackhole mode: full + dont-inline hint
+# Warmup: 3 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: benchmarks.SynchronizationBenchmarkTest.testVolatile
+# Parameters: (threadCount = 1)
+
+# Run progress: 66.67% complete, ETA 00:01:20
+# Fork: 1 of 1
+# Preparing profilers: LinuxPerfProfiler AsyncProfiler 
+# Profilers consume stderr from target VM, use -v EXTRA to copy to console
+# Warmup Iteration   1: 59280798.937 ops/s
+# Warmup Iteration   2: 59138306.761 ops/s
+# Warmup Iteration   3: 54837483.389 ops/s
+Iteration   1: 54723325.892 ops/s
+Iteration   2: 54881517.202 ops/s
+Iteration   3: 54852834.455 ops/s
+Iteration   4: 54470017.846 ops/s
+Iteration   5: 53916565.516 ops/s
+                 ·async: (text only)
+
+# Processing profiler results: AsyncProfiler LinuxPerfProfiler 
+
+
+Result "benchmarks.SynchronizationBenchmarkTest.testVolatile":
+  54568852.182 ±(99.9%) 1537262.703 ops/s [Average]
+  (min, avg, max) = (53916565.516, 54568852.182, 54881517.202), stdev = 399222.242
+  CI (99.9%): [53031589.479, 56106114.886] (assumes normal distribution)
+
+Secondary result "benchmarks.SynchronizationBenchmarkTest.testVolatile:·async":
+Async profiler results:
+  flamegraphs/benchmarks.SynchronizationBenchmarkTest.testVolatile-Throughput-threadCount-1/flame-cpu-forward.html
+
+Secondary result "benchmarks.SynchronizationBenchmarkTest.testVolatile:·perf":
+Perf stats:
+--------------------------------------------------
+
+         49,430.08 msec task-clock                #    0.615 CPUs utilized          
+             1,419      context-switches          #    0.029 K/sec                  
+                44      cpu-migrations            #    0.001 K/sec                  
+               263      page-faults               #    0.005 K/sec                  
+   214,585,160,690      cycles                    #    4.341 GHz                      (30.78%)
+   138,737,401,551      instructions              #    0.65  insn per cycle           (38.51%)
+    29,947,918,445      branches                  #  605.864 M/sec                    (38.52%)
+        15,049,336      branch-misses             #    0.05% of all branches          (38.53%)
+    57,041,710,213      L1-dcache-loads           # 1153.988 M/sec                    (38.54%)
+         6,526,019      L1-dcache-load-misses     #    0.01% of all L1-dcache accesses  (38.51%)
+         1,651,762      LLC-loads                 #    0.033 M/sec                    (30.78%)
+           303,436      LLC-load-misses           #   18.37% of all LL-cache accesses  (30.78%)
+   <not supported>      L1-icache-loads                                             
+         8,151,873      L1-icache-load-misses                                         (30.77%)
+    56,982,819,830      dTLB-loads                # 1152.797 M/sec                    (30.77%)
+         1,035,489      dTLB-load-misses          #    0.00% of all dTLB cache accesses  (30.77%)
+           465,683      iTLB-loads                #    0.009 M/sec                    (30.76%)
+         2,065,063      iTLB-load-misses          #  443.45% of all iTLB cache accesses  (30.75%)
+   <not supported>      L1-dcache-prefetches                                        
+   <not supported>      L1-dcache-prefetch-misses                                   
+
+      80.420128897 seconds time elapsed
+
+      80.464979000 seconds user
+       0.156798000 seconds sys
+
+
+
+
+# Run complete. Total time: 00:04:01
+
+REMEMBER: The numbers below are just data. To gain reusable insights, you need to follow up on
+why the numbers are the way they are. Use profilers (see -prof, -lprof), design factorial
+experiments, perform baseline and negative tests that provide experimental control, make sure
+the benchmarking environment is safe on JVM/OS/HW level, ask for reviews from the domain experts.
+Do not assume the numbers tell you what you want them to tell.
+
+Benchmark                                                  (threadCount)   Mode  Cnt          Score         Error      Units
+SynchronizationBenchmarkTest.testAtomic                                1  thrpt    5  170454296.324 ± 1759388.901      ops/s
+SynchronizationBenchmarkTest.testAtomic:·async                         1  thrpt                 NaN                      ---
+SynchronizationBenchmarkTest.testAtomic:·cpi                           1  thrpt               0.845                clks/insn
+SynchronizationBenchmarkTest.testAtomic:·ipc                           1  thrpt               1.184                insns/clk
+SynchronizationBenchmarkTest.testAtomic:·perf                          1  thrpt                 NaN                      ---
+SynchronizationBenchmarkTest.testNonVolatileNumber                     1  thrpt    5   63645919.683 ± 1103160.772      ops/s
+SynchronizationBenchmarkTest.testNonVolatileNumber:·async              1  thrpt                 NaN                      ---
+SynchronizationBenchmarkTest.testNonVolatileNumber:·cpi                1  thrpt               1.210                clks/insn
+SynchronizationBenchmarkTest.testNonVolatileNumber:·ipc                1  thrpt               0.827                insns/clk
+SynchronizationBenchmarkTest.testNonVolatileNumber:·perf               1  thrpt                 NaN                      ---
+SynchronizationBenchmarkTest.testVolatile                              1  thrpt    5   54568852.182 ± 1537262.703      ops/s
+SynchronizationBenchmarkTest.testVolatile:·async                       1  thrpt                 NaN                      ---
+SynchronizationBenchmarkTest.testVolatile:·cpi                         1  thrpt               1.547                clks/insn
+SynchronizationBenchmarkTest.testVolatile:·ipc                         1  thrpt               0.647                insns/clk
+SynchronizationBenchmarkTest.testVolatile:·perf                        1  thrpt                 NaN                      ---
+
+Benchmark result is saved to results/result_Oracle__Corporation_17_17__35-LTS-2724_tc1.csv
+# JMH version: 1.32
+# VM version: JDK 17, Java HotSpot(TM) 64-Bit Server VM, 17+35-LTS-2724
+# VM invoker: /opt/jdk/oracle/jdk-17/bin/java
+# VM options: -Xms10G -Xmx10G -XX:+UseParallelGC
+# Blackhole mode: full + dont-inline hint
+# Warmup: 3 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 8 threads, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: benchmarks.SynchronizationBenchmarkTest.testAtomic
+# Parameters: (threadCount = 8)
+
+# Run progress: 0.00% complete, ETA 00:04:00
+# Fork: 1 of 1
+# Preparing profilers: LinuxPerfProfiler AsyncProfiler 
+# Profilers consume stderr from target VM, use -v EXTRA to copy to console
+# Warmup Iteration   1: 55276550.730 ops/s
+# Warmup Iteration   2: 54903971.129 ops/s
+# Warmup Iteration   3: 54663114.475 ops/s
+Iteration   1: 55267699.256 ops/s
+Iteration   2: 54688571.471 ops/s
+Iteration   3: 54592636.262 ops/s
+Iteration   4: 54691231.767 ops/s
+Iteration   5: 54386034.598 ops/s
+                 ·async: (text only)
+
+# Processing profiler results: AsyncProfiler LinuxPerfProfiler 
+
+
+Result "benchmarks.SynchronizationBenchmarkTest.testAtomic":
+  54725234.671 ±(99.9%) 1261647.545 ops/s [Average]
+  (min, avg, max) = (54386034.598, 54725234.671, 55267699.256), stdev = 327645.861
+  CI (99.9%): [53463587.126, 55986882.216] (assumes normal distribution)
+
+Secondary result "benchmarks.SynchronizationBenchmarkTest.testAtomic:·async":
+Async profiler results:
+  flamegraphs/benchmarks.SynchronizationBenchmarkTest.testAtomic-Throughput-threadCount-8/flame-cpu-forward.html
+
+Secondary result "benchmarks.SynchronizationBenchmarkTest.testAtomic:·perf":
+Perf stats:
+--------------------------------------------------
+
+        395,118.85 msec task-clock                #    4.913 CPUs utilized          
+             3,529      context-switches          #    0.009 K/sec                  
+               357      cpu-migrations            #    0.001 K/sec                  
+               343      page-faults               #    0.001 K/sec                  
+ 1,696,925,751,841      cycles                    #    4.295 GHz                      (30.76%)
+    91,907,972,565      instructions              #    0.05  insn per cycle           (38.46%)
+    18,410,436,582      branches                  #   46.595 M/sec                    (38.47%)
+        84,534,905      branch-misses             #    0.46% of all branches          (38.49%)
+    38,455,626,840      L1-dcache-loads           #   97.327 M/sec                    (38.50%)
+       389,216,039      L1-dcache-load-misses     #    1.01% of all L1-dcache accesses  (38.49%)
+       238,136,564      LLC-loads                 #    0.603 M/sec                    (30.78%)
+           591,030      LLC-load-misses           #    0.25% of all LL-cache accesses  (30.78%)
+   <not supported>      L1-icache-loads                                             
+       100,924,347      L1-icache-load-misses                                         (30.78%)
+    38,314,290,815      dTLB-loads                #   96.969 M/sec                    (30.77%)
+         8,350,455      dTLB-load-misses          #    0.02% of all dTLB cache accesses  (30.77%)
+         1,567,057      iTLB-loads                #    0.004 M/sec                    (30.76%)
+        15,972,077      iTLB-load-misses          # 1019.24% of all iTLB cache accesses  (30.76%)
+   <not supported>      L1-dcache-prefetches                                        
+   <not supported>      L1-dcache-prefetch-misses                                   
+
+      80.420164622 seconds time elapsed
+
+     640.217172000 seconds user
+       0.391666000 seconds sys
+
+
+
+
+# JMH version: 1.32
+# VM version: JDK 17, Java HotSpot(TM) 64-Bit Server VM, 17+35-LTS-2724
+# VM invoker: /opt/jdk/oracle/jdk-17/bin/java
+# VM options: -Xms10G -Xmx10G -XX:+UseParallelGC
+# Blackhole mode: full + dont-inline hint
+# Warmup: 3 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 8 threads, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber
+# Parameters: (threadCount = 8)
+
+# Run progress: 33.33% complete, ETA 00:02:40
+# Fork: 1 of 1
+# Preparing profilers: LinuxPerfProfiler AsyncProfiler 
+# Profilers consume stderr from target VM, use -v EXTRA to copy to console
+# Warmup Iteration   1: 20998591.938 ops/s
+# Warmup Iteration   2: 18044176.720 ops/s
+# Warmup Iteration   3: 25923706.123 ops/s
+Iteration   1: 33572014.724 ops/s
+Iteration   2: 33553387.049 ops/s
+Iteration   3: 33713548.355 ops/s
+Iteration   4: 33965024.401 ops/s
+Iteration   5: 33593474.765 ops/s
+                 ·async: (text only)
+
+# Processing profiler results: AsyncProfiler LinuxPerfProfiler 
+
+
+Result "benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber":
+  33679489.859 ±(99.9%) 660083.307 ops/s [Average]
+  (min, avg, max) = (33553387.049, 33679489.859, 33965024.401), stdev = 171421.539
+  CI (99.9%): [33019406.552, 34339573.165] (assumes normal distribution)
+
+Secondary result "benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber:·async":
+Async profiler results:
+  flamegraphs/benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber-Throughput-threadCount-8/flame-cpu-forward.html
+
+Secondary result "benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber:·perf":
+Perf stats:
+--------------------------------------------------
+
+        156,071.15 msec task-clock                #    1.940 CPUs utilized          
+         5,275,811      context-switches          #    0.034 M/sec                  
+            24,136      cpu-migrations            #    0.155 K/sec                  
+               289      page-faults               #    0.002 K/sec                  
+   649,472,048,316      cycles                    #    4.161 GHz                      (31.31%)
+   279,475,588,287      instructions              #    0.43  insn per cycle           (39.15%)
+    63,405,763,628      branches                  #  406.262 M/sec                    (38.91%)
+     1,394,062,083      branch-misses             #    2.20% of all branches          (38.94%)
+    92,607,558,143      L1-dcache-loads           #  593.368 M/sec                    (38.56%)
+     4,356,935,166      L1-dcache-load-misses     #    4.70% of all L1-dcache accesses  (38.25%)
+     1,467,675,207      LLC-loads                 #    9.404 M/sec                    (30.32%)
+           643,205      LLC-load-misses           #    0.04% of all LL-cache accesses  (30.18%)
+   <not supported>      L1-icache-loads                                             
+     4,742,220,400      L1-icache-load-misses                                         (30.40%)
+    93,113,472,485      dTLB-loads                #  596.609 M/sec                    (30.50%)
+        73,523,074      dTLB-load-misses          #    0.08% of all dTLB cache accesses  (30.83%)
+       169,510,601      iTLB-loads                #    1.086 M/sec                    (30.96%)
+        44,436,684      iTLB-load-misses          #   26.21% of all iTLB cache accesses  (31.11%)
+   <not supported>      L1-dcache-prefetches                                        
+   <not supported>      L1-dcache-prefetch-misses                                   
+
+      80.456536642 seconds time elapsed
+
+     245.746026000 seconds user
+      47.048556000 seconds sys
+
+
+
+
+# JMH version: 1.32
+# VM version: JDK 17, Java HotSpot(TM) 64-Bit Server VM, 17+35-LTS-2724
+# VM invoker: /opt/jdk/oracle/jdk-17/bin/java
+# VM options: -Xms10G -Xmx10G -XX:+UseParallelGC
+# Blackhole mode: full + dont-inline hint
+# Warmup: 3 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 8 threads, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: benchmarks.SynchronizationBenchmarkTest.testVolatile
+# Parameters: (threadCount = 8)
+
+# Run progress: 66.67% complete, ETA 00:01:20
+# Fork: 1 of 1
+# Preparing profilers: LinuxPerfProfiler AsyncProfiler 
+# Profilers consume stderr from target VM, use -v EXTRA to copy to console
+# Warmup Iteration   1: 25887546.574 ops/s
+# Warmup Iteration   2: 26624582.309 ops/s
+# Warmup Iteration   3: 25606138.305 ops/s
+Iteration   1: 30921111.528 ops/s
+Iteration   2: 30631438.399 ops/s
+Iteration   3: 31268002.168 ops/s
+Iteration   4: 31065225.355 ops/s
+Iteration   5: 30086852.295 ops/s
+                 ·async: (text only)
+
+# Processing profiler results: AsyncProfiler LinuxPerfProfiler 
+
+
+Result "benchmarks.SynchronizationBenchmarkTest.testVolatile":
+  30794525.949 ±(99.9%) 1765512.217 ops/s [Average]
+  (min, avg, max) = (30086852.295, 30794525.949, 31268002.168), stdev = 458497.916
+  CI (99.9%): [29029013.732, 32560038.166] (assumes normal distribution)
+
+Secondary result "benchmarks.SynchronizationBenchmarkTest.testVolatile:·async":
+Async profiler results:
+  flamegraphs/benchmarks.SynchronizationBenchmarkTest.testVolatile-Throughput-threadCount-8/flame-cpu-forward.html
+
+Secondary result "benchmarks.SynchronizationBenchmarkTest.testVolatile:·perf":
+Perf stats:
+--------------------------------------------------
+
+        131,067.27 msec task-clock                #    1.629 CPUs utilized          
+         4,241,254      context-switches          #    0.032 M/sec                  
+            20,262      cpu-migrations            #    0.155 K/sec                  
+               320      page-faults               #    0.002 K/sec                  
+   545,752,408,260      cycles                    #    4.164 GHz                      (30.74%)
+   238,316,171,151      instructions              #    0.44  insn per cycle           (38.44%)
+    53,968,646,654      branches                  #  411.763 M/sec                    (38.58%)
+     1,234,589,737      branch-misses             #    2.29% of all branches          (38.66%)
+    79,311,345,661      L1-dcache-loads           #  605.119 M/sec                    (38.71%)
+     3,114,422,595      L1-dcache-load-misses     #    3.93% of all L1-dcache accesses  (38.72%)
+     1,026,784,407      LLC-loads                 #    7.834 M/sec                    (30.98%)
+           726,470      LLC-load-misses           #    0.07% of all LL-cache accesses  (30.91%)
+   <not supported>      L1-icache-loads                                             
+     3,821,714,971      L1-icache-load-misses                                         (30.85%)
+    79,414,893,272      dTLB-loads                #  605.909 M/sec                    (30.65%)
+        99,365,121      dTLB-load-misses          #    0.13% of all dTLB cache accesses  (30.53%)
+       114,271,235      iTLB-loads                #    0.872 M/sec                    (30.52%)
+        59,653,920      iTLB-load-misses          #   52.20% of all iTLB cache accesses  (30.54%)
+   <not supported>      L1-dcache-prefetches                                        
+   <not supported>      L1-dcache-prefetch-misses                                   
+
+      80.440588008 seconds time elapsed
+
+     208.076718000 seconds user
+      43.485371000 seconds sys
+
+
+
+
+# Run complete. Total time: 00:04:01
+
+REMEMBER: The numbers below are just data. To gain reusable insights, you need to follow up on
+why the numbers are the way they are. Use profilers (see -prof, -lprof), design factorial
+experiments, perform baseline and negative tests that provide experimental control, make sure
+the benchmarking environment is safe on JVM/OS/HW level, ask for reviews from the domain experts.
+Do not assume the numbers tell you what you want them to tell.
+
+Benchmark                                                  (threadCount)   Mode  Cnt         Score         Error      Units
+SynchronizationBenchmarkTest.testAtomic                                8  thrpt    5  54725234.671 ± 1261647.545      ops/s
+SynchronizationBenchmarkTest.testAtomic:·async                         8  thrpt                NaN                      ---
+SynchronizationBenchmarkTest.testAtomic:·cpi                           8  thrpt             18.463                clks/insn
+SynchronizationBenchmarkTest.testAtomic:·ipc                           8  thrpt              0.054                insns/clk
+SynchronizationBenchmarkTest.testAtomic:·perf                          8  thrpt                NaN                      ---
+SynchronizationBenchmarkTest.testNonVolatileNumber                     8  thrpt    5  33679489.859 ±  660083.307      ops/s
+SynchronizationBenchmarkTest.testNonVolatileNumber:·async              8  thrpt                NaN                      ---
+SynchronizationBenchmarkTest.testNonVolatileNumber:·cpi                8  thrpt              2.324                clks/insn
+SynchronizationBenchmarkTest.testNonVolatileNumber:·ipc                8  thrpt              0.430                insns/clk
+SynchronizationBenchmarkTest.testNonVolatileNumber:·perf               8  thrpt                NaN                      ---
+SynchronizationBenchmarkTest.testVolatile                              8  thrpt    5  30794525.949 ± 1765512.217      ops/s
+SynchronizationBenchmarkTest.testVolatile:·async                       8  thrpt                NaN                      ---
+SynchronizationBenchmarkTest.testVolatile:·cpi                         8  thrpt              2.290                clks/insn
+SynchronizationBenchmarkTest.testVolatile:·ipc                         8  thrpt              0.437                insns/clk
+SynchronizationBenchmarkTest.testVolatile:·perf                        8  thrpt                NaN                      ---
+
+Benchmark result is saved to results/result_Oracle__Corporation_17_17__35-LTS-2724_tc8.csv
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 483.269 sec
+
+Results :
+
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+
+flamegraphs/
+flamegraphs/benchmarks.SynchronizationBenchmarkTest.testVolatile-Throughput-threadCount-1/
+flamegraphs/benchmarks.SynchronizationBenchmarkTest.testVolatile-Throughput-threadCount-1/flame-cpu-forward.html
+flamegraphs/benchmarks.SynchronizationBenchmarkTest.testAtomic-Throughput-threadCount-1/
+flamegraphs/benchmarks.SynchronizationBenchmarkTest.testAtomic-Throughput-threadCount-1/flame-cpu-forward.html
+flamegraphs/benchmarks.SynchronizationBenchmarkTest.testVolatile-Throughput-threadCount-8/
+flamegraphs/benchmarks.SynchronizationBenchmarkTest.testVolatile-Throughput-threadCount-8/flame-cpu-forward.html
+flamegraphs/benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber-Throughput-threadCount-8/
+flamegraphs/benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber-Throughput-threadCount-8/flame-cpu-forward.html
+flamegraphs/benchmarks.SynchronizationBenchmarkTest.testAtomic-Throughput-threadCount-8/
+flamegraphs/benchmarks.SynchronizationBenchmarkTest.testAtomic-Throughput-threadCount-8/flame-cpu-forward.html
+flamegraphs/benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber-Throughput-threadCount-1/
+flamegraphs/benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber-Throughput-threadCount-1/flame-cpu-forward.html
+
+index: 5, jdk: jrockit-jdk1.6.0_45-R28.2.7-4.1.0, java_version: 1.6, jmh_version: 1.6.3, use_profiler: false, mvn_path: apache-maven-3.2.5
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running benchmarks.SynchronizationBenchmarkTest
+WARNING: Not a HotSpot compiler command compatible VM ("Oracle JRockit(R)-1.6"), compilerHints are disabled.
+# JMH 1.6.3 (released 2405 days ago, please consider updating!)
+# VM invoker: /opt/jdk/oracle/jrockit-jdk1.6.0_45-R28.2.7-4.1.0/jre/bin/java
+# VM options: -Xms10G -Xmx10G -Xgc:parallel
+# Warmup: 3 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: benchmarks.SynchronizationBenchmarkTest.testAtomic
+# Parameters: (threadCount = 1)
+
+# Run progress: 0.00% complete, ETA 00:04:00
+# Fork: 1 of 1
+# Warmup Iteration   1: 131227231.902 ops/s
+# Warmup Iteration   2: 134694219.983 ops/s
+# Warmup Iteration   3: 135197399.736 ops/s
+Iteration   1: 134895909.150 ops/s
+Iteration   2: 135295263.704 ops/s
+Iteration   3: 135386368.845 ops/s
+Iteration   4: 135408554.683 ops/s
+Iteration   5: 134543277.117 ops/s
+
+
+Result: 135105874.700 ±(99.9%) 1449451.510 ops/s [Average]
+  Statistics: (min, avg, max) = (134543277.117, 135105874.700, 135408554.683), stdev = 376417.954
+  Confidence interval (99.9%): [133656423.190, 136555326.210]
+
+
+WARNING: Not a HotSpot compiler command compatible VM ("Oracle JRockit(R)-1.6"), compilerHints are disabled.
+# JMH 1.6.3 (released 2405 days ago, please consider updating!)
+# VM invoker: /opt/jdk/oracle/jrockit-jdk1.6.0_45-R28.2.7-4.1.0/jre/bin/java
+# VM options: -Xms10G -Xmx10G -Xgc:parallel
+# Warmup: 3 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber
+# Parameters: (threadCount = 1)
+
+# Run progress: 33.33% complete, ETA 00:02:40
+# Fork: 1 of 1
+# Warmup Iteration   1: 306344780.844 ops/s
+# Warmup Iteration   2: 431142293.462 ops/s
+# Warmup Iteration   3: 432670463.570 ops/s
+Iteration   1: 435190460.428 ops/s
+Iteration   2: 435588116.696 ops/s
+Iteration   3: 435202039.931 ops/s
+Iteration   4: 435555506.526 ops/s
+Iteration   5: 431228134.731 ops/s
+
+
+Result: 434552851.662 ±(99.9%) 7193293.373 ops/s [Average]
+  Statistics: (min, avg, max) = (431228134.731, 434552851.662, 435588116.696), stdev = 1868075.446
+  Confidence interval (99.9%): [427359558.289, 441746145.035]
+
+
+WARNING: Not a HotSpot compiler command compatible VM ("Oracle JRockit(R)-1.6"), compilerHints are disabled.
+# JMH 1.6.3 (released 2405 days ago, please consider updating!)
+# VM invoker: /opt/jdk/oracle/jrockit-jdk1.6.0_45-R28.2.7-4.1.0/jre/bin/java
+# VM options: -Xms10G -Xmx10G -Xgc:parallel
+# Warmup: 3 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: benchmarks.SynchronizationBenchmarkTest.testVolatile
+# Parameters: (threadCount = 1)
+
+# Run progress: 66.67% complete, ETA 00:01:20
+# Fork: 1 of 1
+# Warmup Iteration   1: 116112811.063 ops/s
+# Warmup Iteration   2: 173214499.624 ops/s
+# Warmup Iteration   3: 173222714.214 ops/s
+Iteration   1: 173436417.085 ops/s
+Iteration   2: 173551166.527 ops/s
+Iteration   3: 172534284.402 ops/s
+Iteration   4: 173490484.185 ops/s
+Iteration   5: 171985251.114 ops/s
+
+
+Result: 172999520.662 ±(99.9%) 2710142.394 ops/s [Average]
+  Statistics: (min, avg, max) = (171985251.114, 172999520.662, 173551166.527), stdev = 703815.373
+  Confidence interval (99.9%): [170289378.268, 175709663.057]
+
+
+# Run complete. Total time: 00:04:02
+
+Benchmark                                           (threadCount)   Mode  Cnt          Score         Error  Units
+SynchronizationBenchmarkTest.testAtomic                         1  thrpt    5  135105874.700 ± 1449451.510  ops/s
+SynchronizationBenchmarkTest.testNonVolatileNumber              1  thrpt    5  434552851.662 ± 7193293.373  ops/s
+SynchronizationBenchmarkTest.testVolatile                       1  thrpt    5  172999520.662 ± 2710142.394  ops/s
+
+Benchmark result is saved to results/result_Oracle__JRockit(R)_1.6_1.6.0_45-b06_tc1.csv
+WARNING: Not a HotSpot compiler command compatible VM ("Oracle JRockit(R)-1.6"), compilerHints are disabled.
+# JMH 1.6.3 (released 2405 days ago, please consider updating!)
+# VM invoker: /opt/jdk/oracle/jrockit-jdk1.6.0_45-R28.2.7-4.1.0/jre/bin/java
+# VM options: -Xms10G -Xmx10G -Xgc:parallel
+# Warmup: 3 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 8 threads, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: benchmarks.SynchronizationBenchmarkTest.testAtomic
+# Parameters: (threadCount = 8)
+
+# Run progress: 0.00% complete, ETA 00:04:00
+# Fork: 1 of 1
+# Warmup Iteration   1: 13821519.223 ops/s
+# Warmup Iteration   2: 12557978.367 ops/s
+# Warmup Iteration   3: 12580923.850 ops/s
+Iteration   1: 12566113.285 ops/s
+Iteration   2: 13134538.754 ops/s
+Iteration   3: 13212333.727 ops/s
+Iteration   4: 12456284.898 ops/s
+Iteration   5: 13167772.467 ops/s
+
+
+Result: 12907408.626 ±(99.9%) 1404762.021 ops/s [Average]
+  Statistics: (min, avg, max) = (12456284.898, 12907408.626, 13212333.727), stdev = 364812.236
+  Confidence interval (99.9%): [11502646.605, 14312170.647]
+
+
+WARNING: Not a HotSpot compiler command compatible VM ("Oracle JRockit(R)-1.6"), compilerHints are disabled.
+# JMH 1.6.3 (released 2405 days ago, please consider updating!)
+# VM invoker: /opt/jdk/oracle/jrockit-jdk1.6.0_45-R28.2.7-4.1.0/jre/bin/java
+# VM options: -Xms10G -Xmx10G -Xgc:parallel
+# Warmup: 3 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 8 threads, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber
+# Parameters: (threadCount = 8)
+
+# Run progress: 33.33% complete, ETA 00:02:40
+# Fork: 1 of 1
+# Warmup Iteration   1: 80525741.340 ops/s
+# Warmup Iteration   2: 84777238.589 ops/s
+# Warmup Iteration   3: 85090260.794 ops/s
+Iteration   1: 85888392.382 ops/s
+Iteration   2: 86095626.446 ops/s
+Iteration   3: 85805859.942 ops/s
+Iteration   4: 86109242.457 ops/s
+Iteration   5: 85289904.293 ops/s
+
+
+Result: 85837805.104 ±(99.9%) 1282797.605 ops/s [Average]
+  Statistics: (min, avg, max) = (85289904.293, 85837805.104, 86109242.457), stdev = 333138.464
+  Confidence interval (99.9%): [84555007.499, 87120602.709]
+
+
+WARNING: Not a HotSpot compiler command compatible VM ("Oracle JRockit(R)-1.6"), compilerHints are disabled.
+# JMH 1.6.3 (released 2405 days ago, please consider updating!)
+# VM invoker: /opt/jdk/oracle/jrockit-jdk1.6.0_45-R28.2.7-4.1.0/jre/bin/java
+# VM options: -Xms10G -Xmx10G -Xgc:parallel
+# Warmup: 3 iterations, 10 s each
+# Measurement: 5 iterations, 10 s each
+# Timeout: 10 min per iteration
+# Threads: 8 threads, will synchronize iterations
+# Benchmark mode: Throughput, ops/time
+# Benchmark: benchmarks.SynchronizationBenchmarkTest.testVolatile
+# Parameters: (threadCount = 8)
+
+# Run progress: 66.67% complete, ETA 00:01:20
+# Fork: 1 of 1
+# Warmup Iteration   1: 50327447.387 ops/s
+# Warmup Iteration   2: 57798794.813 ops/s
+# Warmup Iteration   3: 57965154.132 ops/s
+Iteration   1: 54778995.519 ops/s
+Iteration   2: 53391158.915 ops/s
+Iteration   3: 53309406.281 ops/s
+Iteration   4: 53978247.566 ops/s
+Iteration   5: 53723990.436 ops/s
+
+
+Result: 53836359.744 ±(99.9%) 2275796.490 ops/s [Average]
+  Statistics: (min, avg, max) = (53309406.281, 53836359.744, 54778995.519), stdev = 591017.121
+  Confidence interval (99.9%): [51560563.254, 56112156.233]
+
+
+# Run complete. Total time: 00:04:01
+
+Benchmark                                           (threadCount)   Mode  Cnt         Score         Error  Units
+SynchronizationBenchmarkTest.testAtomic                         8  thrpt    5  12907408.626 ± 1404762.021  ops/s
+SynchronizationBenchmarkTest.testNonVolatileNumber              8  thrpt    5  85837805.104 ± 1282797.605  ops/s
+SynchronizationBenchmarkTest.testVolatile                       8  thrpt    5  53836359.744 ± 2275796.490  ops/s
+
+Benchmark result is saved to results/result_Oracle__JRockit(R)_1.6_1.6.0_45-b06_tc8.csv
+

@@ -1,0 +1,30 @@
+[memory ][Sat Oct  9 02:34:19 2021][281817] Minimum TLA size is 2048 bytes.
+[memory ][Sat Oct  9 02:34:19 2021][281817] Preferred TLA size is 16384 bytes.
+[memory ][Sat Oct  9 02:34:19 2021][281817] TLA waste limit is 2048 bytes.
+[memory ][Sat Oct  9 02:34:19 2021][281817] Nursery object limit max is 16384 bytes.
+[memory ][Sat Oct  9 02:34:19 2021][281817] Nursery object limit percentage is 1.0%.
+[memory ][Sat Oct  9 02:34:19 2021][281817] Running with 32 bit heap and compressed references supporting 32GB heap.
+[memory ][Sat Oct  9 02:34:19 2021][281817] Java heap regions:
+ [0000000100000000 - 0000000380000000] rw-- (pagesize=0x1000)
+ 10GB committed, 0B reserved.
+[memory ][Sat Oct  9 02:34:19 2021][281817] Initial and maximum number of gc threads: 4, of which 4 parallel threads, 4 concurrent threads, and 4 yc threads.
+[memory ][Sat Oct  9 02:34:19 2021][281817] Maximum nursery percentage of free heap is 95%.
+[memory ][Sat Oct  9 02:34:19 2021][281817] Prefetch distance in workpacket: 4. Packet size: 493 objects.
+[memory ][Sat Oct  9 02:34:19 2021][281817] GC mode: Garbage collection optimized for deterministic pausetimes, strategy: Concurrent Mark & Sweep.
+[memory ][Sat Oct  9 02:34:19 2021][281817] Heap size: 10485760KB, maximal heap size: 10485760KB.
+[memory ][Sat Oct  9 02:34:19 2021][281817] <start>-<end>: <type> <before>KB-><after>KB (<heap>KB), <time> ms, sum of pauses <pause> ms.
+[memory ][Sat Oct  9 02:34:19 2021][281817] <start>  - start time of collection (seconds since jvm start).
+[memory ][Sat Oct  9 02:34:19 2021][281817] <type>   - OC (old collection) or YC (young collection).
+[memory ][Sat Oct  9 02:34:19 2021][281817] <end>    - end time of collection (seconds since jvm start).
+[memory ][Sat Oct  9 02:34:19 2021][281817] <before> - memory used by objects before collection (KB).
+[memory ][Sat Oct  9 02:34:19 2021][281817] <after>  - memory used by objects after collection (KB).
+[memory ][Sat Oct  9 02:34:19 2021][281817] <heap>   - size of heap after collection (KB).
+[memory ][Sat Oct  9 02:34:19 2021][281817] <time>   - total time of collection (milliseconds).
+[memory ][Sat Oct  9 02:34:19 2021][281817] <pause>  - total sum of pauses during collection (milliseconds).
+[memory ][Sat Oct  9 02:34:19 2021][281817]            Run with -Xverbose:gcpause to see individual phases.
+[memory ][Sat Oct  9 02:34:19 2021][281817] Using prefetch linesize: 64 bytes chunks: 512 bytes pf_dist: 128 bytes.
+[gcrepor][Sat Oct  9 02:34:24 2021][281817] 
+[gcrepor][Sat Oct  9 02:34:24 2021][281817] Memory usage report:
+[gcrepor][Sat Oct  9 02:34:24 2021][281817] 
+[gcrepor][Sat Oct  9 02:34:24 2021][281817] No collections done.
+[gcrepor][Sat Oct  9 02:34:24 2021][281817] 

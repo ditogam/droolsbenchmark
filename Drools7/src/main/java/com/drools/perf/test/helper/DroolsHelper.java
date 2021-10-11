@@ -23,19 +23,22 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Logger;
 
 public class DroolsHelper {
     public static final String DROOLS_FILE_NAME = "rools.data";
     private static final AtomicInteger EXECUTED_COUNT = new AtomicInteger();
     private static final AtomicInteger RULE_FOUND_COUNT = new AtomicInteger();
+    private static final ReentrantLock lock = new ReentrantLock();
 
-    public static int sessionPool = 0;
+    private static int sessionPool = 0;
+    private static boolean threadLocal;
     private static Collection<KiePackage> kiePackages = null;
-    public static boolean threadLocal;
-    private static Logger logger=Logger.getLogger(DroolsHelper.class.getName());
 
-    public static void compile() throws Exception {
+    private static Logger logger = Logger.getLogger(DroolsHelper.class.getName());
+
+    private static void compile() throws Exception {
         KnowledgeBuilder builder = KnowledgeBuilderFactory.newKnowledgeBuilder();
         try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("rools/main.drl");
              Reader reader = new InputStreamReader(is);
@@ -56,7 +59,7 @@ public class DroolsHelper {
         return conf;
     }
 
-    public static void loadRules() throws Exception {
+    private static void loadRules() throws Exception {
         if (kiePackages == null) {
             synchronized (DroolsHelper.class) {
                 if (kiePackages == null) {
@@ -77,7 +80,7 @@ public class DroolsHelper {
     private static KieBase RULE_BASE = null;
 
     private static KieBase ruleBase() throws Exception {
-        loadRules();
+
         KieBase ruleBase = null;
         if (threadLocal) {
             ruleBase = RULE_BASE_THREAD_LOCAL.get();
@@ -91,14 +94,16 @@ public class DroolsHelper {
             ruleBase = createKieBase();
             RULE_BASE_THREAD_LOCAL.set(ruleBase);
             return ruleBase;
-        } else {
-            synchronized (DroolsHelper.class) {
-                RULE_BASE = createKieBase();
-                return RULE_BASE;
-            }
         }
+        return null;
 
 
+    }
+
+    public static void createSingletonKieBase() throws Exception {
+        loadRules();
+        if (!threadLocal)
+            RULE_BASE = createKieBase();
     }
 
     private static KieBase createKieBase() {
@@ -108,8 +113,18 @@ public class DroolsHelper {
         return ruleBase;
     }
 
+    public static void init() throws Exception {
+        init(0, false);
+    }
+
+    public static void init(int sessionPool, boolean threadLocal) throws Exception {
+        DroolsHelper.sessionPool = sessionPool;
+        DroolsHelper.threadLocal = threadLocal;
+        createSingletonKieBase();
+    }
+
     public static void executeSubscriber(Subscriber subscriber) throws Exception {
-        loadRules();
+
         KieCommands cmds = KieServices.Factory.get().getCommands();
         ArrayList<Object> objs = new ArrayList<Object>(subscriber.getAccounts().size() + 1);
         objs.add(subscriber);

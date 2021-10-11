@@ -4,7 +4,9 @@ package com.drools.perf.test.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Subscriber {
+public class Subscriber implements java.io.Serializable {
+    static final long serialVersionUID = 1L;
+
     private int chargingProfileId;
     private List<Account> accounts;
 

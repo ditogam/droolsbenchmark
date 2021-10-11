@@ -5,6 +5,9 @@ import com.drools.perf.test.helper.Generator;
 import com.drools.perf.test.model.Subscriber;
 import org.junit.Test;
 import org.openjdk.jmh.annotations.*;
+import org.openjdk.jmh.profile.AsyncProfiler;
+import org.openjdk.jmh.profile.LinuxPerfAsmProfiler;
+import org.openjdk.jmh.profile.LinuxPerfProfiler;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
@@ -14,33 +17,47 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-//@BenchmarkMode(Mode.Throughput)
-//@OutputTimeUnit(TimeUnit.SECONDS)
-@BenchmarkMode(Mode.AverageTime)
-@OutputTimeUnit(TimeUnit.MICROSECONDS)
+@BenchmarkMode(Mode.Throughput)
+@OutputTimeUnit(TimeUnit.SECONDS)
+//@BenchmarkMode(Mode.AverageTime)
+//@OutputTimeUnit(TimeUnit.MICROSECONDS)
 
 @State(Scope.Benchmark)
 @Warmup(iterations = 5, time = 10, timeUnit = TimeUnit.SECONDS)
-@Measurement(iterations = 30, time = 10, timeUnit = TimeUnit.SECONDS)
+@Measurement(iterations = 10, time = 10, timeUnit = TimeUnit.SECONDS)
 @Fork(value = 2, jvmArgs = {"-Xms10G",
-        "-Xmx10G"/*, "-Xgc:deterministic", "-XpauseTarget=80ms", "-XXgcthreads:4"
-        , "-Xverbose:compaction,gc,gcpause,gcreport,memory,memdbg",
-        "-XverboseTimeStamp",
-        "-Xverboselog:./logs/jvm.log"*/
+        "-Xmx10G",
+
+////        "-XX:+UseParallelGC",
+//        "-XX:ConcGCThreads=5",
+//        "-XX:ParallelGCThreads=5",
+////        "-XX:+UseZGC",
+//        "-XX:+UseNUMA",
+//        "-XX:+UseShenandoahGC",
+////        "-XX:ShenandoahGCMode=iu",
+////        "-XX:+UnlockExperimentalVMOptions",
+//        "-XX:+UnlockDiagnosticVMOptions", "-XX:+DebugNonSafepoints",
+//        "-XX:+UseNUMA",
+//        "-XX:-UseBiasedLocking",
+//        "-XX:+UseLargePages", "-XX:+UseTransparentHugePages",
+
+//        "-XX:+UsePerfData",
+//        "-XX:MaxMetaspaceSize=1G", "-XX:MetaspaceSize=256M",
+//        "-Xlog:gc*,gc+ref*,gc+ergo*,gc+heap*,gc+stats*,gc+compaction*,gc+age*:logs/gc.log:time,pid,tags:filecount=25,filesize=30m"
 }
 )
-public class DroolsBenchmark {
+public class DroolsBenchmarkTest {
     private List<Subscriber> subscribers;
     private AtomicInteger index = new AtomicInteger();
 
     //    @Param({"false", "true"})
     private boolean threadLocal;
-//    @Param({"false", "true"})
+    //    @Param({"false", "true"})
     private boolean shadowProxy;
 
     @Setup
     public void loadData() throws Exception {
-        DroolsHelper.threadLocal = threadLocal;
+        DroolsHelper.threadLocal = true;
         DroolsHelper.shadowProxy = shadowProxy;
         subscribers = Generator.getPreGeneratedSubscribers();
     }
@@ -74,10 +91,14 @@ public class DroolsBenchmark {
         if (!file.exists() || !file.isDirectory())
             file.mkdir();
         final Options options = new OptionsBuilder()
-                .include(DroolsBenchmark.class.getSimpleName())
+                .include(DroolsBenchmarkTest.class.getSimpleName())
                 .forks(1)
                 .threads(Integer.parseInt(args[0]))
 //                .addProfiler(GCProfiler.class)
+                .addProfiler(AsyncProfiler.class, "output=flamegraph;event=cpu;allkernel=true;direction=forward;interval=50000")
+                .addProfiler(LinuxPerfProfiler.class)
+//                .addProfiler(LinuxPerfAsmProfiler.class)
+
 
                 .build();
 

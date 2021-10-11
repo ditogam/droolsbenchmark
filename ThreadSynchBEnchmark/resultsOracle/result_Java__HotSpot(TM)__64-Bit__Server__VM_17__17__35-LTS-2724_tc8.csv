@@ -1,0 +1,16 @@
+"Benchmark","Mode","Threads","Samples","Score","Score Error (99.9%)","Unit","Param: threadCount"
+"benchmarks.SynchronizationBenchmarkTest.testAtomic","thrpt",8,30,43692079.226390,68079.754505,"ops/s",8
+"benchmarks.SynchronizationBenchmarkTest.testAtomic:·async","thrpt",8,1,NaN,NaN,"---",8
+"benchmarks.SynchronizationBenchmarkTest.testAtomic:·cpi","thrpt",8,1,19.040483,NaN,"clks/insn",8
+"benchmarks.SynchronizationBenchmarkTest.testAtomic:·ipc","thrpt",8,1,0.052520,NaN,"insns/clk",8
+"benchmarks.SynchronizationBenchmarkTest.testAtomic:·perf","thrpt",8,1,NaN,NaN,"---",8
+"benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber","thrpt",8,30,8174233.839069,57073.967459,"ops/s",8
+"benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber:·async","thrpt",8,1,NaN,NaN,"---",8
+"benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber:·cpi","thrpt",8,1,4.690888,NaN,"clks/insn",8
+"benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber:·ipc","thrpt",8,1,0.213179,NaN,"insns/clk",8
+"benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber:·perf","thrpt",8,1,NaN,NaN,"---",8
+"benchmarks.SynchronizationBenchmarkTest.testVolatile","thrpt",8,30,4476834.990581,100457.742468,"ops/s",8
+"benchmarks.SynchronizationBenchmarkTest.testVolatile:·async","thrpt",8,1,NaN,NaN,"---",8
+"benchmarks.SynchronizationBenchmarkTest.testVolatile:·cpi","thrpt",8,1,5.295193,NaN,"clks/insn",8
+"benchmarks.SynchronizationBenchmarkTest.testVolatile:·ipc","thrpt",8,1,0.188851,NaN,"insns/clk",8
+"benchmarks.SynchronizationBenchmarkTest.testVolatile:·perf","thrpt",8,1,NaN,NaN,"---",8

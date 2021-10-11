@@ -8,6 +8,9 @@ public class Subscriber {
     private int chargingProfileId;
     private List<Account> accounts;
 
+    public Subscriber() {
+    }
+
     public int getChargingProfileId() {
         return chargingProfileId;
     }
