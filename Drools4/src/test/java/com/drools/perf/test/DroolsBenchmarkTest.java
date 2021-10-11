@@ -26,12 +26,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Measurement(iterations = 10, time = 10, timeUnit = TimeUnit.SECONDS)
 @Fork(value = 2, jvmArgs = {"-Xms10G",
 //        "-XX:+UseParallelGC",
-        "-XX:StartFlightRecording=filename=myrecording.jfr,delay=60s",
+//        "-XX:StartFlightRecording=filename=myrecording.jfr,delay=60s",
 
-        "-Xmx10G", "-Xgc:deterministic", "-XpauseTarget=80ms", "-XXgcthreads:4"/**/
+        "-Xmx10G"/*,
+        "-Xgc:deterministic", "-XpauseTarget=80ms", "-XXgcthreads:4"
         , "-Xverbose:compaction,gc,gcpause,gcreport,memory,memdbg",
         "-XverboseTimeStamp",
-        "-Xverboselog:./logs/jvm.log"
+        "-Xverboselog:./logs/jvm.log"*/
 }
 )
 public class DroolsBenchmarkTest {
