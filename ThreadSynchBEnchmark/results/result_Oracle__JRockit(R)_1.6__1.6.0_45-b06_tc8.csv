@@ -1,4 +1,0 @@
-"Benchmark","Mode","Threads","Samples","Score","Score Error (99.9%)","Unit","Param: threadCount"
-"benchmarks.SynchronizationBenchmarkTest.testAtomic","thrpt",8,30.000000,10039683.209178,76645.950511,"ops/s",8
-"benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber","thrpt",8,30.000000,81447493.013034,561680.699258,"ops/s",8
-"benchmarks.SynchronizationBenchmarkTest.testVolatile","thrpt",8,30.000000,55141836.560373,74955.424082,"ops/s",8

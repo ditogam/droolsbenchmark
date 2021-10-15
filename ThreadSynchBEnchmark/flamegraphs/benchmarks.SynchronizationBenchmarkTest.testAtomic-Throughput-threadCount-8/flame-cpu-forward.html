@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8'>
+<style>
+	body {margin: 0; padding: 10px; background-color: #ffffff}
+	h1 {margin: 5px 0 0 0; font-size: 18px; font-weight: normal; text-align: center}
+	header {margin: -24px 0 5px 0; line-height: 24px}
+	button {font: 12px sans-serif; cursor: pointer}
+	p {margin: 5px 0 5px 0}
+	a {color: #0366d6}
+	#hl {position: absolute; display: none; overflow: hidden; white-space: nowrap; pointer-events: none; background-color: #ffffe0; outline: 1px solid #ffc000; height: 15px}
+	#hl span {padding: 0 3px 0 3px}
+	#status {overflow: hidden; white-space: nowrap}
+	#match {overflow: hidden; white-space: nowrap; display: none; float: right; text-align: right}
+	#reset {cursor: pointer}
+</style>
+</head>
+<body style='font: 12px Verdana, sans-serif'>
+<h1>Flame Graph</h1>
+<header style='text-align: left'><button id='reverse' title='Reverse'>&#x1f53b;</button>&nbsp;&nbsp;<button id='search' title='Search'>&#x1f50d;</button></header>
+<header style='text-align: right'>Produced by <a href='https://github.com/jvm-profiling-tools/async-profiler'>async-profiler</a></header>
+<canvas id='canvas' style='width: 100%; height: 752px'></canvas>
+<div id='hl'><span></span></div>
+<p id='match'>Matched: <span id='matchval'></span> <span id='reset' title='Clear'>&#x274c;</span></p>
+<p id='status'>&nbsp;</p>
+<script>
+	// Copyright 2020 Andrei Pangin
+	// Licensed under the Apache License, Version 2.0.
+	'use strict';
+	var root, rootLevel, px, pattern;
+	var reverse = false;
+	const levels = Array(47);
+	for (let h = 0; h < levels.length; h++) {
+		levels[h] = [];
+	}
+
+	const canvas = document.getElementById('canvas');
+	const c = canvas.getContext('2d');
+	const hl = document.getElementById('hl');
+	const status = document.getElementById('status');
+
+	const canvasWidth = canvas.offsetWidth;
+	const canvasHeight = canvas.offsetHeight;
+	canvas.style.width = canvasWidth + 'px';
+	canvas.width = canvasWidth * (devicePixelRatio || 1);
+	canvas.height = canvasHeight * (devicePixelRatio || 1);
+	if (devicePixelRatio) c.scale(devicePixelRatio, devicePixelRatio);
+	c.font = document.body.style.font;
+
+	const palette = [
+		[0x50e150, 30, 30, 30],
+		[0x50bebe, 30, 30, 30],
+		[0xe17d00, 30, 30,  0],
+		[0xc8c83c, 30, 30, 10],
+		[0xe15a5a, 30, 40, 40],
+	];
+
+	function getColor(p) {
+		const v = Math.random();
+		return '#' + (p[0] + ((p[1] * v) << 16 | (p[2] * v) << 8 | (p[3] * v))).toString(16);
+	}
+
+	function f(level, left, width, type, title) {
+		levels[level].push({left: left, width: width, color: getColor(palette[type]), title: title});
+	}
+
+	function samples(n) {
+		return n === 1 ? '1 sample' : n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' samples';
+	}
+
+	function pct(a, b) {
+		return a >= b ? '100' : (100 * a / b).toFixed(2);
+	}
+
+	function findFrame(frames, x) {
+		let left = 0;
+		let right = frames.length - 1;
+
+		while (left <= right) {
+			const mid = (left + right) >>> 1;
+			const f = frames[mid];
+
+			if (f.left > x) {
+				right = mid - 1;
+			} else if (f.left + f.width <= x) {
+				left = mid + 1;
+			} else {
+				return f;
+			}
+		}
+
+		if (frames[left] && (frames[left].left - x) * px < 0.5) return frames[left];
+		if (frames[right] && (x - (frames[right].left + frames[right].width)) * px < 0.5) return frames[right];
+
+		return null;
+	}
+
+	function search(r) {
+		if (r && (r = prompt('Enter regexp to search:', '')) === null) {
+			return;
+		}
+
+		pattern = r ? RegExp(r) : undefined;
+		const matched = render(root, rootLevel);
+		document.getElementById('matchval').textContent = pct(matched, root.width) + '%';
+		document.getElementById('match').style.display = r ? 'inherit' : 'none';
+	}
+
+	function render(newRoot, newLevel) {
+		if (root) {
+			c.fillStyle = '#ffffff';
+			c.fillRect(0, 0, canvasWidth, canvasHeight);
+		}
+
+		root = newRoot || levels[0][0];
+		rootLevel = newLevel || 0;
+		px = canvasWidth / root.width;
+
+		const x0 = root.left;
+		const x1 = x0 + root.width;
+		const marked = [];
+
+		function mark(f) {
+			return marked[f.left] >= f.width || (marked[f.left] = f.width);
+		}
+
+		function totalMarked() {
+			let total = 0;
+			let left = 0;
+			for (let x in marked) {
+				if (+x >= left) {
+					total += marked[x];
+					left = +x + marked[x];
+				}
+			}
+			return total;
+		}
+
+		function drawFrame(f, y, alpha) {
+			if (f.left < x1 && f.left + f.width > x0) {
+				c.fillStyle = pattern && f.title.match(pattern) && mark(f) ? '#ee00ee' : f.color;
+				c.fillRect((f.left - x0) * px, y, f.width * px, 15);
+
+				if (f.width * px >= 21) {
+					const chars = Math.floor(f.width * px / 7);
+					const title = f.title.length <= chars ? f.title : f.title.substring(0, chars - 2) + '..';
+					c.fillStyle = '#000000';
+					c.fillText(title, Math.max(f.left - x0, 0) * px + 3, y + 12, f.width * px - 6);
+				}
+
+				if (alpha) {
+					c.fillStyle = 'rgba(255, 255, 255, 0.5)';
+					c.fillRect((f.left - x0) * px, y, f.width * px, 15);
+				}
+			}
+		}
+
+		for (let h = 0; h < levels.length; h++) {
+			const y = reverse ? h * 16 : canvasHeight - (h + 1) * 16;
+			const frames = levels[h];
+			for (let i = 0; i < frames.length; i++) {
+				drawFrame(frames[i], y, h < rootLevel);
+			}
+		}
+
+		return totalMarked();
+	}
+
+	canvas.onmousemove = function() {
+		const h = Math.floor((reverse ? event.offsetY : (canvasHeight - event.offsetY)) / 16);
+		if (h >= 0 && h < levels.length) {
+			const f = findFrame(levels[h], event.offsetX / px + root.left);
+			if (f) {
+				hl.style.left = (Math.max(f.left - root.left, 0) * px + canvas.offsetLeft) + 'px';
+				hl.style.width = (Math.min(f.width, root.width) * px) + 'px';
+				hl.style.top = ((reverse ? h * 16 : canvasHeight - (h + 1) * 16) + canvas.offsetTop) + 'px';
+				hl.firstChild.textContent = f.title;
+				hl.style.display = 'block';
+				canvas.title = f.title + '\n(' + samples(f.width) + ', ' + pct(f.width, levels[0][0].width) + '%)';
+				canvas.style.cursor = 'pointer';
+				canvas.onclick = function() {
+					if (f != root) {
+						render(f, h);
+						canvas.onmousemove();
+					}
+				};
+				status.textContent = 'Function: ' + canvas.title;
+				return;
+			}
+		}
+		canvas.onmouseout();
+	}
+
+	canvas.onmouseout = function() {
+		hl.style.display = 'none';
+		status.textContent = '\xa0';
+		canvas.title = '';
+		canvas.style.cursor = '';
+		canvas.onclick = '';
+	}
+
+	document.getElementById('reverse').onclick = function() {
+		reverse = !reverse;
+		render();
+	}
+
+	document.getElementById('search').onclick = function() {
+		search(true);
+	}
+
+	document.getElementById('reset').onclick = function() {
+		search(false);
+	}
+
+	window.onkeydown = function() {
+		if (event.ctrlKey && event.keyCode === 70) {
+			event.preventDefault();
+			search(true);
+		} else if (event.keyCode === 27) {
+			search(false);
+		}
+	}
+f(0,0,897,4,'all')
+f(1,0,60,4,'[unknown]')
+f(2,0,1,4,'__pthread_cond_wait')
+f(3,0,1,2,'entry_SYSCALL_64_after_hwframe')
+f(4,0,1,2,'do_syscall_64')
+f(5,0,1,2,'__x64_sys_futex')
+f(6,0,1,2,'do_futex')
+f(7,0,1,2,'futex_wait')
+f(2,1,2,4,'open64')
+f(3,1,2,2,'entry_SYSCALL_64_after_hwframe')
+f(4,1,2,2,'do_syscall_64')
+f(5,1,2,2,'__x64_sys_openat')
+f(6,1,2,2,'do_sys_open')
+f(7,1,2,2,'do_sys_openat2')
+f(8,1,2,2,'do_filp_open')
+f(9,1,2,2,'path_openat')
+f(10,1,1,2,'alloc_empty_file')
+f(11,1,1,2,'__alloc_file')
+f(12,1,1,2,'security_file_alloc')
+f(13,1,1,2,'kmem_cache_alloc')
+f(10,2,1,2,'link_path_walk.part.0')
+f(11,2,1,2,'walk_component')
+f(12,2,1,2,'step_into')
+f(2,3,56,4,'pthread_cond_timedwait@@GLIBC_2.3.2')
+f(3,3,56,2,'entry_SYSCALL_64_after_hwframe')
+f(4,3,1,2,'__x64_sys_futex')
+f(4,4,55,2,'do_syscall_64')
+f(5,4,54,2,'__x64_sys_futex')
+f(6,6,51,2,'do_futex')
+f(7,6,4,2,'_raw_spin_lock')
+f(7,10,47,2,'futex_wait')
+f(8,10,1,2,'__get_user_nocheck_4')
+f(8,11,4,2,'__unqueue_futex')
+f(8,15,5,2,'_raw_spin_lock')
+f(8,20,23,2,'futex_wait_queue_me')
+f(9,29,11,2,'hrtimer_sleeper_start_expires')
+f(10,29,11,2,'hrtimer_start_range_ns')
+f(11,29,11,2,'__lock_text_start')
+f(9,40,1,2,'hrtimer_start_range_ns')
+f(9,41,2,2,'schedule')
+f(10,41,2,2,'__schedule')
+f(11,41,2,2,'finish_task_switch')
+f(8,43,13,2,'futex_wait_setup')
+f(8,56,1,2,'hrtimer_init_sleeper')
+f(9,56,1,2,'__hrtimer_init')
+f(6,57,1,2,'get_timespec64')
+f(7,57,1,2,'copy_user_generic_unrolled')
+f(5,58,1,2,'syscall_enter_from_user_mode')
+f(2,59,1,4,'read')
+f(3,59,1,2,'entry_SYSCALL_64_after_hwframe')
+f(4,59,1,2,'do_syscall_64')
+f(5,59,1,2,'__x64_sys_read')
+f(6,59,1,2,'ksys_read')
+f(7,59,1,2,'vfs_read')
+f(8,59,1,2,'new_sync_read')
+f(9,59,1,2,'kernfs_fop_read_iter')
+f(10,59,1,2,'seq_read_iter')
+f(11,59,1,2,'kernfs_seq_show')
+f(12,59,1,2,'cgroup_seqfile_show')
+f(13,59,1,2,'memcg_stat_show')
+f(14,59,1,2,'seq_printf')
+f(1,60,814,0,'java/lang/Thread.run')
+f(2,60,814,0,'java/util/concurrent/ThreadPoolExecutor$Worker.run')
+f(3,60,814,0,'java/util/concurrent/ThreadPoolExecutor.runWorker')
+f(4,60,811,0,'java/util/concurrent/FutureTask.run')
+f(5,60,810,0,'java/util/concurrent/Executors$RunnableAdapter.call')
+f(6,60,810,0,'java/util/concurrent/FutureTask.run')
+f(7,60,810,0,'org/openjdk/jmh/runner/BenchmarkHandler$BenchmarkTask.call')
+f(8,60,810,0,'org/openjdk/jmh/runner/BenchmarkHandler$BenchmarkTask.call')
+f(9,60,810,0,'java/lang/reflect/Method.invoke')
+f(10,60,810,0,'jdk/internal/reflect/DelegatingMethodAccessorImpl.invoke')
+f(11,60,810,0,'jdk/internal/reflect/GeneratedMethodAccessor1.invoke')
+f(12,60,810,0,'benchmarks/jmh_generated/SynchronizationBenchmarkTest_testAtomic_jmhTest.testAtomic_Throughput')
+f(13,60,1,3,'InterpreterRuntime::resolve_from_cache(JavaThread*, Bytecodes::Code)')
+f(14,60,1,3,'InterpreterRuntime::resolve_invoke(JavaThread*, Bytecodes::Code)')
+f(15,60,1,3,'LinkResolver::resolve_invoke(CallInfo&, Handle, constantPoolHandle const&, int, Bytecodes::Code, JavaThread*)')
+f(16,60,1,3,'LinkResolver::linktime_resolve_virtual_method(LinkInfo const&, JavaThread*)')
+f(17,60,1,3,'LinkResolver::resolve_method(LinkInfo const&, Bytecodes::Code, JavaThread*)')
+f(18,60,1,3,'LinkResolver::check_method_loader_constraints(LinkInfo const&, methodHandle const&, char const*, JavaThread*)')
+f(19,60,1,3,'SystemDictionary::check_signature_loaders(Symbol*, Klass*, Handle, Handle, bool)')
+f(20,60,1,4,'__pthread_mutex_unlock')
+f(21,60,1,2,'entry_SYSCALL_64_after_hwframe')
+f(22,60,1,2,'do_syscall_64')
+f(23,60,1,2,'syscall_enter_from_user_mode')
+f(13,61,808,0,'benchmarks/jmh_generated/SynchronizationBenchmarkTest_testAtomic_jmhTest.testAtomic_thrpt_jmhStub')
+f(14,61,1,3,'ThreadSafepointState::handle_polling_page_exception()')
+f(15,61,1,3,'SafepointMechanism::process(JavaThread*, bool)')
+f(16,61,1,3,'SafepointSynchronize::block(JavaThread*)')
+f(17,61,1,4,'syscall')
+f(18,61,1,2,'entry_SYSCALL_64_after_hwframe')
+f(19,61,1,2,'do_syscall_64')
+f(20,61,1,2,'syscall_enter_from_user_mode')
+f(14,62,2,2,'asm_common_interrupt')
+f(15,62,2,2,'common_interrupt')
+f(16,62,2,2,'irqentry_exit')
+f(17,62,2,2,'irqentry_exit_to_user_mode')
+f(18,62,2,2,'exit_to_user_mode_prepare')
+f(14,64,1,2,'asm_sysvec_apic_timer_interrupt')
+f(15,64,1,2,'sysvec_apic_timer_interrupt')
+f(16,64,1,2,'irq_exit_rcu')
+f(17,64,1,2,'do_softirq_own_stack')
+f(18,64,1,2,'asm_call_sysvec_on_stack')
+f(19,64,1,2,'__softirqentry_text_start')
+f(20,64,1,2,'run_timer_softirq')
+f(21,64,1,2,'__run_timers.part.0')
+f(22,64,1,2,'call_timer_fn')
+f(23,64,1,2,'process_timeout')
+f(24,64,1,2,'wake_up_process')
+f(25,64,1,2,'try_to_wake_up')
+f(26,64,1,2,'__lock_text_start')
+f(14,65,803,0,'benchmarks/SynchronizationBenchmarkTest.testAtomic')
+f(15,65,797,0,'java/util/concurrent/atomic/AtomicLong.incrementAndGet')
+f(16,65,13,4,'__restore_rt')
+f(17,65,9,2,'entry_SYSCALL_64_after_hwframe')
+f(18,65,9,2,'do_syscall_64')
+f(19,65,7,2,'__x64_sys_rt_sigreturn')
+f(20,65,1,2,'__set_current_blocked')
+f(20,66,6,2,'set_current_blocked')
+f(21,66,6,2,'__set_current_blocked')
+f(19,72,2,2,'syscall_enter_from_user_mode')
+f(17,74,4,4,'ioctl')
+f(18,74,4,2,'entry_SYSCALL_64_after_hwframe')
+f(19,74,4,2,'do_syscall_64')
+f(20,74,4,2,'__x64_sys_ioctl')
+f(21,74,2,2,'fput_many')
+f(21,76,1,2,'mutex_unlock')
+f(21,77,1,2,'perf_ioctl')
+f(22,77,1,2,'put_ctx')
+f(16,78,2,2,'_nv009260rm?[nvidia]')
+f(17,78,2,2,'os_release_spinlock?[nvidia]')
+f(18,78,2,2,'__lock_text_start')
+f(16,80,1,2,'_nv022398rm?[nvidia]')
+f(16,81,4,2,'_nv032887rm?[nvidia]')
+f(16,85,742,2,'asm_common_interrupt')
+f(17,85,742,2,'common_interrupt')
+f(18,85,1,2,'irq_exit_rcu')
+f(19,85,1,2,'do_softirq_own_stack')
+f(20,85,1,2,'asm_call_sysvec_on_stack')
+f(21,85,1,2,'__softirqentry_text_start')
+f(22,85,1,2,'net_rx_action')
+f(23,85,1,2,'e1000e_poll?[e1000e]')
+f(24,85,1,2,'e1000_clean_rx_irq?[e1000e]')
+f(18,86,741,2,'irqentry_exit')
+f(19,86,741,2,'irqentry_exit_to_user_mode')
+f(20,86,741,2,'exit_to_user_mode_prepare')
+f(21,819,8,2,'schedule')
+f(22,819,8,2,'__schedule')
+f(23,820,7,2,'finish_task_switch')
+f(16,827,33,2,'asm_sysvec_apic_timer_interrupt')
+f(17,827,33,2,'sysvec_apic_timer_interrupt')
+f(18,827,32,2,'irq_exit_rcu')
+f(19,827,32,2,'do_softirq_own_stack')
+f(20,827,32,2,'asm_call_sysvec_on_stack')
+f(21,827,32,2,'__softirqentry_text_start')
+f(22,827,3,2,'rcu_core_si')
+f(23,827,2,2,'rcu_core')
+f(24,827,2,2,'rcu_report_qs_rnp')
+f(25,827,2,2,'rcu_gp_kthread_wake')
+f(26,827,2,2,'swake_up_one')
+f(27,827,2,2,'__lock_text_start')
+f(23,829,1,2,'rcu_segcblist_ready_cbs')
+f(22,830,13,2,'run_rebalance_domains')
+f(23,830,13,2,'rebalance_domains')
+f(24,832,1,2,'cpumask_next_and')
+f(24,833,10,2,'load_balance')
+f(25,836,7,2,'find_busiest_group')
+f(26,836,1,2,'cpumask_next_and')
+f(26,837,1,2,'idle_cpu')
+f(26,838,5,2,'update_sd_lb_stats.constprop.0')
+f(27,842,1,2,'cpumask_next_and')
+f(28,842,1,2,'_find_next_bit.constprop.0')
+f(22,843,16,2,'run_timer_softirq')
+f(23,843,16,2,'__run_timers.part.0')
+f(24,852,7,2,'call_timer_fn')
+f(25,852,5,2,'clocksource_watchdog')
+f(25,857,1,2,'cpumask_next')
+f(25,858,1,2,'process_timeout')
+f(26,858,1,2,'wake_up_process')
+f(27,858,1,2,'try_to_wake_up')
+f(28,858,1,2,'__lock_text_start')
+f(18,859,1,2,'irqentry_exit')
+f(19,859,1,2,'irqentry_exit_to_user_mode')
+f(20,859,1,2,'exit_to_user_mode_prepare')
+f(21,859,1,2,'schedule')
+f(22,859,1,2,'__schedule')
+f(16,860,1,2,'asm_sysvec_reschedule_ipi')
+f(17,860,1,2,'sysvec_reschedule_ipi')
+f(18,860,1,2,'irqentry_exit')
+f(19,860,1,2,'irqentry_exit_to_user_mode')
+f(20,860,1,2,'exit_to_user_mode_prepare')
+f(21,860,1,2,'schedule')
+f(22,860,1,2,'__schedule')
+f(23,860,1,2,'finish_task_switch')
+f(16,861,1,2,'entry_SYSCALL_64_after_hwframe')
+f(17,861,1,2,'do_syscall_64')
+f(18,861,1,2,'__x64_sys_rt_sigreturn')
+f(19,861,1,2,'restore_sigcontext')
+f(20,861,1,2,'fpu__restore_sig')
+f(21,861,1,2,'__fpu__restore_sig')
+f(22,861,1,2,'fpregs_mark_activate')
+f(15,862,6,0,'org/openjdk/jmh/infra/Blackhole.consume')
+f(16,862,1,4,'__restore_rt')
+f(17,862,1,2,'entry_SYSCALL_64_after_hwframe')
+f(18,862,1,2,'__x64_sys_rt_sigreturn')
+f(16,863,3,2,'asm_common_interrupt')
+f(17,863,3,2,'common_interrupt')
+f(18,863,3,2,'irqentry_exit')
+f(19,863,3,2,'irqentry_exit_to_user_mode')
+f(20,863,3,2,'exit_to_user_mode_prepare')
+f(16,866,1,2,'asm_sysvec_apic_timer_interrupt')
+f(17,866,1,2,'sysvec_apic_timer_interrupt')
+f(18,866,1,2,'irq_exit_rcu')
+f(19,866,1,2,'do_softirq_own_stack')
+f(20,866,1,2,'asm_call_sysvec_on_stack')
+f(21,866,1,2,'__softirqentry_text_start')
+f(22,866,1,2,'rcu_core_si')
+f(23,866,1,2,'rcu_core')
+f(24,866,1,2,'rcu_report_qs_rnp')
+f(25,866,1,2,'rcu_gp_kthread_wake')
+f(26,866,1,2,'swake_up_one')
+f(27,866,1,2,'__lock_text_start')
+f(16,867,1,0,'org/openjdk/jmh/infra/Blackhole.consumeFull')
+f(17,867,1,2,'asm_common_interrupt')
+f(18,867,1,2,'common_interrupt')
+f(19,867,1,2,'irqentry_exit')
+f(20,867,1,2,'irqentry_exit_to_user_mode')
+f(21,867,1,2,'exit_to_user_mode_prepare')
+f(14,868,1,0,'org/openjdk/jmh/infra/Blackhole.consumeFull')
+f(15,868,1,2,'asm_common_interrupt')
+f(16,868,1,2,'common_interrupt')
+f(17,868,1,2,'irqentry_exit')
+f(18,868,1,2,'irqentry_exit_to_user_mode')
+f(19,868,1,2,'exit_to_user_mode_prepare')
+f(13,869,1,0,'org/openjdk/jmh/runner/InfraControl.preSetup')
+f(14,869,1,0,'java/util/concurrent/CountDownLatch.await')
+f(15,869,1,0,'java/util/concurrent/locks/AbstractQueuedSynchronizer.acquireSharedInterruptibly')
+f(16,869,1,0,'java/util/concurrent/locks/AbstractQueuedSynchronizer.acquire')
+f(17,869,1,0,'java/util/concurrent/locks/AbstractQueuedSynchronizer.signalNextIfShared')
+f(18,869,1,0,'java/util/concurrent/locks/LockSupport.unpark')
+f(19,869,1,0,'jdk/internal/misc/Unsafe.unpark')
+f(20,869,1,4,'__pthread_cond_signal')
+f(21,869,1,2,'entry_SYSCALL_64_after_hwframe')
+f(22,869,1,2,'do_syscall_64')
+f(23,869,1,2,'__x64_sys_futex')
+f(24,869,1,2,'do_futex')
+f(25,869,1,2,'futex_wake')
+f(26,869,1,2,'mark_wake_futex')
+f(27,869,1,2,'__unqueue_futex')
+f(5,870,1,0,'java/util/concurrent/FutureTask.set')
+f(6,870,1,0,'java/util/concurrent/FutureTask.finishCompletion')
+f(7,870,1,0,'java/util/concurrent/ExecutorCompletionService$QueueingFuture.done')
+f(8,870,1,0,'java/util/AbstractQueue.add')
+f(9,870,1,0,'java/util/concurrent/LinkedBlockingQueue.offer')
+f(10,870,1,0,'java/util/concurrent/locks/ReentrantLock.unlock')
+f(11,870,1,0,'java/util/concurrent/locks/AbstractQueuedSynchronizer.release')
+f(12,870,1,0,'java/util/concurrent/locks/AbstractQueuedSynchronizer.signalNext')
+f(13,870,1,0,'java/util/concurrent/locks/LockSupport.unpark')
+f(14,870,1,0,'jdk/internal/misc/Unsafe.unpark')
+f(15,870,1,4,'__pthread_cond_signal')
+f(16,870,1,2,'entry_SYSCALL_64_after_hwframe')
+f(17,870,1,2,'do_syscall_64')
+f(18,870,1,2,'__x64_sys_futex')
+f(19,870,1,2,'do_futex')
+f(20,870,1,2,'futex_wake')
+f(4,871,3,0,'java/util/concurrent/ThreadPoolExecutor.getTask')
+f(5,871,3,0,'java/util/concurrent/LinkedBlockingQueue.take')
+f(6,871,1,0,'java/util/concurrent/locks/AbstractQueuedSynchronizer$ConditionObject.await')
+f(7,871,1,0,'java/util/concurrent/ForkJoinPool.managedBlock')
+f(8,871,1,0,'java/util/concurrent/ForkJoinPool.unmanagedBlock')
+f(9,871,1,0,'java/util/concurrent/locks/AbstractQueuedSynchronizer$ConditionNode.block')
+f(10,871,1,0,'java/util/concurrent/locks/LockSupport.park')
+f(11,871,1,0,'jdk/internal/misc/Unsafe.park')
+f(12,871,1,4,'[unknown]')
+f(13,871,1,4,'__pthread_cond_wait')
+f(14,871,1,2,'entry_SYSCALL_64_after_hwframe')
+f(15,871,1,2,'do_syscall_64')
+f(16,871,1,2,'__x64_sys_futex')
+f(17,871,1,2,'do_futex')
+f(18,871,1,2,'futex_wait')
+f(19,871,1,2,'futex_wait_setup')
+f(6,872,2,0,'java/util/concurrent/locks/ReentrantLock.unlock')
+f(7,872,2,0,'java/util/concurrent/locks/AbstractQueuedSynchronizer.release')
+f(8,872,2,0,'java/util/concurrent/locks/AbstractQueuedSynchronizer.signalNext')
+f(9,872,2,0,'java/util/concurrent/locks/LockSupport.unpark')
+f(10,872,2,0,'jdk/internal/misc/Unsafe.unpark')
+f(11,872,2,4,'__pthread_cond_signal')
+f(12,872,2,2,'entry_SYSCALL_64_after_hwframe')
+f(13,872,2,2,'do_syscall_64')
+f(14,872,2,2,'__x64_sys_futex')
+f(15,872,2,2,'do_futex')
+f(16,872,2,2,'futex_wake')
+f(17,872,2,2,'wake_up_q')
+f(18,872,2,2,'try_to_wake_up')
+f(19,872,2,2,'__lock_text_start')
+f(1,874,13,0,'org/openjdk/jmh/runner/ForkedMain.main')
+f(2,874,13,0,'org/openjdk/jmh/runner/ForkedRunner.run')
+f(3,874,13,0,'org/openjdk/jmh/runner/BaseRunner.runBenchmarksForked')
+f(4,874,13,0,'org/openjdk/jmh/runner/BaseRunner.doSingle')
+f(5,874,13,0,'org/openjdk/jmh/runner/BaseRunner.runBenchmark')
+f(6,874,13,0,'org/openjdk/jmh/runner/BaseRunner.runBenchmark')
+f(7,874,1,0,'jdk/proxy1/$Proxy0.iterationResult')
+f(8,874,1,0,'org/openjdk/jmh/runner/link/BinaryLinkClient$1.invoke')
+f(9,874,1,0,'org/openjdk/jmh/runner/link/BinaryLinkClient.access$000')
+f(10,874,1,0,'org/openjdk/jmh/runner/link/BinaryLinkClient.pushFrame')
+f(11,874,1,0,'java/io/ObjectOutputStream.flush')
+f(12,874,1,0,'java/io/ObjectOutputStream$BlockDataOutputStream.flush')
+f(13,874,1,0,'java/io/BufferedOutputStream.flush')
+f(14,874,1,0,'java/io/BufferedOutputStream.flushBuffer')
+f(15,874,1,0,'java/net/Socket$SocketOutputStream.write')
+f(16,874,1,0,'sun/nio/ch/NioSocketImpl$2.write')
+f(17,874,1,0,'sun/nio/ch/NioSocketImpl.write')
+f(18,874,1,0,'sun/nio/ch/NioSocketImpl.implWrite')
+f(19,874,1,0,'sun/nio/ch/NioSocketImpl.tryWrite')
+f(20,874,1,0,'sun/nio/ch/SocketDispatcher.write')
+f(21,874,1,0,'sun/nio/ch/FileDispatcherImpl.write0')
+f(22,874,1,4,'__libc_write')
+f(23,874,1,2,'entry_SYSCALL_64_after_hwframe')
+f(24,874,1,2,'do_syscall_64')
+f(25,874,1,2,'__x64_sys_write')
+f(26,874,1,2,'ksys_write')
+f(27,874,1,2,'vfs_write')
+f(28,874,1,2,'new_sync_write')
+f(29,874,1,2,'sock_write_iter')
+f(30,874,1,2,'sock_sendmsg')
+f(31,874,1,2,'inet6_sendmsg')
+f(32,874,1,2,'tcp_sendmsg')
+f(33,874,1,2,'tcp_sendmsg_locked')
+f(34,874,1,2,'tcp_push')
+f(35,874,1,2,'__tcp_push_pending_frames')
+f(36,874,1,2,'tcp_write_xmit')
+f(37,874,1,2,'__tcp_transmit_skb')
+f(38,874,1,2,'ip_queue_xmit')
+f(39,874,1,2,'__ip_queue_xmit')
+f(40,874,1,2,'ip_local_out')
+f(41,874,1,2,'ip_output')
+f(42,874,1,2,'ip_finish_output')
+f(43,874,1,2,'__ip_finish_output')
+f(44,874,1,2,'ip_finish_output2')
+f(45,874,1,2,'dev_queue_xmit')
+f(46,874,1,2,'__dev_queue_xmit')
+f(7,875,10,0,'org/openjdk/jmh/runner/BenchmarkHandler.runIteration')
+f(8,875,8,0,'org/openjdk/jmh/runner/BenchmarkHandler.startProfilers')
+f(9,875,8,0,'org/openjdk/jmh/profile/AsyncProfiler.beforeIteration')
+f(10,875,8,0,'org/openjdk/jmh/profile/AsyncProfiler.start')
+f(11,875,8,0,'org/openjdk/jmh/profile/AsyncProfiler.execute')
+f(12,875,8,0,'org/openjdk/jmh/profile/AsyncProfiler$JavaApi.execute')
+f(13,875,8,0,'org/openjdk/jmh/profile/AsyncProfiler$JavaApi.execute0')
+f(14,875,6,4,'Java_one_profiler_AsyncProfiler_execute0')
+f(15,875,6,3,'Profiler::runInternal(Arguments&, std::ostream&)')
+f(16,875,6,3,'Profiler::start(Arguments&, bool)')
+f(17,875,6,3,'PerfEvents::start(Arguments&)')
+f(18,875,1,4,'/usr/lib/x86_64-linux-gnu/libc-2.31.so')
+f(19,875,1,2,'entry_SYSCALL_64_after_hwframe')
+f(20,875,1,2,'do_syscall_64')
+f(21,875,1,2,'syscall_enter_from_user_mode')
+f(18,876,5,4,'ioctl')
+f(19,876,5,2,'entry_SYSCALL_64_after_hwframe')
+f(20,876,5,2,'do_syscall_64')
+f(21,876,5,2,'__x64_sys_ioctl')
+f(22,876,5,2,'perf_ioctl')
+f(23,876,5,2,'_perf_ioctl')
+f(24,876,5,2,'_perf_event_refresh')
+f(25,876,5,2,'_perf_event_enable')
+f(26,876,5,2,'event_function_call')
+f(27,876,5,2,'task_function_call')
+f(28,876,5,2,'smp_call_function_single')
+f(14,881,2,4,'mmap')
+f(15,881,2,2,'entry_SYSCALL_64_after_hwframe')
+f(16,881,2,2,'do_syscall_64')
+f(17,882,1,2,'__x64_sys_mmap')
+f(18,882,1,2,'ksys_mmap_pgoff')
+f(19,882,1,2,'vm_mmap_pgoff')
+f(20,882,1,2,'do_mmap')
+f(21,882,1,2,'mmap_region')
+f(22,882,1,2,'perf_mmap')
+f(23,882,1,2,'security_perf_event_read')
+f(8,883,1,0,'org/openjdk/jmh/runner/BenchmarkHandler.stopProfilers')
+f(9,883,1,0,'org/openjdk/jmh/profile/AsyncProfiler.afterIteration')
+f(10,883,1,0,'org/openjdk/jmh/profile/AsyncProfiler.stopAndDump')
+f(11,883,1,0,'org/openjdk/jmh/profile/AsyncProfiler.execute')
+f(12,883,1,0,'org/openjdk/jmh/profile/AsyncProfiler$JavaApi.execute')
+f(13,883,1,0,'org/openjdk/jmh/profile/AsyncProfiler$JavaApi.execute0')
+f(14,883,1,4,'Java_one_profiler_AsyncProfiler_execute0')
+f(15,883,1,3,'Profiler::runInternal(Arguments&, std::ostream&)')
+f(16,883,1,3,'Profiler::stop()')
+f(17,883,1,3,'PerfEvents::stop()')
+f(18,883,1,4,'munmap')
+f(19,883,1,2,'entry_SYSCALL_64_after_hwframe')
+f(20,883,1,2,'do_syscall_64')
+f(21,883,1,2,'__x64_sys_munmap')
+f(22,883,1,2,'__vm_munmap')
+f(23,883,1,2,'__do_munmap')
+f(24,883,1,2,'unmap_region')
+f(25,883,1,2,'free_pgtables')
+f(26,883,1,2,'unlink_file_vma')
+f(27,883,1,2,'__remove_shared_vm_struct')
+f(28,883,1,2,'vma_interval_tree_remove')
+f(29,883,1,2,'__rb_erase_color')
+f(8,884,1,0,'org/openjdk/jmh/runner/InfraControl.awaitWarmdownReady')
+f(9,884,1,0,'org/openjdk/jmh/runner/InfraControlL2.awaitWarmdownReady')
+f(10,884,1,0,'java/util/concurrent/CountDownLatch.await')
+f(11,884,1,0,'java/util/concurrent/locks/AbstractQueuedSynchronizer.acquireSharedInterruptibly')
+f(12,884,1,0,'java/util/concurrent/locks/AbstractQueuedSynchronizer.acquire')
+f(13,884,1,2,'asm_exc_page_fault')
+f(14,884,1,2,'exc_page_fault')
+f(15,884,1,2,'do_user_addr_fault')
+f(7,885,2,0,'org/openjdk/jmh/runner/ForkedRunner$1.accept')
+f(8,885,2,0,'org/openjdk/jmh/runner/link/BinaryLinkClient.pushResults')
+f(9,885,1,0,'java/lang/ClassLoader.loadClass')
+f(10,885,1,0,'jdk/internal/loader/ClassLoaders$AppClassLoader.loadClass')
+f(11,885,1,0,'jdk/internal/loader/BuiltinClassLoader.loadClass')
+f(12,885,1,0,'jdk/internal/loader/BuiltinClassLoader.loadClassOrNull')
+f(13,885,1,0,'jdk/internal/loader/BuiltinClassLoader.findClassOnClassPathOrNull')
+f(14,885,1,0,'jdk/internal/loader/URLClassPath.getResource')
+f(15,885,1,0,'jdk/internal/loader/URLClassPath$FileLoader.getResource')
+f(16,885,1,0,'java/net/URL.<init>')
+f(17,885,1,0,'java/net/URL.<init>')
+f(18,885,1,0,'sun/net/www/protocol/file/Handler.parseURL')
+f(19,885,1,0,'java/net/URLStreamHandler.parseURL')
+f(20,885,1,2,'asm_exc_page_fault')
+f(21,885,1,2,'exc_page_fault')
+f(22,885,1,2,'do_user_addr_fault')
+f(23,885,1,2,'handle_mm_fault')
+f(24,885,1,2,'__handle_mm_fault')
+f(25,885,1,2,'do_anonymous_page')
+f(26,885,1,2,'alloc_pages_vma')
+f(27,885,1,2,'__alloc_pages_nodemask')
+f(28,885,1,2,'get_page_from_freelist')
+f(29,885,1,2,'rmqueue')
+f(9,886,1,0,'org/openjdk/jmh/runner/link/BinaryLinkClient.pushFrame')
+f(10,886,1,0,'java/io/ObjectOutputStream.flush')
+f(11,886,1,0,'java/io/ObjectOutputStream$BlockDataOutputStream.flush')
+f(12,886,1,0,'java/io/BufferedOutputStream.flush')
+f(13,886,1,0,'java/io/BufferedOutputStream.flushBuffer')
+f(14,886,1,0,'java/net/Socket$SocketOutputStream.write')
+f(15,886,1,0,'sun/nio/ch/NioSocketImpl$2.write')
+f(16,886,1,0,'sun/nio/ch/NioSocketImpl.write')
+f(17,886,1,0,'sun/nio/ch/NioSocketImpl.implWrite')
+f(18,886,1,0,'sun/nio/ch/NioSocketImpl.tryWrite')
+f(19,886,1,0,'sun/nio/ch/SocketDispatcher.write')
+f(20,886,1,0,'sun/nio/ch/FileDispatcherImpl.write0')
+f(21,886,1,4,'__libc_write')
+f(22,886,1,2,'entry_SYSCALL_64_after_hwframe')
+f(23,886,1,2,'do_syscall_64')
+f(24,886,1,2,'__x64_sys_write')
+f(25,886,1,2,'ksys_write')
+f(26,886,1,2,'vfs_write')
+f(27,886,1,2,'new_sync_write')
+f(28,886,1,2,'sock_write_iter')
+f(29,886,1,2,'sock_sendmsg')
+f(30,886,1,2,'inet6_sendmsg')
+f(31,886,1,2,'tcp_sendmsg')
+f(32,886,1,2,'tcp_sendmsg_locked')
+f(33,886,1,2,'tcp_push')
+f(34,886,1,2,'__tcp_push_pending_frames')
+f(35,886,1,2,'tcp_write_xmit')
+f(36,886,1,2,'__tcp_transmit_skb')
+f(37,886,1,2,'ip_queue_xmit')
+f(38,886,1,2,'__ip_queue_xmit')
+f(39,886,1,2,'ip_local_out')
+f(40,886,1,2,'__ip_local_out')
+f(41,886,1,2,'nf_hook_slow')
+f(42,886,1,2,'iptable_filter_hook?[iptable_filter]')
+f(43,886,1,2,'ipt_do_table?[ip_tables]')
+f(1,887,10,4,'start_thread')
+f(2,887,10,4,'thread_native_entry(Thread*)')
+f(3,887,10,3,'Thread::call_run()')
+f(4,887,2,3,'JavaThread::thread_main_inner()')
+f(5,887,1,3,'CompileBroker::compiler_thread_loop()')
+f(6,887,1,3,'CompileBroker::possibly_add_compiler_threads(JavaThread*)')
+f(7,887,1,4,'sysinfo')
+f(8,887,1,2,'entry_SYSCALL_64_after_hwframe')
+f(9,887,1,2,'do_syscall_64')
+f(10,887,1,2,'__x64_sys_sysinfo')
+f(11,887,1,2,'__do_sys_sysinfo')
+f(12,887,1,2,'do_sysinfo')
+f(13,887,1,2,'si_meminfo')
+f(14,887,1,2,'nr_blockdev_pages')
+f(5,888,1,4,'__pthread_mutex_unlock')
+f(6,888,1,2,'entry_SYSCALL_64_after_hwframe')
+f(7,888,1,2,'__x64_sys_futex')
+f(4,889,7,3,'WatcherThread::run()')
+f(5,889,1,3,'PeriodicTask::real_time_tick(int)')
+f(6,889,1,3,'StatSamplerTask::task()')
+f(7,889,1,3,'PerfLongVariant::sample()')
+f(8,889,1,2,'asm_exc_page_fault')
+f(9,889,1,2,'exc_page_fault')
+f(10,889,1,2,'do_user_addr_fault')
+f(11,889,1,2,'handle_mm_fault')
+f(12,889,1,2,'__handle_mm_fault')
+f(13,889,1,2,'do_wp_page')
+f(14,889,1,2,'do_page_mkwrite')
+f(15,889,1,2,'ext4_page_mkwrite')
+f(16,889,1,2,'file_update_time')
+f(17,889,1,2,'update_time')
+f(18,889,1,2,'generic_update_time')
+f(19,889,1,2,'__mark_inode_dirty')
+f(20,889,1,2,'ext4_dirty_inode')
+f(21,889,1,2,'__ext4_journal_start_sb')
+f(22,889,1,2,'jbd2__journal_start')
+f(23,889,1,2,'start_this_handle')
+f(5,890,6,4,'__pthread_mutex_unlock')
+f(6,890,6,2,'entry_SYSCALL_64_after_hwframe')
+f(7,890,6,2,'do_syscall_64')
+f(8,890,6,2,'__x64_sys_futex')
+f(9,890,6,2,'do_futex')
+f(10,890,6,2,'futex_wake')
+f(11,895,1,2,'get_futex_key')
+f(4,896,1,4,'__pthread_mutex_unlock')
+f(5,896,1,2,'entry_SYSCALL_64_after_hwframe')
+f(6,896,1,2,'do_syscall_64')
+f(7,896,1,2,'__x64_sys_futex')
+f(8,896,1,2,'do_futex')
+f(9,896,1,2,'futex_wake')
+render();
+</script></body></html>

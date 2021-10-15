@@ -1,16 +1,16 @@
 "Benchmark","Mode","Threads","Samples","Score","Score Error (99.9%)","Unit","Param: threadCount"
-"benchmarks.SynchronizationBenchmarkTest.testAtomic","thrpt",8,30,66138287.693481,1078646.691828,"ops/s",8
+"benchmarks.SynchronizationBenchmarkTest.testAtomic","thrpt",8,3,57370122.499050,4094396.522483,"ops/s",8
 "benchmarks.SynchronizationBenchmarkTest.testAtomic:·async","thrpt",8,1,NaN,NaN,"---",8
-"benchmarks.SynchronizationBenchmarkTest.testAtomic:·cpi","thrpt",8,1,15.618147,NaN,"clks/insn",8
-"benchmarks.SynchronizationBenchmarkTest.testAtomic:·ipc","thrpt",8,1,0.064028,NaN,"insns/clk",8
+"benchmarks.SynchronizationBenchmarkTest.testAtomic:·cpi","thrpt",8,1,17.759418,NaN,"clks/insn",8
+"benchmarks.SynchronizationBenchmarkTest.testAtomic:·ipc","thrpt",8,1,0.056308,NaN,"insns/clk",8
 "benchmarks.SynchronizationBenchmarkTest.testAtomic:·perf","thrpt",8,1,NaN,NaN,"---",8
-"benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber","thrpt",8,30,30219190.928461,1656876.624321,"ops/s",8
+"benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber","thrpt",8,3,34097517.159531,4316205.403027,"ops/s",8
 "benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber:·async","thrpt",8,1,NaN,NaN,"---",8
-"benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber:·cpi","thrpt",8,1,2.486628,NaN,"clks/insn",8
-"benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber:·ipc","thrpt",8,1,0.402151,NaN,"insns/clk",8
+"benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber:·cpi","thrpt",8,1,2.298789,NaN,"clks/insn",8
+"benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber:·ipc","thrpt",8,1,0.435012,NaN,"insns/clk",8
 "benchmarks.SynchronizationBenchmarkTest.testNonVolatileNumber:·perf","thrpt",8,1,NaN,NaN,"---",8
-"benchmarks.SynchronizationBenchmarkTest.testVolatile","thrpt",8,30,30764430.530311,744458.424027,"ops/s",8
+"benchmarks.SynchronizationBenchmarkTest.testVolatile","thrpt",8,3,31514747.742455,21223687.598527,"ops/s",8
 "benchmarks.SynchronizationBenchmarkTest.testVolatile:·async","thrpt",8,1,NaN,NaN,"---",8
-"benchmarks.SynchronizationBenchmarkTest.testVolatile:·cpi","thrpt",8,1,2.194242,NaN,"clks/insn",8
-"benchmarks.SynchronizationBenchmarkTest.testVolatile:·ipc","thrpt",8,1,0.455738,NaN,"insns/clk",8
+"benchmarks.SynchronizationBenchmarkTest.testVolatile:·cpi","thrpt",8,1,2.248570,NaN,"clks/insn",8
+"benchmarks.SynchronizationBenchmarkTest.testVolatile:·ipc","thrpt",8,1,0.444727,NaN,"insns/clk",8
 "benchmarks.SynchronizationBenchmarkTest.testVolatile:·perf","thrpt",8,1,NaN,NaN,"---",8

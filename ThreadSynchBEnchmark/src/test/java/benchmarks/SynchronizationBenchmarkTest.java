@@ -20,7 +20,7 @@ import java.util.concurrent.atomic.AtomicLong;
 @OutputTimeUnit(TimeUnit.SECONDS)
 @State(Scope.Benchmark)
 @Warmup(iterations = 3, time = 10, timeUnit = TimeUnit.SECONDS)
-@Measurement(iterations = 30, time = 10, timeUnit = TimeUnit.SECONDS)
+@Measurement(iterations = 3, time = 10, timeUnit = TimeUnit.SECONDS)
 
 public class SynchronizationBenchmarkTest {
     private AtomicLong atomic = new AtomicLong();

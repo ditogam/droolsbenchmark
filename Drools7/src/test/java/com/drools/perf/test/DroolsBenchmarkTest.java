@@ -15,10 +15,10 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Threads(10)
-//@BenchmarkMode(Mode.Throughput)
-//@OutputTimeUnit(TimeUnit.SECONDS)
-@BenchmarkMode(Mode.AverageTime)
-@OutputTimeUnit(TimeUnit.MICROSECONDS)
+@BenchmarkMode(Mode.Throughput)
+@OutputTimeUnit(TimeUnit.SECONDS)
+//@BenchmarkMode(Mode.AverageTime)
+//@OutputTimeUnit(TimeUnit.MICROSECONDS)
 
 @State(Scope.Benchmark)
 @Fork(value = 2, jvmArgs = {"-Xms10G",
@@ -27,12 +27,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 //        "-XX:ConcGCThreads=5",
 //        "-XX:ParallelGCThreads=5",
 //        "-XX:+UseZGC",
-//        "-XX:+UseShenandoahGC",
+        "-XX:+UseShenandoahGC",
 ////        "-XX:ShenandoahGCMode=iu",
 ////        "-XX:+UnlockExperimentalVMOptions",
-//        "-XX:+UseNUMA",
-//        "-XX:-UseBiasedLocking",
-//        "-XX:+UseLargePages", "-XX:+UseTransparentHugePages",
+        "-XX:+UseNUMA",
+        "-XX:-UseBiasedLocking",
+        "-XX:+UseLargePages", "-XX:+UseTransparentHugePages",
 //
 ////        "-XX:+UsePerfData",
 ////        "-XX:MaxMetaspaceSize=1G", "-XX:MetaspaceSize=256M",

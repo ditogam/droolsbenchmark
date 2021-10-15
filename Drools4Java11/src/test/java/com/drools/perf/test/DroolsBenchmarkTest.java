@@ -32,18 +32,18 @@ import java.util.concurrent.atomic.AtomicInteger;
 //        "-XX:ConcGCThreads=5",
 //        "-XX:ParallelGCThreads=5",
 ////        "-XX:+UseZGC",
-//        "-XX:+UseNUMA",
-//        "-XX:+UseShenandoahGC",
+        "-XX:+UseNUMA",
+        "-XX:+UseShenandoahGC",
 ////        "-XX:ShenandoahGCMode=iu",
 ////        "-XX:+UnlockExperimentalVMOptions",
 //        "-XX:+UnlockDiagnosticVMOptions", "-XX:+DebugNonSafepoints",
-//        "-XX:+UseNUMA",
-//        "-XX:-UseBiasedLocking",
-//        "-XX:+UseLargePages", "-XX:+UseTransparentHugePages",
+        "-XX:+UseNUMA",
+        "-XX:-UseBiasedLocking",
+        "-XX:+UseLargePages", "-XX:+UseTransparentHugePages",
 
-//        "-XX:+UsePerfData",
+        "-XX:+UsePerfData",
 //        "-XX:MaxMetaspaceSize=1G", "-XX:MetaspaceSize=256M",
-//        "-Xlog:gc*,gc+ref*,gc+ergo*,gc+heap*,gc+stats*,gc+compaction*,gc+age*:logs/gc.log:time,pid,tags:filecount=25,filesize=30m"
+        "-Xlog:gc*,gc+ref*,gc+ergo*,gc+heap*,gc+stats*,gc+compaction*,gc+age*:logs/gc.log:time,tags:filecount=25,filesize=30m"
 }
 )
 public class DroolsBenchmarkTest {
@@ -95,8 +95,8 @@ public class DroolsBenchmarkTest {
                 .forks(1)
                 .threads(Integer.parseInt(args[0]))
 //                .addProfiler(GCProfiler.class)
-                .addProfiler(AsyncProfiler.class, "output=flamegraph;event=cpu;allkernel=true;direction=forward;interval=50000")
-                .addProfiler(LinuxPerfProfiler.class)
+//                .addProfiler(AsyncProfiler.class, "output=flamegraph;event=cpu;allkernel=true;direction=forward;interval=50000")
+//                .addProfiler(LinuxPerfProfiler.class)
 //                .addProfiler(LinuxPerfAsmProfiler.class)
 
 
