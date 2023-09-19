@@ -6,6 +6,7 @@ import com.drools.perf.test.model.Subscriber;
 import org.junit.Test;
 import org.openjdk.jmh.annotations.*;
 
+import org.openjdk.jmh.profile.AsyncProfiler;
 import org.openjdk.jmh.profile.LinuxPerfProfiler;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.options.Options;
@@ -22,10 +23,15 @@ import java.util.concurrent.atomic.AtomicInteger;
 //@OutputTimeUnit(TimeUnit.MICROSECONDS)
 
 @State(Scope.Benchmark)
-@Warmup(iterations = 5, time = 10, timeUnit = TimeUnit.SECONDS)
-@Measurement(iterations = 10, time = 10, timeUnit = TimeUnit.SECONDS)
+@Warmup(iterations = 2, time = 2, timeUnit = TimeUnit.SECONDS)
+@Measurement(iterations = 10, time = 2, timeUnit = TimeUnit.SECONDS)
 @Fork(value = 2, jvmArgs = {"-Xms10G",
+//    "-XX:+UseZGC",
+//    "-XX:+ZGenerational",
 //        "-XX:+UseParallelGC",
+    "-Xlog:gc*,gc+ref*,gc+ergo*,gc+heap*,gc+stats*,gc+compaction*,gc+age*:logs/gc.log:time,pid,tags:filecount=25,filesize=30m",
+    "-XX:+UseShenandoahGC",
+    "-XX:MaxMetaspaceSize=1G", "-XX:MetaspaceSize=256M",
 //        "-XX:StartFlightRecording=filename=myrecording.jfr,delay=60s",
 
         "-Xmx10G"/*,
@@ -82,8 +88,10 @@ public class DroolsBenchmarkTest {
         final Options options = new OptionsBuilder()
                 .include(DroolsBenchmarkTest.class.getSimpleName())
                 .forks(1)
-                .threads(Integer.parseInt(args[0]))
-                .addProfiler(LinuxPerfProfiler.class)
+            .threads(Runtime.getRuntime().availableProcessors() - 1)
+            .addProfiler(AsyncProfiler.class, "output=flamegraph;event=cpu;allkernel=true;direction=forward;interval=50000")
+
+//                .addProfiler(LinuxPerfProfiler.class)
                 .build();
 
         new Runner(options).run();

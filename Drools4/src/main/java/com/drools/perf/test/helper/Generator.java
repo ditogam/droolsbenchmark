@@ -51,14 +51,15 @@ public class Generator {
             subscriber.acc(accId, generateRandom(-1000, 1000));
         }
         boolean hasPositive = false;
-        for (Account account : subscriber.getAccounts()) {
+        List<Account> accounts = subscriber.getAccounts();
+        for (Account account : accounts) {
             if (account.getBalance() > 0) {
                 hasPositive = true;
                 break;
             }
         }
         if (!hasPositive) {
-            subscriber.getAccounts().get(0).setBalance(generateRandom(500, 10000));
+            accounts.get(0).setBalance(generateRandom(500, 10000));
         }
         return subscriber;
     }

@@ -1,5 +1,6 @@
 package com.drools.perf.test;
-import com.drools.perf.test.model.*;
+import com.drools.perf.test.model.Account;
+import com.drools.perf.test.model.Subscriber;
 
 rule "general.test.rule.cp0.acc.0"
 	activation-group "main"

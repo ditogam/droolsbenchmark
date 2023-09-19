@@ -1,5 +1,8 @@
 package com.drools.perf.test.model;
 
+import lombok.Getter;
+
+@Getter
 public class Account {
     private int accountKindId;
     private long balance;
@@ -12,17 +15,9 @@ public class Account {
         this.balance = balance;
     }
 
-    public int getAccountKindId() {
-        return accountKindId;
-    }
-
     public Account setAccountKindId(int accountKindId) {
         this.accountKindId = accountKindId;
         return this;
-    }
-
-    public long getBalance() {
-        return balance;
     }
 
     public Account setBalance(long balance) {
