@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import com.drools.perf.test.model.Account;
 import com.drools.perf.test.model.Subscriber;
@@ -21,6 +22,7 @@ import org.drools.compiler.PackageBuilder;
 import org.drools.compiler.PackageBuilderErrors;
 import org.drools.rule.Package;
 import org.drools.rule.Rule;
+import org.drools.util.AbstractHashTable;
 
 public class DroolsHelper {
     public static final String DROOLS_FILE_NAME = "rools.data";
@@ -141,6 +143,9 @@ public class DroolsHelper {
             String activationGroup = rule.getActivationGroup();
             if (activationGroup != null && activationGroup.equals("main")) {
                 RULE_FOUND_COUNT.incrementAndGet();
+//                System.out.println(rule.getName() +" "+
+//                subscriber.getChargingProfileId()+" "+accounts.stream().map(Account::getAccountKindId)
+//                    .toList());
             }
             return true;
         });
@@ -150,13 +155,13 @@ public class DroolsHelper {
 
     public static void printResults() {
 //        List<String> list = RULE_RESULTS.stream().sorted().collect(Collectors.toList());
-        System.err.printf("Executed = Found = %s Executed = %s. rule found = %s distinct rules %s%n",
-                EXECUTED_COUNT.get() == RULE_FOUND_COUNT.get(), EXECUTED_COUNT, RULE_FOUND_COUNT, "");
+        System.err.printf("Executed = Found = %s Executed = %s. rule found = %s distinct rules %s%n AbstractHashTable.count= %s",
+                EXECUTED_COUNT.get() == RULE_FOUND_COUNT.get(), EXECUTED_COUNT, RULE_FOUND_COUNT, "", AbstractHashTable.MEASUREMENTS);
     }
 
     public static void main(String[] args) throws Exception {
-//        List<Subscriber> subscribers = Generator.generateSubscribers(500);
-        List<Subscriber> subscribers = Generator.getPreGeneratedSubscribers();
+        List<Subscriber> subscribers = Generator.generateSubscribers(1);
+//        List<Subscriber> subscribers = Generator.getPreGeneratedSubscribers();
         loadRules();
         for (Subscriber subscriber : subscribers) {
             executeSubscriber(subscriber);

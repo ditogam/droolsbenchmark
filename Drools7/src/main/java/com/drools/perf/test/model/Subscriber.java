@@ -31,7 +31,7 @@ public class Subscriber {
 
     public Subscriber acc(int accountKindId, long balance) {
         if (accounts == null)
-            accounts = new ArrayList<Account>();
+            accounts = new ArrayList<>();
         accounts.add(new Account(accountKindId, balance));
         return this;
     }

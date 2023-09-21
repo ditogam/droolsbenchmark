@@ -11,7 +11,7 @@
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
-        <drools.version>7.52.0.Final</drools.version>
+        <drools.version>9.44.0.Final</drools.version>
         <jmh.version>1.32</jmh.version>
         <jar.directory>${project.build.directory}/libraries</jar.directory>
     </properties>
@@ -40,8 +40,11 @@
             <artifactId>drools-model-compiler</artifactId>
             <version>${drools.version}</version>
         </dependency>
-
-
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>kie-api</artifactId>
+            <version>${drools.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.drools</groupId>
             <artifactId>drools-mvel</artifactId>
@@ -58,6 +61,13 @@
             <artifactId>drools-metric</artifactId>
             <version>${drools.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.drools</groupId>
+            <artifactId>drools-model-codegen</artifactId>
+            <version>${drools.version}</version>
+        </dependency>
+
         <!-- -->
 
 
@@ -98,6 +108,33 @@
     <build>
         <finalName>${project.groupId}.${project.artifactId}-${project.version}</finalName>
         <plugins>
+            <plugin>
+                <groupId>org.kie</groupId>
+                <artifactId>kie-maven-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <dumpKieSourcesFolder>generated-sources/main/kie</dumpKieSourcesFolder>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>target/generated-sources/main/kie/</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>

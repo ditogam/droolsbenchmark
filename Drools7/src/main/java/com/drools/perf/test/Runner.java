@@ -1,12 +1,12 @@
 package com.drools.perf.test;
 
-import com.drools.perf.test.helper.DroolsHelper;
-import com.drools.perf.test.helper.Generator;
-import com.drools.perf.test.model.Subscriber;
-
 import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import com.drools.perf.test.helper.DroolsHelper;
+import com.drools.perf.test.helper.Generator;
+import com.drools.perf.test.model.Subscriber;
 
 import static com.drools.perf.test.helper.DroolsHelper.executeSubscriber;
 
@@ -99,8 +99,8 @@ public class Runner {
     public static void main(String[] args) throws Exception {
         Runner runner = new Runner();
         runner.warmupIterations.set(3);
-        runner.measurementIterations.set(10);
-        runner.threadCount = 10;
+        runner.measurementIterations.set(3);
+        runner.threadCount = Runtime.getRuntime().availableProcessors() - 1;
         runner.run();
     }
 }

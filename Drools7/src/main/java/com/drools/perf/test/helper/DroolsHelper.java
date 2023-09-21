@@ -1,30 +1,33 @@
 package com.drools.perf.test.helper;
 
-import com.drools.perf.test.model.Subscriber;
-import org.drools.core.RuleBaseConfiguration;
-import org.drools.core.command.runtime.rule.FireAllRulesCommand;
-import org.drools.core.definitions.rule.impl.RuleImpl;
-import org.drools.core.impl.KnowledgeBaseFactory;
-import org.drools.core.impl.KnowledgeBaseImpl;
-import org.drools.core.io.impl.ReaderResource;
-import org.kie.api.KieBase;
-import org.kie.api.KieServices;
-import org.kie.api.command.BatchExecutionCommand;
-import org.kie.api.command.Command;
-import org.kie.api.command.KieCommands;
-import org.kie.api.definition.KiePackage;
-import org.kie.api.io.ResourceType;
-import org.kie.api.runtime.StatelessKieSession;
-import org.kie.internal.builder.KnowledgeBuilder;
-import org.kie.internal.builder.KnowledgeBuilderFactory;
-
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Logger;
+
+import com.drools.perf.test.model.Subscriber;
+import org.drools.core.RuleBaseConfiguration;
+import org.drools.io.ReaderResource;
+import org.drools.kiesession.rulebase.InternalKnowledgeBase;
+import org.drools.kiesession.rulebase.KnowledgeBaseFactory;
+import org.drools.model.Model;
+import org.drools.modelcompiler.KieBaseBuilder;
+import org.kie.api.KieBase;
+import org.kie.api.definition.KiePackage;
+import org.kie.api.io.ResourceType;
+import org.kie.api.runtime.StatelessKieSession;
+import org.kie.internal.builder.KnowledgeBuilder;
+import org.kie.internal.builder.KnowledgeBuilderFactory;
 
 public class DroolsHelper {
     public static final String DROOLS_FILE_NAME = "rools.data";
@@ -33,14 +36,15 @@ public class DroolsHelper {
     private static final ReentrantLock lock = new ReentrantLock();
 
     private static int sessionPool = 0;
-    private static boolean threadLocal;
+    private static boolean threadLocal = true;
+    private static boolean useCanonicalModel = true;
     private static Collection<KiePackage> kiePackages = null;
 
     private static Logger logger = Logger.getLogger(DroolsHelper.class.getName());
 
     private static void compile() throws Exception {
         KnowledgeBuilder builder = KnowledgeBuilderFactory.newKnowledgeBuilder();
-        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("rools/main.drl");
+        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("com/drools/perf/test/main.drl");
              Reader reader = new InputStreamReader(is);
              FileOutputStream fos = new FileOutputStream(DROOLS_FILE_NAME);
              ObjectOutputStream oos = new ObjectOutputStream(fos)) {
@@ -51,7 +55,7 @@ public class DroolsHelper {
     }
 
     private static RuleBaseConfiguration getRuleBaseConfiguration() {
-        RuleBaseConfiguration conf = (RuleBaseConfiguration) KnowledgeBaseFactory.newKnowledgeBaseConfiguration();
+        RuleBaseConfiguration conf = KnowledgeBaseFactory.newKnowledgeBase().getRuleBaseConfiguration();
         conf.setSequential(false);
         if (sessionPool > 0)
             conf.setSessionPoolSize(sessionPool);
@@ -107,45 +111,58 @@ public class DroolsHelper {
     }
 
     private static KieBase createKieBase() {
-        KieBase ruleBase;
-        ruleBase = KnowledgeBaseFactory.newKnowledgeBase(getRuleBaseConfiguration());
-        ((KnowledgeBaseImpl) ruleBase).addPackages(kiePackages);
+
+        if (useCanonicalModel) {
+            try {
+                Model model =
+                    (Model) Class.forName("com.drools.perf.test.Rules00102e0dc585442dbfee50de12ebebc4").getConstructor().newInstance();
+                KieBase kieBase = KieBaseBuilder.createKieBaseFromModel(model);
+
+                return kieBase;
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        InternalKnowledgeBase ruleBase = KnowledgeBaseFactory.newKnowledgeBase();
+
+        ruleBase.addPackages(kiePackages);
+
         return ruleBase;
     }
 
     public static void init() throws Exception {
-        init(0, false);
+        init(0, false, false);
     }
 
-    public static void init(int sessionPool, boolean threadLocal) throws Exception {
+    public static void init(int sessionPool, boolean threadLocal, boolean useCanonicalModel) throws Exception {
         DroolsHelper.sessionPool = sessionPool;
         DroolsHelper.threadLocal = threadLocal;
+        DroolsHelper.useCanonicalModel = useCanonicalModel;
         createSingletonKieBase();
     }
 
     public static void executeSubscriber(Subscriber subscriber) throws Exception {
-
-        KieCommands cmds = KieServices.Factory.get().getCommands();
         ArrayList<Object> objs = new ArrayList<Object>(subscriber.getAccounts().size() + 1);
         objs.add(subscriber);
         objs.addAll(subscriber.getAccounts());
-        List<Command<?>> batch = new ArrayList<>();
+        List<Object> batch = new ArrayList<>();
         for (Object obj : objs) {
-            batch.add(cmds.newInsert(obj));
+            batch.add(obj);
         }
-        batch.add(new FireAllRulesCommand(match -> {
-            RuleImpl rule = (RuleImpl) match.getRule();
-            String activationGroup = rule.getActivationGroup();
-            if (activationGroup != null && activationGroup.equals("main")) {
-                RULE_FOUND_COUNT.incrementAndGet();
-            }
-            return true;
-        }));
-        BatchExecutionCommand exec = cmds.newBatchExecution(batch);
+//        batch.add(new FireAllRulesCommand(match -> {
+//            RuleImpl rule = (RuleImpl) match.getRule();
+//            String activationGroup = rule.getActivationGroup();
+//            if (activationGroup != null && activationGroup.equals("main")) {
+//                RULE_FOUND_COUNT.incrementAndGet();
+//            }
+//            return true;
+//        }));
+//        BatchExecutionCommand exec = cmds.newBatchExecution(batch);
         StatelessKieSession ss = ruleBase().newStatelessKieSession();
         ss.setGlobal("result", "Hello");
 
-        ss.execute(exec);
+        ss.execute(batch);
         EXECUTED_COUNT.incrementAndGet();
     }
 
@@ -156,6 +173,7 @@ public class DroolsHelper {
     }
 
     public static void main(String[] args) throws Exception {
+        init(2, true, true);
         List<Subscriber> subscribers = Generator.generateSubscribers(10000);
         loadRules();
         for (Subscriber subscriber : subscribers) {

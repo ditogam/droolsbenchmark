@@ -23,15 +23,17 @@ import java.util.concurrent.atomic.AtomicInteger;
 //@OutputTimeUnit(TimeUnit.MICROSECONDS)
 
 @State(Scope.Benchmark)
-@Warmup(iterations = 2, time = 2, timeUnit = TimeUnit.SECONDS)
-@Measurement(iterations = 10, time = 2, timeUnit = TimeUnit.SECONDS)
+@Warmup(iterations = 50, time = 5, timeUnit = TimeUnit.SECONDS)
+@Measurement(iterations = 100, time = 5, timeUnit = TimeUnit.SECONDS)
 @Fork(value = 2, jvmArgs = {"-Xms10G",
 //    "-XX:+UseZGC",
 //    "-XX:+ZGenerational",
 //        "-XX:+UseParallelGC",
-    "-Xlog:gc*,gc+ref*,gc+ergo*,gc+heap*,gc+stats*,gc+compaction*,gc+age*:logs/gc.log:time,pid,tags:filecount=25,filesize=30m",
+    "-Xlog:gc*,gc+ref*,gc+ergo*,gc+heap*,gc+stats*,gc+compaction*,gc+age*:logs/gc.log:time,pid,tags:filecount=25,filesize=3000m",
     "-XX:+UseShenandoahGC",
-    "-XX:MaxMetaspaceSize=1G", "-XX:MetaspaceSize=256M",
+//    "-javaagent:libs/jHiccup.jar",
+//    "-XX:+UseZST",
+    "-XX:MaxMetaspaceSize=1G", "-XX:MetaspaceSize=1G",
 //        "-XX:StartFlightRecording=filename=myrecording.jfr,delay=60s",
 
         "-Xmx10G"/*,
@@ -88,7 +90,7 @@ public class DroolsBenchmarkTest {
         final Options options = new OptionsBuilder()
                 .include(DroolsBenchmarkTest.class.getSimpleName())
                 .forks(1)
-            .threads(Runtime.getRuntime().availableProcessors() - 1)
+            .threads(10)
             .addProfiler(AsyncProfiler.class, "output=flamegraph;event=cpu;allkernel=true;direction=forward;interval=50000")
 
 //                .addProfiler(LinuxPerfProfiler.class)
