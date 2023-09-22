@@ -1,21 +1,29 @@
 package com.drools.perf.test;
 
-import com.drools.perf.test.helper.DroolsHelper;
-import com.drools.perf.test.helper.Generator;
-import com.drools.perf.test.model.Subscriber;
-import org.junit.Test;
-import org.openjdk.jmh.annotations.*;
-
-import org.openjdk.jmh.profile.AsyncProfiler;
-import org.openjdk.jmh.profile.LinuxPerfProfiler;
-import org.openjdk.jmh.runner.Runner;
-import org.openjdk.jmh.runner.options.Options;
-import org.openjdk.jmh.runner.options.OptionsBuilder;
-
 import java.io.File;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import com.drools.perf.test.helper.DroolsHelper;
+import com.drools.perf.test.helper.Generator;
+import com.drools.perf.test.model.Subscriber;
+import org.junit.Test;
+import org.openjdk.jmh.annotations.Benchmark;
+import org.openjdk.jmh.annotations.BenchmarkMode;
+import org.openjdk.jmh.annotations.Fork;
+import org.openjdk.jmh.annotations.Measurement;
+import org.openjdk.jmh.annotations.Mode;
+import org.openjdk.jmh.annotations.OutputTimeUnit;
+import org.openjdk.jmh.annotations.Scope;
+import org.openjdk.jmh.annotations.Setup;
+import org.openjdk.jmh.annotations.State;
+import org.openjdk.jmh.annotations.TearDown;
+import org.openjdk.jmh.annotations.Warmup;
+import org.openjdk.jmh.profile.AsyncProfiler;
+import org.openjdk.jmh.runner.Runner;
+import org.openjdk.jmh.runner.options.Options;
+import org.openjdk.jmh.runner.options.OptionsBuilder;
 
 @BenchmarkMode(Mode.Throughput)
 @OutputTimeUnit(TimeUnit.SECONDS)
@@ -23,14 +31,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 //@OutputTimeUnit(TimeUnit.MICROSECONDS)
 
 @State(Scope.Benchmark)
-@Warmup(iterations = 50, time = 5, timeUnit = TimeUnit.SECONDS)
-@Measurement(iterations = 100, time = 5, timeUnit = TimeUnit.SECONDS)
+@Warmup(iterations = 5, time = 5, timeUnit = TimeUnit.SECONDS)
+@Measurement(iterations = 5, time = 5, timeUnit = TimeUnit.SECONDS)
 @Fork(value = 2, jvmArgs = {"-Xms10G",
-//    "-XX:+UseZGC",
-//    "-XX:+ZGenerational",
+    "-XX:+UseZGC",
+    "-XX:+ZGenerational",
 //        "-XX:+UseParallelGC",
     "-Xlog:gc*,gc+ref*,gc+ergo*,gc+heap*,gc+stats*,gc+compaction*,gc+age*:logs/gc.log:time,pid,tags:filecount=25,filesize=3000m",
-    "-XX:+UseShenandoahGC",
+//    "-XX:+UseShenandoahGC",
 //    "-javaagent:libs/jHiccup.jar",
 //    "-XX:+UseZST",
     "-XX:MaxMetaspaceSize=1G", "-XX:MetaspaceSize=1G",
@@ -48,7 +56,7 @@ public class DroolsBenchmarkTest {
     private AtomicInteger index = new AtomicInteger();
 
     //    @Param({"false", "true"})
-    private boolean threadLocal;
+    private boolean threadLocal = true;
 //    @Param({"false", "true"})
     private boolean shadowProxy;
 

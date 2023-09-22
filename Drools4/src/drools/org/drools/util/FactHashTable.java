@@ -58,7 +58,6 @@ public class FactHashTable extends AbstractHashTable
         if ( this.size++ >= this.threshold ) {
             resize( 2 * this.table.length );
         }
-        measureSize();
         return true;
     }
 

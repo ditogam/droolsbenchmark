@@ -39,7 +39,7 @@ public class IdentityAssertMapComparator
         if ( realObject instanceof ShadowProxy ) {
             realObject = ((ShadowProxy)realObject).getShadowedObject();
         }
-        return realObject.hashCode();//rehash( System.identityHashCode( realObject ) );
+        return rehash( System.identityHashCode( realObject ) );
     }
 
     public int rehash(int h) {

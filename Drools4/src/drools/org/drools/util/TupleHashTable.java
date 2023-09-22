@@ -36,8 +36,6 @@ public class TupleHashTable extends AbstractHashTable
         if ( this.size++ >= this.threshold ) {
             resize( 2 * this.table.length );
         }
-
-        measureSize();
     }
 
     public ReteTuple get(final ReteTuple tuple) {

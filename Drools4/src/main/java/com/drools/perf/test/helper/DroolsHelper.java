@@ -155,8 +155,8 @@ public class DroolsHelper {
 
     public static void printResults() {
 //        List<String> list = RULE_RESULTS.stream().sorted().collect(Collectors.toList());
-        System.err.printf("Executed = Found = %s Executed = %s. rule found = %s distinct rules %s%n AbstractHashTable.count= %s",
-                EXECUTED_COUNT.get() == RULE_FOUND_COUNT.get(), EXECUTED_COUNT, RULE_FOUND_COUNT, "", AbstractHashTable.MEASUREMENTS);
+        System.err.printf("Executed = Found = %s Executed = %s. rule found = %s distinct rules %s%n",
+                EXECUTED_COUNT.get() == RULE_FOUND_COUNT.get(), EXECUTED_COUNT, RULE_FOUND_COUNT, "");
     }
 
     public static void main(String[] args) throws Exception {

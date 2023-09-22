@@ -11,14 +11,15 @@ import org.junit.Test;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Fork;
+import org.openjdk.jmh.annotations.Measurement;
 import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
-import org.openjdk.jmh.annotations.Param;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.annotations.Threads;
+import org.openjdk.jmh.annotations.Warmup;
 import org.openjdk.jmh.profile.AsyncProfiler;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.options.Options;
@@ -33,22 +34,24 @@ import static org.openjdk.jmh.annotations.Threads.MAX;
 //@OutputTimeUnit(TimeUnit.MILLISECONDS)
 
 @State(Scope.Benchmark)
-@Fork(value = 2, jvmArgs = {"-Xms20G",
+@Warmup(iterations = 2, time = 5, timeUnit = TimeUnit.SECONDS)
+@Measurement(iterations = 2, time = 5, timeUnit = TimeUnit.SECONDS)
+@Fork(jvmArgs = {"-Xms20G",
     "-Xmx20G",
 ////        "-XX:+UseParallelGC",
 //        "-XX:ConcGCThreads=15",
 //        "-XX:ParallelGCThreads=5",
-//        "-XX:+UseZGC","-XX:+ZGenerational",
-//        "-XX:+UseShenandoahGC",
+    "-XX:+UseZGC", //"-XX:+ZGenerational",
+//    "-XX:+UseShenandoahGC",
 //        "-XX:ShenandoahGCMode=iu",
 ////        "-XX:+UnlockExperimentalVMOptions",
-        "-XX:+UseNUMA",
+//        "-XX:+UseNUMA",
 //        "-XX:-UseBiasedLocking",
-        "-XX:+UseLargePages", "-XX:+UseTransparentHugePages",
+//        "-XX:+UseLargePages", "-XX:+UseTransparentHugePages",
 //
 ////        "-XX:+UsePerfData",
-    "-XX:MaxMetaspaceSize=1G", "-XX:MetaspaceSize=256M",
-    "-Xlog:gc*,gc+ref*,gc+ergo*,gc+heap*,gc+stats*,gc+compaction*,gc+age*:logs/gc.log:time,pid,tags:filecount=25,filesize=30m"
+//    "-XX:MaxMetaspaceSize=1G", "-XX:MetaspaceSize=256M",
+    "-Xlog:gc*,gc+ref*,gc+ergo*,gc+heap*,gc+stats*,gc+compaction*,gc+age*:logs/gc.log:time,pid,tags:filecount=25,filesize=3000m"
 }
 )
 public class DroolsBenchmarkTest {
@@ -58,16 +61,24 @@ public class DroolsBenchmarkTest {
     //    @Param({"0", "3"})
     private int sessionPool;
     //    @Param({"false", "true"})
-    private boolean threadLocal;
-    @Param({"false", "true"})
-    private boolean useCanonicalModel;
+    private boolean threadLocal = true;
+    //    @Param({"false", "true"})
+    private boolean useCanonicalModel = true;
 
     @Setup
     public void loadData() throws Exception {
+        //VERYYYYYYYYYY important, this gives
         System.err.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ====" + System.getProperty("drools.useEagerSegmentCreation"));
         if (System.getProperty("drools.useEagerSegmentCreation") == null) {
             System.setProperty("drools.useEagerSegmentCreation", "true");
         }
+        if (System.getProperty("drools.threadSafe") == null) {
+            System.setProperty("drools.threadSafe", "false");
+        }
+        if (System.getProperty("drools.kieBaseMutability") == null) {
+            System.setProperty("drools.kieBaseMutability", "DISABLED");
+        }
+
         System.err.println("bbbbbbbbbbbbbbbb ====" + System.getProperty("drools.useEagerSegmentCreation"));
         DroolsHelper.init(sessionPool, threadLocal, useCanonicalModel);
 //        DroolsHelper.threadLocal = threadLocal;
@@ -106,9 +117,9 @@ public class DroolsBenchmarkTest {
         final Options options = new OptionsBuilder()
                 .include(DroolsBenchmarkTest.class.getSimpleName())
                 .forks(1)
-            .warmupIterations(2)
-            .measurementIterations(5)
-            .threads(Runtime.getRuntime().availableProcessors() - 1)
+//            .warmupIterations(2)
+//            .measurementIterations(5)
+            .threads(10)
 //                .addProfiler(GCProfiler.class)
             .addProfiler(AsyncProfiler.class, "output=flamegraph;event=cpu;allkernel=true;direction=forward;interval=50000")
 //                .addProfiler(LinuxPerfProfiler.class)
