@@ -526,7 +526,7 @@ public class DefaultAgenda
      * @throws ConsequenceException
      *             If an error occurs while attempting to fire the consequence.
      */
-    public void fireActivation(final Activation activation) throws ConsequenceException {
+    public synchronized void fireActivation(final Activation activation) throws ConsequenceException {
         // We do this first as if a node modifies a fact that causes a recursion on an empty pattern
         // we need to make sure it re-activates
         increaseDormantActivations();

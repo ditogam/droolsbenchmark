@@ -420,22 +420,22 @@ public abstract class AbstractWorkingMemory
         this.halt = true;
     }
 
-    public void fireAllRules() throws FactException {
+    public synchronized void fireAllRules() throws FactException {
         fireAllRules( null,
                       -1 );
     }
 
-    public void fireAllRules(int fireLimit) throws FactException {
+    public synchronized void fireAllRules(int fireLimit) throws FactException {
         fireAllRules( null,
                       fireLimit );
     }
 
-    public void fireAllRules(final AgendaFilter agendaFilter) throws FactException {
+    public synchronized void fireAllRules(final AgendaFilter agendaFilter) throws FactException {
         fireAllRules( agendaFilter,
                       -1 );
     }
 
-    public void fireAllRules(final AgendaFilter agendaFilter,
+    public synchronized void fireAllRules(final AgendaFilter agendaFilter,
                                           int fireLimit) throws FactException {
         // If we're already firing a rule, then it'll pick up
         // the firing for any other assertObject(..) that get

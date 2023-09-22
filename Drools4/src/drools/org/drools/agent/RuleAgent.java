@@ -273,7 +273,7 @@ public class RuleAgent {
         }
     }
 
-    void configure(boolean newInstance,
+    synchronized void configure(boolean newInstance,
                                 List provs,
                                 int secondsToRefresh) {
         this.newInstance = newInstance;
@@ -324,7 +324,7 @@ public class RuleAgent {
 
     }
 
-    private Package[] checkForChanges(PackageProvider prov) {
+    private synchronized Package[] checkForChanges(PackageProvider prov) {
         listener.debug( "SCANNING FOR CHANGE " + prov.toString() );
         if (this.ruleBase == null) ruleBase = RuleBaseFactory.newRuleBase( this.ruleBaseConf );
         Package[] changes = prov.loadPackageChanges();
@@ -380,7 +380,7 @@ public class RuleAgent {
      * the rules are updated.
      *
      */
-    public RuleBase getRuleBase() {
+    public synchronized RuleBase getRuleBase() {
         return this.ruleBase;
     }
 
@@ -395,7 +395,7 @@ public class RuleAgent {
     /**
      * Stop the polling (if it is happening)
      */
-    public void stopPolling() {
+    public synchronized void stopPolling() {
         if ( this.timer != null ) timer.cancel();
         timer = null;
     }

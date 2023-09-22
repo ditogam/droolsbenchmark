@@ -28,7 +28,7 @@ public class ClassFieldExtractorCache {
         return new ClassFieldExtractorCache();
     }
 
-    public ClassFieldExtractor getExtractor(final Class clazz,
+    public synchronized ClassFieldExtractor getExtractor(final Class clazz,
                                                          final String fieldName,
                                                          ClassLoader classLoader) {
         if ( cache == null ) {

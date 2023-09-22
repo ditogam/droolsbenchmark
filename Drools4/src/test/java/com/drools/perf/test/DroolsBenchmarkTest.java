@@ -31,8 +31,8 @@ import org.openjdk.jmh.runner.options.OptionsBuilder;
 //@OutputTimeUnit(TimeUnit.MICROSECONDS)
 
 @State(Scope.Benchmark)
-@Warmup(iterations = 5, time = 5, timeUnit = TimeUnit.SECONDS)
-@Measurement(iterations = 5, time = 5, timeUnit = TimeUnit.SECONDS)
+@Warmup(iterations = 150, time = 5, timeUnit = TimeUnit.SECONDS)
+@Measurement(iterations = 500, time = 5, timeUnit = TimeUnit.SECONDS)
 @Fork(value = 2, jvmArgs = {"-Xms10G",
     "-XX:+UseZGC",
     "-XX:+ZGenerational",

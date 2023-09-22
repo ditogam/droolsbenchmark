@@ -69,7 +69,7 @@ public class ObjenesisBase
      * @param clazz Class to instantiate
      * @return Instantiator dedicated to the class
      */
-    public  ObjectInstantiator getInstantiatorOf(final Class clazz) {
+    public synchronized ObjectInstantiator getInstantiatorOf(final Class clazz) {
         if ( this.cache == null ) {
             return this.strategy.newInstantiatorOf( clazz );
         }

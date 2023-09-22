@@ -150,7 +150,7 @@ public class PatternBuilder
 
     public static ObjectTypeNode attachObjectTypeNode(BuildContext context,
                                                       ObjectType objectType) {
-//        synchronized ( context.getRuleBase().getPackagesMap() ) {
+        synchronized ( context.getRuleBase().getPackagesMap() ) {
             ObjectTypeNode otn = new ObjectTypeNode( context.getNextId(),
                                                      objectType,
                                                      context );
@@ -163,7 +163,7 @@ public class PatternBuilder
             }
     
             return otn;
-//        }
+        }
     }
 
     public void attachAlphaNodes(final BuildContext context,
